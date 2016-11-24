@@ -1,4 +1,4 @@
-package universal.log;
+package com.android.common.logger;
 
 public final class Settings {
 

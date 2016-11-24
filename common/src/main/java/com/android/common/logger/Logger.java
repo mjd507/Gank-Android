@@ -1,4 +1,4 @@
-package universal.log;
+package com.android.common.logger;
 
 /**
  * Logger is a wrapper of {@link android.util.Log}

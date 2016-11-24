@@ -1,4 +1,4 @@
-package universal.log;
+package com.android.common.logger;
 
 public interface LogAdapter {
   void d(String tag, String message);

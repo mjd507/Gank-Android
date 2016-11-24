@@ -1,8 +1,8 @@
-package universal.log;
+package com.android.common.logger;
 
 import android.util.Log;
 
-class AndroidLogAdapter implements LogAdapter {
+public class AndroidLogAdapter implements LogAdapter {
   @Override public void d(String tag, String message) {
     Log.d(tag, message);
   }
