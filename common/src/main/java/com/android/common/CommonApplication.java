@@ -2,9 +2,9 @@ package com.android.common;
 
 import android.app.Application;
 
-import com.android.common.logger.AndroidLogAdapter;
-import com.android.common.logger.LogLevel;
-import com.android.common.logger.Logger;
+import com.android.common.utils.logger.AndroidLogAdapter;
+import com.android.common.utils.logger.LogLevel;
+import com.android.common.utils.logger.Logger;
 
 
 /**
@@ -20,7 +20,7 @@ public class CommonApplication extends Application {
 
     }
 
-    private static CommonApplication getInstance(){
+    public static CommonApplication getInstance(){
         return instance;
     }
 

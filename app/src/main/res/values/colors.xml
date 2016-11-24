@@ -3,4 +3,40 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="half_transparent">#10000000</color>
+
+    <color name="bg_application">#efefef</color>
+    <color name="bg_title">#4dd0c8</color>
+    <color name="bg_search">#ffc8d4d5</color>
+    <color name="bg_button_unselected">#4dd0c8</color>
+    <color name="bg_button_selected">#49c5be</color>
+    <color name="bg_button_enabled">#999999</color>
+
+    <color name="line_gray">#dedede</color>
+
+    <color name="btn_bottom_text_selected">@color/bg_title</color>
+    <color name="btn_bottom_text_normal">#8e8e8e</color>
+
+    <color name="list_item_normal">@color/bg_application</color>
+    <color name="list_item_selected">#e2e2e2</color>
+    <color name="list_divider">#dedede</color>
+
+    <color name="text_38">#ff383838</color>
+    <color name="text_83">#ff838383</color>
+    <color name="text_yellow">#fffb7d0d</color>
+    <color name="text_tip">#ffb08227</color>
+    <color name="text_red">#ffd53a3a</color>
+    <color name="text_AE">#ffaeaeae</color>
+    <color name="text_e5">#ffe5e5e5</color>
+    <color name="text_f5">#fff5f5f5</color>
+    <color name="text_be">#ffbebebe</color>
+    <color name="text_b1">#ffb1b1b1</color>
+    <color name="text_zhongse">#ffb08227</color>
+
+    <color name="bg_background">#ffebeff0</color>
+
 </resources>

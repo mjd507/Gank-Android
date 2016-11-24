@@ -16,7 +16,7 @@
  * This software contains code derived from the following Android classes:
  * android.util.Log, android.text.TextUtils.
  */
-package com.android.common.logger;
+package com.android.common.utils.logger;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

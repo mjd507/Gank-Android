@@ -1,4 +1,4 @@
-package com.android.common.logger;
+package com.android.common.utils.logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;

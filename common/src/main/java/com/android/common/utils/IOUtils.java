@@ -1,7 +1,7 @@
 package com.android.common.utils;
 
 
-import com.android.common.logger.Logger;
+import com.android.common.utils.logger.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
