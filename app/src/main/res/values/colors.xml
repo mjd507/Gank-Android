@@ -5,6 +5,18 @@
     <color name="colorAccent">#FF4081</color>
 
 
+    <!--dialog text-->
+    <color name="dialog_title">#333</color>
+    <color name="dialog_msg">#333</color>
+    <color name="dialog_btn_cancel">#333</color>
+    <color name="dialog_btn_ok">#0888ff</color>
+
+    <!--dialog btn bg-->
+    <color name="dialog_btn_bg_normal">#fff</color>
+    <color name="dialog_btn_bg_press">#dedede</color>
+    <color name="dialog_divider_line">#dedede</color>
+
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="half_transparent">#10000000</color>

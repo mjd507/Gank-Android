@@ -1,4 +1,4 @@
-package com.android.common.adapter;
+package com.android.common.ui.adapter;
 
 import android.content.Context;
 import android.view.View;

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.android.common.adapter.CommonViewHolder;
-import com.android.common.adapter.CommonAdapter;
+import com.android.common.ui.adapter.CommonViewHolder;
+import com.android.common.ui.adapter.CommonAdapter;
 
 import java.util.List;
 

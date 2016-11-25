@@ -1,4 +1,4 @@
-package com.android.common.view;
+package com.cleaner.commonandroid;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.common.R;
 
 /**
  * 描述: 普通对话框
