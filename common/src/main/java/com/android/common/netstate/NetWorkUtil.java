@@ -9,8 +9,8 @@ import android.net.NetworkInfo;
  * 描述: 检测网络的工具类
  */
 public class NetWorkUtil {
-    public static enum NetType {
-        wifi, CMNET, CMWAP, noneNet
+    public enum NetType {
+        WIFI, CMNET, CMWAP, NONE_NET
     }
 
     /**
@@ -78,7 +78,7 @@ public class NetWorkUtil {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo == null) {
-            return NetType.noneNet;
+            return NetType.NONE_NET;
         }
         int nType = networkInfo.getType();
 
@@ -89,9 +89,9 @@ public class NetWorkUtil {
                 return NetType.CMWAP;
             }
         } else if (nType == ConnectivityManager.TYPE_WIFI) {
-            return NetType.wifi;
+            return NetType.WIFI;
         }
-        return NetType.noneNet;
+        return NetType.NONE_NET;
     }
 
     /**

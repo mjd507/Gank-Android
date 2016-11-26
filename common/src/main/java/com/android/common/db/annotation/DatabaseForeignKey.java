@@ -1,22 +1,20 @@
 package com.android.common.db.annotation;
 
+import com.android.common.db.entity.BaseDB;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.fastandroid.lib.db.entity.BaseDB;
-
 /**
- * @description 数据库外键
- * @author 许友爻
- * @date 2014年7月14日下午1:49:21
- * @version 1.0
+ * 描述: 数据库外键
+ * Created by mjd on 2016/11/26.
  */
-@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
 public @interface DatabaseForeignKey {
-	Class<? extends BaseDB> table();
+    Class<? extends BaseDB> table();
 
-	String tableFieldName() default "";
+    String tableFieldName() default "";
 }
