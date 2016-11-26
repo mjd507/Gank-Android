@@ -1,10 +1,12 @@
-package com.cleaner.commonandroid;
+package com.cleaner.commonandroid.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.cleaner.commonandroid.R;
 
 
 /**
