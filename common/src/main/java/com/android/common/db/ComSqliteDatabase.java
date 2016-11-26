@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.android.common.db.entity.BaseDB;
 import com.android.common.db.entity.EntityMetadata;
+import com.android.common.db.entity.EntityRepository;
 import com.android.common.db.entity.FieldMetadata;
 import com.android.common.db.exception.DBException;
 import com.android.common.db.exception.DBNotOpenException;

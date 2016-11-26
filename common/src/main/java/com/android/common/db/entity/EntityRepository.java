@@ -1,7 +1,6 @@
-package com.android.common.db;
+package com.android.common.db.entity;
 
-import com.android.common.db.entity.BaseDB;
-import com.android.common.db.entity.EntityMetadata;
+import com.android.common.db.ComSQLiteDatabase;
 import com.android.common.db.exception.DBNotOpenException;
 import com.android.common.utils.logger.Logger;
 
