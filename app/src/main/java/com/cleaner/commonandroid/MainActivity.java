@@ -1,16 +1,16 @@
 package com.cleaner.commonandroid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.android.common.ui.adapter.CommonViewHolder;
 import com.android.common.ui.adapter.CommonAdapter;
+import com.android.common.ui.adapter.CommonViewHolder;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private ListView lv;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lv = this.findViewById(R.id.listview);
+        lv = (ListView) this.findViewById(R.id.listview);
 
     }
 
