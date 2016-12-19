@@ -1,5 +1,6 @@
 package com.cleaner.commonandroid;
 
+import com.android.common.utils.ConstUtils;
 import com.android.common.utils.FileUtils;
 
 import org.junit.Test;
@@ -18,5 +19,12 @@ public class FileTest {
         File fileDir = FileUtils.getFileByPath("/Users/mjd/Documents/Growing/Books/");
         String fileSize = FileUtils.getDirSize(fileDir);
         System.out.println("booksSize = " + fileSize);
+    }
+
+    @Test
+    public void testMemorySize() {
+        long size = ConstUtils.GB+ConstUtils.MB*500;
+        String str = FileUtils.byte2MemorySize(size);
+        System.out.println("testMemorySize = " + str);
     }
 }

@@ -1,19 +1,28 @@
 package com.android.common.utils;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
 
 /**
  * 描述: 文件操作相关的工具类
+ * <p>
+ * 功能包括:
+ * 判断 文件/目录 是否存在,不存在判断是否创建成功;
+ * 判断 文件/目录 是否删除,没删除判断是否删除成功;
+ * 读取文件(to byte or to String);
+ * 写入文件(from inputStream or from String);
+ * 获取文件/目录 总长度 and 总大小
+ * <p>
  * <p>
  * 这里目前只提供了参数为 File 的操作文件的方法,如果是 String 类型的 参数,参照如下方法,获取到对应的文件/目录即可
  * File file = new File(filePath)
@@ -28,27 +37,99 @@ public class FileUtils {
     private static final String TAG = FileUtils.class.getSimpleName();
 
 
-    //------------ Delete File --------------------
+    //------------ Create File --------------------
 
     /**
-     * 删除文件
+     * 判断文件是否存在，不存在则判断是否创建成功
      */
-    public static void deleteFile(String path) {
-        File file = new File(path);
-        file.delete();
-    }
-
-    /**
-     *
-     */
-    public static void deleteAllFile(String path) {
-        File folder = new File(path);
-        File[] files = folder.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            deleteFile(files[i].getAbsolutePath());
+    public static boolean isFileExistsOrCreated(File file) {
+        if (file == null) return false;
+        // 如果存在，是文件则返回true，是目录则返回false
+        if (file.exists()) return file.isFile();
+        //文件不存在,判断目录是否存在
+        if (!isDirExistsOrCreated(file.getParentFile())) return false;
+        try {
+            return file.createNewFile();
+        } catch (IOException e) {
+            LogUtils.e(TAG, e.getMessage());
+            return false;
         }
     }
 
+    /**
+     * 判断目录是否存在，不存在则判断是否创建成功
+     */
+    private static boolean isDirExistsOrCreated(File fileDir) {
+        if (fileDir != null) {
+            if (fileDir.exists()) {
+                return fileDir.isDirectory();
+            } else {
+                return fileDir.mkdirs();
+            }
+        }
+        return false;
+    }
+
+
+    //------------ Delete File --------------------
+
+    /**
+     * 文件是否成功删除
+     */
+    private static boolean isFileDeleted(File file) {
+        if (file != null && file.exists()) {
+            if (file.isFile()) {
+                return file.delete();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 删除目录下的所有文件
+     */
+    public static boolean deleteFilesInDir(File dir) {
+        if (dir == null) return false;
+        // 目录不存在返回true
+        if (!dir.exists()) return true;
+        // 不是目录返回false
+        if (!dir.isDirectory()) return false;
+        // 文件存在且是目录
+        File[] files = dir.listFiles();
+        if (files != null && files.length != 0) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    if (!isFileDeleted(file)) return false;
+                } else if (file.isDirectory()) {
+                    if (!deleteDir(file)) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 删除目录
+     */
+    public static boolean deleteDir(File dir) {
+        if (dir == null) return false;
+        // 目录不存在返回true
+        if (!dir.exists()) return true;
+        // 不是目录返回false
+        if (!dir.isDirectory()) return false;
+        // 文件存在且是目录
+        File[] files = dir.listFiles();
+        if (files != null && files.length != 0) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    if (!isFileDeleted(file)) return false;
+                } else if (file.isDirectory()) {
+                    if (!deleteDir(file)) return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
 
     //------------ Read File --------------------
 
@@ -70,7 +151,7 @@ public class FileUtils {
             LogUtils.e(TAG, ex.getMessage());
             return null;
         } finally {
-            close(input, output);
+            CloseUtils.closeIO(input, output);
         }
     }
 
@@ -91,10 +172,10 @@ public class FileUtils {
             // 要去除最后的换行符
             return sb.delete(sb.length(), sb.length()).toString();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtils.e(TAG, e.getMessage());
             return null;
         } finally {
-            close(reader, null);
+            CloseUtils.closeIO(reader);
         }
     }
 
@@ -102,17 +183,45 @@ public class FileUtils {
     //------------ Write File --------------------
 
     /**
-     * 写出数据
+     * 将输入流写入文件
      */
-    public static void write(File file, byte[] data) {
-        FileOutputStream fos = null;
+    public static boolean writeFileFromIS(File file, InputStream is, boolean append) {
+        if (file == null || is == null) return false;
+        if (!isFileExistsOrCreated(file)) return false;
+        OutputStream os = null;
         try {
-            fos = new FileOutputStream(file);
-            fos.write(data);
+            os = new BufferedOutputStream(new FileOutputStream(file, append));
+            byte data[] = new byte[1024];
+            int len;
+            while ((len = is.read(data, 0, data.length)) != -1) {
+                os.write(data, 0, len);
+            }
+            return true;
         } catch (IOException e) {
             LogUtils.e(TAG, e.getMessage());
+            return false;
         } finally {
-            close(null, fos);
+            CloseUtils.closeIO(is, os);
+        }
+    }
+
+
+    /**
+     * 将字符串写入文件
+     */
+    public static boolean writeFileFromString(File file, String content, boolean append) {
+        if (file == null || content == null) return false;
+        if (!isFileExistsOrCreated(file)) return false;
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(file, append));
+            bw.write(content);
+            return true;
+        } catch (IOException e) {
+            LogUtils.e(TAG, e.getMessage());
+            return false;
+        } finally {
+            CloseUtils.closeIO(bw);
         }
     }
 
@@ -136,7 +245,7 @@ public class FileUtils {
     }
 
     /**
-     * 获取目录所有文件的长度
+     * 获取目录所有文件的总长度
      * 如果不是目录,返回文件长度
      */
     public static long getDirLength(File dir) {
@@ -162,15 +271,15 @@ public class FileUtils {
      */
     public static String getFileSize(File file) {
         long len = getFileLength(file);
-        return len == -1 ? "" : byte2FitMemorySize(len);
+        return len == -1 ? "" : byte2MemorySize(len);
     }
 
     /**
-     * 获取目录大小
+     * 获取目录所有文件的总大小
      */
     public static String getDirSize(File dir) {
         long len = getDirLength(dir);
-        return len == -1 ? "" : byte2FitMemorySize(len);
+        return len == -1 ? "" : byte2MemorySize(len);
     }
 
 
@@ -197,42 +306,17 @@ public class FileUtils {
         return false;
     }
 
-    public static String byte2FitMemorySize(long byteNum) {
+    public static String byte2MemorySize(long byteNum) {
         if (byteNum < 0) {
             return "shouldn't be less than zero!";
-        } else if (byteNum < ConstUtils.KB) {
-            return String.format("%.1fB", byteNum + 0.05);
-        } else if (byteNum < ConstUtils.MB) {
-            return String.format("%.1fKB", byteNum / ConstUtils.KB + 0.05);
-        } else if (byteNum < ConstUtils.GB) {
-            return String.format("%.1fMB", byteNum / ConstUtils.MB+ 0.0);
-        } else {
-            return String.format("%.1fGB", byteNum / ConstUtils.GB + 0.05);
-        }
-    }
-
-    /**
-     * 关闭 IO 流
-     */
-    private static void close(InputStream input, OutputStream output) {
-        try {
-            if (input != null)
-                input.close();
-            if (output != null)
-                output.close();
-        } catch (Exception ex) {
-            LogUtils.d(TAG, ex.getMessage());
-        }
-    }
-
-    private static void close(Reader reader, Writer writer) {
-        try {
-            if (reader != null)
-                reader.close();
-            if (writer != null)
-                writer.close();
-        } catch (Exception ex) {
-            LogUtils.d(TAG, ex.getMessage());
+        } else if (byteNum < ConstUtils.KB) {  // < 1 KB  -> 保留整数
+            return String.format("%dB", byteNum);
+        } else if (byteNum < ConstUtils.MB) {   // < 1 MB  -> 保留 1 位小数
+            return String.format("%.1fKB", byteNum * 1.0 / ConstUtils.KB);
+        } else if (byteNum < ConstUtils.GB) {   // < 1 GB  -> 保留 1 位小数
+            return String.format("%.1fMB", byteNum * 1.0 / ConstUtils.MB);
+        } else {    //  > 1GB -> 保留 2 位小数
+            return String.format("%.2fGB", byteNum * 1.00 / ConstUtils.GB);
         }
     }
 
