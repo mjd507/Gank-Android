@@ -11,6 +11,13 @@ public class ConstUtils {
     public static final int GB = MB * 1024;
 
 
+    public enum TimeUnit {
+        MSEC,
+        SEC,
+        MIN,
+        HOUR,
+        DAY
+    }
     //秒 分 时 天 与 毫秒的倍数
     public static final int SEC = 1000;
     public static final int MIN = 60 * SEC;
