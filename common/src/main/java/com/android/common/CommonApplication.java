@@ -2,6 +2,7 @@ package com.android.common;
 
 import android.app.Application;
 
+import com.android.common.utils.Utils;
 import com.android.common.utils.logger.AndroidLogAdapter;
 import com.android.common.utils.logger.LogLevel;
 import com.android.common.utils.logger.Logger;
@@ -16,17 +17,19 @@ public class CommonApplication extends Application {
 
     private static CommonApplication instance = new CommonApplication();
 
-    private CommonApplication(){
+    private CommonApplication() {
 
     }
 
-    public static CommonApplication getInstance(){
+    public static CommonApplication getInstance() {
         return instance;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Utils.init(this);
 
         Logger
                 .init("MJD_TAG")                 // default PRETTYLOGGER or use just init()
@@ -36,9 +39,6 @@ public class CommonApplication extends Application {
                 .methodOffset(2)                // default 0
                 .logAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
     }
-
-
-
 
 
 }

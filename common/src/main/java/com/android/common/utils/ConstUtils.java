@@ -6,26 +6,17 @@ package com.android.common.utils;
  */
 public class ConstUtils {
 
-    public static int KB = 1024;
-    public static int MB = KB * 1024;
-    public static int GB = MB * 1024;
+    public static final int KB = 1024;
+    public static final int MB = KB * 1024;
+    public static final int GB = MB * 1024;
 
-    /**
-     * 秒与毫秒的倍数
-     */
+
+    //秒 分 时 天 与 毫秒的倍数
     public static final int SEC = 1000;
-    /**
-     * 分与毫秒的倍数
-     */
-    public static final int MIN = 60000;
-    /**
-     * 时与毫秒的倍数
-     */
-    public static final int HOUR = 3600000;
-    /**
-     * 天与毫秒的倍数
-     */
-    public static final int DAY = 86400000;
+    public static final int MIN = 60 * SEC;
+    public static final int HOUR = 60 * MIN;
+    public static final int DAY = 24 * HOUR;
+
     /**
      * 正则：手机号（简单）
      */
@@ -39,6 +30,7 @@ public class ConstUtils {
      * <p>虚拟运营商：170</p>
      */
     public static final String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|(147))\\d{8}$";
+
     /**
      * 正则：电话号码
      */
@@ -121,6 +113,4 @@ public class ConstUtils {
      * 正则：负浮点数
      */
     public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
-
-    /************** If u want more please visit http://toutiao.com/i6231678548520731137/ **************/
 }

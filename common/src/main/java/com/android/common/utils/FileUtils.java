@@ -22,6 +22,7 @@ import java.io.OutputStream;
  * 读取文件(to byte or to String);
  * 写入文件(from inputStream or from String);
  * 获取文件/目录 总长度 and 总大小
+ * 重命名文件
  * <p>
  * <p>
  * 这里目前只提供了参数为 File 的操作文件的方法,如果是 String 类型的 参数,参照如下方法,获取到对应的文件/目录即可
@@ -282,6 +283,22 @@ public class FileUtils {
         return len == -1 ? "" : byte2MemorySize(len);
     }
 
+    /**
+     * 重命名文件
+     */
+    public static boolean rename(File file, String newName) {
+        // 文件为空返回false
+        if (file == null) return false;
+        // 文件不存在返回false
+        if (!file.exists()) return false;
+        // 新的文件名为空返回false
+        if (StringUtils.isEmpty(newName)) return false;
+        // 如果文件名没有改变返回true
+        if (newName.equals(file.getName())) return true;
+        File newFile = new File(file.getParent() + File.separator + newName);
+        // 如果重命名的文件已存在返回false
+        return !newFile.exists() && file.renameTo(newFile);
+    }
 
     //------------ helper method --------------------
 

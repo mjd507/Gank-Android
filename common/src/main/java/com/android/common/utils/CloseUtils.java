@@ -12,6 +12,9 @@ import static android.content.ContentValues.TAG;
 
 public class CloseUtils {
 
+    /**
+     * 关闭 IO
+     */
     public static void closeIO(Closeable... closeables) {
         if (closeables == null) return;
         for (Closeable closeable : closeables) {
