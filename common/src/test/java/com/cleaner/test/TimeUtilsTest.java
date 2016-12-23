@@ -1,6 +1,5 @@
 package com.cleaner.test;
 
-import com.android.common.utils.ConstUtils;
 import com.android.common.utils.TimeUtils;
 
 import org.junit.Test;
@@ -61,26 +60,6 @@ public class TimeUtilsTest {
         System.out.println(date1);
     }
 
-    //---------------- 获取两个时间差(不精确) 返回 long 类型的 毫秒值 start ----------------
-    @Test
-    public void getTimeSpan() throws InterruptedException {
-        String time1 = "2016-12-23 10:22:19";
-        String time2 = "2016-12-23 10:22:20";
-        long timeSpan1 = TimeUtils.getTimeSpan(time1, time2, ConstUtils.TimeUnit.SEC);
-        long timeSpan2 = TimeUtils.getTimeSpan(time1, time2, ConstUtils.TimeUnit.SEC,"yyyy-MM-dd HH:mm");
-        System.out.println(timeSpan1);
-        System.out.println(timeSpan2);
-        long t1 = 1482463000;
-        long t2 = 1482463900;
-        long timeSpan3 = TimeUtils.getTimeSpan(t1, t2, ConstUtils.TimeUnit.MSEC);
-        System.out.println(timeSpan3);
-        Date date = new Date();
-        Thread.sleep(3000);
-        Date date1 = new Date();
-        long timeSpan4 = TimeUtils.getTimeSpan(date, date1, ConstUtils.TimeUnit.MSEC);
-        System.out.println(timeSpan4);
-    }
-
     //---------------- 获取合适型两个时间差 返回 String 类型的 start ----------------
     /**
      * precision = 0，返回null
@@ -122,5 +101,38 @@ public class TimeUtilsTest {
         Date nowTimeDate = TimeUtils.getNowTimeDate();
         System.out.println(nowTimeDate);
     }
+
+    //---------------- 获取合适型与当前时间的差 start ----------------
+    @Test
+    public void getFitTimeSpanByNow() throws InterruptedException {
+        String fitTimeSpanByNow = TimeUtils.getFitTimeSpanByNow(System.currentTimeMillis(), 5);
+        System.out.println(fitTimeSpanByNow);
+        String time = "2016-12-21 02:23:24";
+        String fitTimeSpanByNow1 = TimeUtils.getFitTimeSpanByNow(time, 5);
+        System.out.println(fitTimeSpanByNow1);
+        String fitTimeSpanByNow2 = TimeUtils.getFitTimeSpanByNow(time, 5, "yyyy-MM-dd HH:mm");
+        System.out.println(fitTimeSpanByNow2);
+        Date date = TimeUtils.string2Date(time);
+        String fitTimeSpanByNow3 = TimeUtils.getFitTimeSpanByNow(date, 5);
+        System.out.println(fitTimeSpanByNow3);
+    }
+
+    //---------------- 获取友好型与当前时间的差 start ----------------
+    @Test
+    public void getFriendlyTimeSpanByNow(){
+        String friendlyTimeSpanByNow = TimeUtils.getFriendlyTimeSpanByNow(System.currentTimeMillis());
+        System.out.println(friendlyTimeSpanByNow);
+        String time = "2016-12-23 14:55:45";
+        String friendlyTimeSpanByNow1 = TimeUtils.getFriendlyTimeSpanByNow(time);
+        System.out.println(friendlyTimeSpanByNow1);
+        String time1 = "2016-12-22 14:55:45";
+        String friendlyTimeSpanByNow2 = TimeUtils.getFriendlyTimeSpanByNow(time1, "yyyy-MM-dd HH:mm");
+        System.out.println(friendlyTimeSpanByNow2);
+        String friendlyTimeSpanByNow3 = TimeUtils.getFriendlyTimeSpanByNow(new Date());
+        System.out.println(friendlyTimeSpanByNow3);
+    }
+
+
+
 
 }

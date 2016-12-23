@@ -106,57 +106,6 @@ public class TimeUtils {
     //---------------- millis <=> String  millis <==> date  String <=> date  end  -------------
 
 
-    //---------------- 获取两个时间差(不精确) 返回 long 类型的 毫秒值 start ----------------
-
-    /**
-     * 获取两个时间差（单位：unit）
-     */
-    public static long getTimeSpan(long millis0, long millis1, ConstUtils.TimeUnit unit) {
-        return millis2TimeSpan(Math.abs(millis0 - millis1), unit);
-    }
-
-    /**
-     * 获取两个时间差（单位：unit）
-     * <p>time0和time1格式都为yyyy-MM-dd HH:mm:ss</p>
-     */
-    public static long getTimeSpan(String time0, String time1, ConstUtils.TimeUnit unit) {
-        return getTimeSpan(time0, time1, unit, DEFAULT_PATTERN);
-    }
-
-    /**
-     * 获取两个时间差（单位：unit）
-     * <p>time0 和 time1 格式都为 pattern</p>
-     */
-    public static long getTimeSpan(String time0, String time1, ConstUtils.TimeUnit unit, String pattern) {
-        return millis2TimeSpan(Math.abs(string2Millis(time0, pattern) - string2Millis(time1, pattern)), unit);
-    }
-
-    /**
-     * 获取两个时间差（单位：unit）
-     */
-    public static long getTimeSpan(Date date0, Date date1, ConstUtils.TimeUnit unit) {
-        return millis2TimeSpan(Math.abs(date2Millis(date0) - date2Millis(date1)), unit);
-    }
-
-    private static long millis2TimeSpan(long millis, ConstUtils.TimeUnit unit) {
-        switch (unit) {
-            default:
-            case MSEC:
-                return millis;
-            case SEC:
-                return millis / ConstUtils.SEC;
-            case MIN:
-                return millis / ConstUtils.MIN;
-            case HOUR:
-                return millis / ConstUtils.HOUR;
-            case DAY:
-                return millis / ConstUtils.DAY;
-        }
-    }
-
-    //---------------- 获取两个时间差(不精确) 返回 long 类型的 毫秒值 end ----------------
-
-
     //---------------- 获取合适型两个时间差 返回 String 类型的 start ----------------
     /**
      * precision = 0，返回null
@@ -198,7 +147,7 @@ public class TimeUtils {
     }
 
     @SuppressLint("DefaultLocale")
-    private static String millis2FitTimeSpan(long millis, int precision) {
+    public static String millis2FitTimeSpan(long millis, int precision) {
         if (millis <= 0 || precision <= 0) return null;
         StringBuilder sb = new StringBuilder();
         String[] units = {"天", "小时", "分钟", "秒", "毫秒"};
@@ -247,60 +196,13 @@ public class TimeUtils {
         return new Date();
     }
 
-    /**
-     * 获取与当前时间的差（单位：unit）
-     * <p>time格式为yyyy-MM-dd HH:mm:ss</p>
-     */
-    public static long getTimeSpanByNow(String time, ConstUtils.TimeUnit unit) {
-        return getTimeSpan(getNowTimeString(), time, unit, DEFAULT_PATTERN);
-    }
+    //---------------- 获取当前时间 end ----------------
 
-    /**
-     * 获取与当前时间的差（单位：unit）
-     * <p>time格式为pattern</p>
-     */
-    public static long getTimeSpanByNow(String time, ConstUtils.TimeUnit unit, String pattern) {
-        return getTimeSpan(getNowTimeString(), time, unit, pattern);
-    }
 
-    /**
-     * 获取与当前时间的差（单位：unit）
-     */
-    public static long getTimeSpanByNow(Date date, ConstUtils.TimeUnit unit) {
-        return getTimeSpan(new Date(), date, unit);
-    }
-
-    /**
-     * 获取与当前时间的差（单位：unit）
-     *
-     * @param millis 毫秒时间戳
-     * @param unit   单位类型
-     *               <ul>
-     *               <li>{@link ConstUtils.TimeUnit#MSEC}: 毫秒</li>
-     *               <li>{@link ConstUtils.TimeUnit#SEC }: 秒</li>
-     *               <li>{@link ConstUtils.TimeUnit#MIN }: 分</li>
-     *               <li>{@link ConstUtils.TimeUnit#HOUR}: 小时</li>
-     *               <li>{@link ConstUtils.TimeUnit#DAY }: 天</li>
-     *               </ul>
-     * @return unit时间戳
-     */
-    public static long getTimeSpanByNow(long millis, ConstUtils.TimeUnit unit) {
-        return getTimeSpan(System.currentTimeMillis(), millis, unit);
-    }
+    //---------------- 获取合适型与当前时间的差 start ----------------
 
     /**
      * 获取合适型与当前时间的差
-     * <p>time格式为yyyy-MM-dd HH:mm:ss</p>
-     *
-     * @param time      时间字符串
-     * @param precision 精度
-     *                  <p>precision = 0，返回null</p>
-     *                  <p>precision = 1，返回天</p>
-     *                  <p>precision = 2，返回天和小时</p>
-     *                  <p>precision = 3，返回天、小时和分钟</p>
-     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
-     *                  <p>precision >= 5，返回天、小时、分钟、秒和毫秒</p>
-     * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(String time, int precision) {
         return getFitTimeSpan(getNowTimeString(), time, precision, DEFAULT_PATTERN);
@@ -309,17 +211,6 @@ public class TimeUtils {
     /**
      * 获取合适型与当前时间的差
      * <p>time格式为pattern</p>
-     *
-     * @param time      时间字符串
-     * @param precision 精度
-     *                  <p>precision = 0，返回null</p>
-     *                  <p>precision = 1，返回天</p>
-     *                  <p>precision = 2，返回天和小时</p>
-     *                  <p>precision = 3，返回天、小时和分钟</p>
-     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
-     *                  <p>precision >= 5，返回天、小时、分钟、秒和毫秒</p>
-     * @param pattern   时间格式
-     * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(String time, int precision, String pattern) {
         return getFitTimeSpan(getNowTimeString(), time, precision, pattern);
@@ -327,16 +218,6 @@ public class TimeUtils {
 
     /**
      * 获取合适型与当前时间的差
-     *
-     * @param date      Date类型时间
-     * @param precision 精度
-     *                  <p>precision = 0，返回null</p>
-     *                  <p>precision = 1，返回天</p>
-     *                  <p>precision = 2，返回天和小时</p>
-     *                  <p>precision = 3，返回天、小时和分钟</p>
-     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
-     *                  <p>precision >= 5，返回天、小时、分钟、秒和毫秒</p>
-     * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(Date date, int precision) {
         return getFitTimeSpan(getNowTimeDate(), date, precision);
@@ -344,36 +225,28 @@ public class TimeUtils {
 
     /**
      * 获取合适型与当前时间的差
-     *
-     * @param millis    毫秒时间戳
-     * @param precision 精度
-     *                  <p>precision = 0，返回null</p>
-     *                  <p>precision = 1，返回天</p>
-     *                  <p>precision = 2，返回天和小时</p>
-     *                  <p>precision = 3，返回天、小时和分钟</p>
-     *                  <p>precision = 4，返回天、小时、分钟和秒</p>
-     *                  <p>precision >= 5，返回天、小时、分钟、秒和毫秒</p>
-     * @return 合适型与当前时间的差
      */
     public static String getFitTimeSpanByNow(long millis, int precision) {
         return getFitTimeSpan(System.currentTimeMillis(), millis, precision);
     }
 
+    //---------------- 获取合适型与当前时间的差 end ----------------
+
+
+
+    //---------------- 获取友好型与当前时间的差 start ----------------
+    /**
+     * 如果小于1秒钟内，显示刚刚
+     * 如果在1分钟内，显示XXX秒前
+     * 如果在1小时内，显示XXX分钟前
+     * 如果在1小时外的今天内，显示今天15:32
+     * 如果是昨天的，显示昨天15:32
+     * 其余显示，2016-10-15
+     * 时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007
+     */
+
     /**
      * 获取友好型与当前时间的差
-     * <p>time格式为yyyy-MM-dd HH:mm:ss</p>
-     *
-     * @param time 时间字符串
-     * @return 友好型与当前时间的差
-     * <ul>
-     * <li>如果小于1秒钟内，显示刚刚</li>
-     * <li>如果在1分钟内，显示XXX秒前</li>
-     * <li>如果在1小时内，显示XXX分钟前</li>
-     * <li>如果在1小时外的今天内，显示今天15:32</li>
-     * <li>如果是昨天的，显示昨天15:32</li>
-     * <li>其余显示，2016-10-15</li>
-     * <li>时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007</li>
-     * </ul>
      */
     public static String getFriendlyTimeSpanByNow(String time) {
         return getFriendlyTimeSpanByNow(time, DEFAULT_PATTERN);
@@ -382,19 +255,6 @@ public class TimeUtils {
     /**
      * 获取友好型与当前时间的差
      * <p>time格式为pattern</p>
-     *
-     * @param time    时间字符串
-     * @param pattern 时间格式
-     * @return 友好型与当前时间的差
-     * <ul>
-     * <li>如果小于1秒钟内，显示刚刚</li>
-     * <li>如果在1分钟内，显示XXX秒前</li>
-     * <li>如果在1小时内，显示XXX分钟前</li>
-     * <li>如果在1小时外的今天内，显示今天15:32</li>
-     * <li>如果是昨天的，显示昨天15:32</li>
-     * <li>其余显示，2016-10-15</li>
-     * <li>时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007</li>
-     * </ul>
      */
     public static String getFriendlyTimeSpanByNow(String time, String pattern) {
         return getFriendlyTimeSpanByNow(string2Millis(time, pattern));
@@ -402,18 +262,6 @@ public class TimeUtils {
 
     /**
      * 获取友好型与当前时间的差
-     *
-     * @param date Date类型时间
-     * @return 友好型与当前时间的差
-     * <ul>
-     * <li>如果小于1秒钟内，显示刚刚</li>
-     * <li>如果在1分钟内，显示XXX秒前</li>
-     * <li>如果在1小时内，显示XXX分钟前</li>
-     * <li>如果在1小时外的今天内，显示今天15:32</li>
-     * <li>如果是昨天的，显示昨天15:32</li>
-     * <li>其余显示，2016-10-15</li>
-     * <li>时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007</li>
-     * </ul>
      */
     public static String getFriendlyTimeSpanByNow(Date date) {
         return getFriendlyTimeSpanByNow(date.getTime());
@@ -421,18 +269,6 @@ public class TimeUtils {
 
     /**
      * 获取友好型与当前时间的差
-     *
-     * @param millis 毫秒时间戳
-     * @return 友好型与当前时间的差
-     * <ul>
-     * <li>如果小于1秒钟内，显示刚刚</li>
-     * <li>如果在1分钟内，显示XXX秒前</li>
-     * <li>如果在1小时内，显示XXX分钟前</li>
-     * <li>如果在1小时外的今天内，显示今天15:32</li>
-     * <li>如果是昨天的，显示昨天15:32</li>
-     * <li>其余显示，2016-10-15</li>
-     * <li>时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007</li>
-     * </ul>
      */
     @SuppressLint("DefaultLocale")
     public static String getFriendlyTimeSpanByNow(long millis) {
@@ -458,6 +294,9 @@ public class TimeUtils {
         }
     }
 
+    //---------------- 获取友好型与当前时间的差 end ----------------
+
+
     /**
      * 判断是否同一天
      * <p>time格式为yyyy-MM-dd HH:mm:ss</p>
@@ -472,10 +311,6 @@ public class TimeUtils {
     /**
      * 判断是否同一天
      * <p>time格式为pattern</p>
-     *
-     * @param time    时间字符串
-     * @param pattern 时间格式
-     * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isSameDay(String time, String pattern) {
         return isSameDay(string2Millis(time, pattern));
@@ -483,9 +318,6 @@ public class TimeUtils {
 
     /**
      * 判断是否同一天
-     *
-     * @param date Date类型时间
-     * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isSameDay(Date date) {
         return isSameDay(date.getTime());
@@ -493,9 +325,6 @@ public class TimeUtils {
 
     /**
      * 判断是否同一天
-     *
-     * @param millis 毫秒时间戳
-     * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isSameDay(long millis) {
         long wee = (System.currentTimeMillis() / ConstUtils.DAY) * ConstUtils.DAY;
