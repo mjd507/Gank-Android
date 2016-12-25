@@ -13,9 +13,7 @@ public class SPUtils {
     private SharedPreferences sp;
     private SharedPreferences.Editor edit;
 
-    /**
-     *
-     */
+
     public SPUtils(String name, int mode) {
         this.sp = CommonApplication.getInstance().getSharedPreferences(name, mode);
         this.edit = this.sp.edit();

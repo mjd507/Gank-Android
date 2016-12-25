@@ -19,7 +19,7 @@ public class CleanUtils {
      * <p>/data/data/(package name)/cache</p>
      */
     public static boolean cleanInternalCache() {
-        return FileUtils.deleteFilesInDir(Utils.context.getCacheDir());
+        return FileUtils.deleteFilesInDir(Utils.getAppContext().getCacheDir());
     }
 
     /**
@@ -27,7 +27,7 @@ public class CleanUtils {
      * <p>/data/data/(package name)/files</p>
      */
     public static boolean cleanInternalFiles() {
-        return FileUtils.deleteFilesInDir(Utils.context.getFilesDir());
+        return FileUtils.deleteFilesInDir(Utils.getAppContext().getFilesDir());
     }
 
     /**
@@ -35,7 +35,7 @@ public class CleanUtils {
      * <p>/data/data/(package name)/databases</p>
      */
     public static boolean cleanInternalDbs() {
-        String path = Utils.context.getFilesDir().getParent() + File.separator + "databases";
+        String path = Utils.getAppContext().getFilesDir().getParent() + File.separator + "databases";
         File file = FileUtils.getFileByPath(path);
         return FileUtils.deleteFilesInDir(file);
     }
@@ -45,7 +45,7 @@ public class CleanUtils {
      * <p>/data/data/(package name)/databases/dbName</p>
      */
     public static boolean cleanInternalDbByName(String dbName) {
-        return Utils.context.deleteDatabase(dbName);
+        return Utils.getAppContext().deleteDatabase(dbName);
     }
 
     /**
@@ -53,7 +53,7 @@ public class CleanUtils {
      * <p>/data/data/(package name)/shared_prefs</p>
      */
     public static boolean cleanInternalSP() {
-        String path = Utils.context.getFilesDir().getParent() + File.separator + "shared_prefs";
+        String path = Utils.getAppContext().getFilesDir().getParent() + File.separator + "shared_prefs";
         File file = FileUtils.getFileByPath(path);
         return FileUtils.deleteFilesInDir(file);
     }
@@ -64,7 +64,7 @@ public class CleanUtils {
      */
     public static boolean cleanExternalCache() {
         if (SDCardUtils.isSDCardEnable()) {
-            return FileUtils.deleteFilesInDir(Utils.context.getExternalCacheDir());
+            return FileUtils.deleteFilesInDir(Utils.getAppContext().getExternalCacheDir());
         }
         return false;
     }
