@@ -310,17 +310,11 @@ public class FileUtils {
     }
 
     public static boolean isDir(File file) {
-        if (file != null && file.exists()) {
-            return file.isDirectory();
-        }
-        return false;
+        return file != null && file.exists() && file.isDirectory();
     }
 
     public static boolean isFile(File file) {
-        if (file != null && file.exists()) {
-            return file.isFile();
-        }
-        return false;
+        return file != null && file.exists() && file.isFile();
     }
 
     public static String byte2MemorySize(long byteNum) {

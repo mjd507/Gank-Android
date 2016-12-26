@@ -72,10 +72,6 @@ public class ConstUtils {
 
     /************** 以下摘自http://tool.oschina.net/regex **************/
     /**
-     * 正则：双字节字符(包括汉字在内)
-     */
-    public static final String REGEX_DOUBLE_BYTE_CHAR = "[^\\x00-\\xff]";
-    /**
      * 正则：空白行
      */
     public static final String REGEX_BLANK_LINE = "\\n\\s*\\r";
