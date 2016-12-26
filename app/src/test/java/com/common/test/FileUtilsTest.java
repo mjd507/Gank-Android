@@ -1,14 +1,15 @@
-package com.cleaner.test;
+package com.common.test;
 
-import com.android.common.utils.ConstUtils;
-import com.android.common.utils.FileUtils;
-import com.android.common.utils.TimeUtils;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import common.utils.ConstUtils;
+import common.utils.FileUtils;
+import common.utils.TimeUtils;
 
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  * Created by mjd on 2016/12/19.
  */
 
-public class FileTest {
+public class FileUtilsTest {
 
     @Test
     public void testFileSize() {

@@ -1,6 +1,8 @@
-package com.android.common.utils;
+package common.utils;
 
 import android.content.SharedPreferences;
+
+import com.cleaner.commonandroid.utils.Utils;
 
 /**
  * 描述: SharedPreferences 工具类

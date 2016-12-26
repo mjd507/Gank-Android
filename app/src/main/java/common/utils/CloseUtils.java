@@ -1,0 +1,33 @@
+package common.utils;
+
+import com.android.common.utils.*;
+
+import java.io.Closeable;
+import java.io.IOException;
+
+import static android.content.ContentValues.TAG;
+
+/**
+ * 描述:
+ * Created by mjd on 2016/12/19.
+ */
+
+public class CloseUtils {
+
+    /**
+     * 关闭 IO
+     */
+    public static void closeIO(Closeable... closeables) {
+        if (closeables == null) return;
+        for (Closeable closeable : closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (IOException e) {
+                    com.android.common.utils.LogUtils.d(TAG, e.getMessage());
+                }
+            }
+        }
+    }
+
+}

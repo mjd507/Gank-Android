@@ -1,4 +1,4 @@
-package com.android.common;
+package com.cleaner.commonandroid;
 
 import android.app.Application;
 
@@ -6,17 +6,16 @@ import com.android.common.utils.logger.AndroidLogAdapter;
 import com.android.common.utils.logger.LogLevel;
 import com.android.common.utils.logger.Logger;
 
-
 /**
  * 描述:
- * Created by mjd on 2016/11/24.
+ * Created by mjd on 2016/12/26.
  */
 
-public class CommonApplication extends Application {
+public class MyApplication extends Application {
 
-    private static CommonApplication application;
+    private static MyApplication application;
 
-    public static CommonApplication getInstance() {
+    public static MyApplication getInstance() {
         return application;
     }
 
@@ -34,6 +33,4 @@ public class CommonApplication extends Application {
                 .methodOffset(2)                // default 0
                 .logAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
     }
-
-
 }
