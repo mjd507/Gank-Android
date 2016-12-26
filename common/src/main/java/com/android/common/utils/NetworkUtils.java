@@ -70,7 +70,7 @@ public class NetworkUtils {
      * 判断网络是否可用
      */
     public static boolean isAvailableByPing() {
-        ShellUtils.CommandResult result = ShellUtils.execCmd("ping -c 1 -w 1 123.125.114.144", false);
+        ShellUtils.CommandResult result = ShellUtils.execCmd(new String[]{"ping -c 1 -w 1 123.125.114.144"}, false);
         boolean ret = result.result == 0;
         if (result.errorMsg != null) {
             LogUtils.d("isAvailableByPing errorMsg", result.errorMsg);
@@ -274,6 +274,7 @@ public class NetworkUtils {
 
     /**
      * 获取域名ip地址
+     *
      * @param domain 域名
      * @return ip地址
      */
