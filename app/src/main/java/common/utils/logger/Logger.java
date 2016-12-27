@@ -1,9 +1,5 @@
 package common.utils.logger;
 
-import com.android.common.utils.logger.LoggerPrinter;
-import com.android.common.utils.logger.Printer;
-import com.android.common.utils.logger.Settings;
-
 /**
  * Logger is a wrapper of {@link android.util.Log}
  * But more pretty, simple and powerful

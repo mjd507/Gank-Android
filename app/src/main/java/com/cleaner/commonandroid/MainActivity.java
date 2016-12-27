@@ -11,11 +11,11 @@ import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.common.ui.adapter.CommonAdapter;
-import com.android.common.ui.adapter.CommonViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import common.ui.adapter.CommonAdapter;
+import common.ui.adapter.CommonViewHolder;
 
 public class MainActivity extends Activity {
 

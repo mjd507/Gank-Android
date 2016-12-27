@@ -1,4 +1,4 @@
-package com.common.test;
+package common.test;
 
 
 import org.junit.Test;
@@ -11,8 +11,8 @@ import common.utils.ConstUtils;
 import common.utils.FileUtils;
 import common.utils.TimeUtils;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 /**
  * 描述:

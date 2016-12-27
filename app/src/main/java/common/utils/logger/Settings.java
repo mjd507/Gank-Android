@@ -1,7 +1,5 @@
 package common.utils.logger;
 
-import com.android.common.utils.logger.*;
-
 public final class Settings {
 
   private int methodCount = 2;
@@ -12,7 +10,7 @@ public final class Settings {
   /**
    * Determines to how logs will be printed
    */
-  private com.android.common.utils.logger.LogLevel logLevel = com.android.common.utils.logger.LogLevel.FULL;
+  private LogLevel logLevel = LogLevel.FULL;
 
   public Settings hideThreadInfo() {
     showThreadInfo = false;
@@ -27,7 +25,7 @@ public final class Settings {
     return this;
   }
 
-  public Settings logLevel(com.android.common.utils.logger.LogLevel logLevel) {
+  public Settings logLevel(LogLevel logLevel) {
     this.logLevel = logLevel;
     return this;
   }
@@ -50,7 +48,7 @@ public final class Settings {
     return showThreadInfo;
   }
 
-  public com.android.common.utils.logger.LogLevel getLogLevel() {
+  public LogLevel getLogLevel() {
     return logLevel;
   }
 
@@ -69,6 +67,6 @@ public final class Settings {
     methodCount = 2;
     methodOffset = 0;
     showThreadInfo = true;
-    logLevel = com.android.common.utils.logger.LogLevel.FULL;
+    logLevel = LogLevel.FULL;
   }
 }

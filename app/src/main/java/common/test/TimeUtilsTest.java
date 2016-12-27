@@ -1,10 +1,10 @@
-package com.cleaner.test;
-
-import com.android.common.utils.TimeUtils;
+package common.test;
 
 import org.junit.Test;
 
 import java.util.Date;
+
+import common.utils.TimeUtils;
 
 /**
  * 描述:

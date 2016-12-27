@@ -1,11 +1,5 @@
 package common.utils.logger;
 
-import com.android.common.utils.logger.*;
-import com.android.common.utils.logger.Helper;
-import com.android.common.utils.logger.LogLevel;
-import com.android.common.utils.logger.Logger;
-import com.android.common.utils.logger.Printer;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-final class LoggerPrinter implements com.android.common.utils.logger.Printer {
+final class LoggerPrinter implements Printer {
 
   private static final String DEFAULT_TAG = "PRETTYLOGGER";
 
@@ -78,7 +72,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
   /**
    * It is used to determine log settings such as method count, thread info visibility
    */
-  private final com.android.common.utils.logger.Settings settings = new com.android.common.utils.logger.Settings();
+  private final Settings settings = new Settings();
 
   public LoggerPrinter() {
     init(DEFAULT_TAG);
@@ -89,7 +83,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
    *
    * @param tag is the given string which will be used in Logger
    */
-  @Override public com.android.common.utils.logger.Settings init(String tag) {
+  @Override public Settings init(String tag) {
     if (tag == null) {
       throw new NullPointerException("tag may not be null");
     }
@@ -100,7 +94,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
     return settings;
   }
 
-  @Override public com.android.common.utils.logger.Settings getSettings() {
+  @Override public Settings getSettings() {
     return settings;
   }
 
@@ -156,7 +150,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
    * @param json the json content
    */
   @Override public void json(String json) {
-    if (com.android.common.utils.logger.Helper.isEmpty(json)) {
+    if (Helper.isEmpty(json)) {
       d("Empty/Null json content");
       return;
     }
@@ -186,7 +180,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
    * @param xml the xml content
    */
   @Override public void xml(String xml) {
-    if (com.android.common.utils.logger.Helper.isEmpty(xml)) {
+    if (Helper.isEmpty(xml)) {
       d("Empty/Null xml content");
       return;
     }
@@ -204,20 +198,20 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
   }
 
   @Override public synchronized void log(int priority, String tag, String message, Throwable throwable) {
-    if (settings.getLogLevel() == com.android.common.utils.logger.LogLevel.NONE) {
+    if (settings.getLogLevel() == LogLevel.NONE) {
       return;
     }
     if (throwable != null && message != null) {
-      message += " : " + com.android.common.utils.logger.Helper.getStackTraceString(throwable);
+      message += " : " + Helper.getStackTraceString(throwable);
     }
     if (throwable != null && message == null) {
-      message = com.android.common.utils.logger.Helper.getStackTraceString(throwable);
+      message = Helper.getStackTraceString(throwable);
     }
     if (message == null) {
       message = "No message/exception is set";
     }
     int methodCount = getMethodCount();
-    if (com.android.common.utils.logger.Helper.isEmpty(message)) {
+    if (Helper.isEmpty(message)) {
       message = "Empty/NULL log message";
     }
 
@@ -351,7 +345,7 @@ final class LoggerPrinter implements com.android.common.utils.logger.Printer {
   }
 
   private String formatTag(String tag) {
-    if (!com.android.common.utils.logger.Helper.isEmpty(tag) && !com.android.common.utils.logger.Helper.equals(this.tag, tag)) {
+    if (!Helper.isEmpty(tag) && !Helper.equals(this.tag, tag)) {
       return this.tag + "-" + tag;
     }
     return this.tag;

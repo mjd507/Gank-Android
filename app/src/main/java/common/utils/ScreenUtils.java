@@ -9,8 +9,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.cleaner.commonandroid.utils.Utils;
-
 
 /**
  * 描述:
@@ -19,8 +17,8 @@ import com.cleaner.commonandroid.utils.Utils;
 
 public class ScreenUtils {
 
-    public static int[] getScreenSize() {
-        WindowManager windowManager = (WindowManager) Utils.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+    public static int[] getScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();// 创建了一张白纸
         windowManager.getDefaultDisplay().getMetrics(dm);// 给白纸设置宽高
         return new int[]{dm.widthPixels, dm.heightPixels};
@@ -77,8 +75,8 @@ public class ScreenUtils {
     /**
      * 判断是否锁屏
      */
-    public static boolean isScreenLock() {
-        KeyguardManager km = (KeyguardManager) Utils.getAppContext().getSystemService(Context.KEYGUARD_SERVICE);
+    public static boolean isScreenLock(Context context) {
+        KeyguardManager km = (KeyguardManager) context.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
         return km.inKeyguardRestrictedInputMode();
     }
 

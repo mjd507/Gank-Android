@@ -1,7 +1,5 @@
 package common.utils.logger;
 
-import com.android.common.utils.logger.Settings;
-
 public interface Printer {
 
   Printer t(String tag, int methodCount);

@@ -1,6 +1,6 @@
 package common.utils;
 
-import com.cleaner.commonandroid.utils.Utils;
+import android.content.Context;
 
 import java.io.File;
 
@@ -21,24 +21,24 @@ public class CleanUtils {
      * 清除内部缓存
      * <p>/data/data/(package name)/cache</p>
      */
-    public static boolean cleanInternalCache() {
-        return FileUtils.deleteFilesInDir(Utils.getAppContext().getCacheDir());
+    public static boolean cleanInternalCache(Context context) {
+        return FileUtils.deleteFilesInDir(context.getApplicationContext().getCacheDir());
     }
 
     /**
      * 清除内部文件
      * <p>/data/data/(package name)/files</p>
      */
-    public static boolean cleanInternalFiles() {
-        return FileUtils.deleteFilesInDir(Utils.getAppContext().getFilesDir());
+    public static boolean cleanInternalFiles(Context context) {
+        return FileUtils.deleteFilesInDir(context.getApplicationContext().getFilesDir());
     }
 
     /**
      * 清除内部数据库
      * <p>/data/data/(package name)/databases</p>
      */
-    public static boolean cleanInternalDbs() {
-        String path = Utils.getAppContext().getFilesDir().getParent() + File.separator + "databases";
+    public static boolean cleanInternalDbs(Context context) {
+        String path = context.getApplicationContext().getFilesDir().getParent() + File.separator + "databases";
         File file = FileUtils.getFileByPath(path);
         return FileUtils.deleteFilesInDir(file);
     }
@@ -47,16 +47,16 @@ public class CleanUtils {
      * 根据名称清除数据库
      * <p>/data/data/(package name)/databases/dbName</p>
      */
-    public static boolean cleanInternalDbByName(String dbName) {
-        return Utils.getAppContext().deleteDatabase(dbName);
+    public static boolean cleanInternalDbByName(Context context,String dbName) {
+        return context.getApplicationContext().deleteDatabase(dbName);
     }
 
     /**
      * 清除内部SP
      * <p>/data/data/(package name)/shared_prefs</p>
      */
-    public static boolean cleanInternalSP() {
-        String path = Utils.getAppContext().getFilesDir().getParent() + File.separator + "shared_prefs";
+    public static boolean cleanInternalSP(Context context) {
+        String path = context.getApplicationContext().getFilesDir().getParent() + File.separator + "shared_prefs";
         File file = FileUtils.getFileByPath(path);
         return FileUtils.deleteFilesInDir(file);
     }
@@ -65,11 +65,8 @@ public class CleanUtils {
      * 清除外部缓存
      * <p>/storage/emulated/0/android/data/(package name)/cache</p>
      */
-    public static boolean cleanExternalCache() {
-        if (SDCardUtils.isSDCardEnable()) {
-            return FileUtils.deleteFilesInDir(Utils.getAppContext().getExternalCacheDir());
-        }
-        return false;
+    public static boolean cleanExternalCache(Context context) {
+        return SDCardUtils.isSDCardEnable() && FileUtils.deleteFilesInDir(context.getApplicationContext().getExternalCacheDir());
     }
 
     /**

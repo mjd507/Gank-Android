@@ -1,7 +1,5 @@
 package common.utils;
 
-import com.android.common.utils.*;
-
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -24,7 +22,7 @@ public class CloseUtils {
                 try {
                     closeable.close();
                 } catch (IOException e) {
-                    com.android.common.utils.LogUtils.d(TAG, e.getMessage());
+                    LogUtils.d(TAG, e.getMessage());
                 }
             }
         }

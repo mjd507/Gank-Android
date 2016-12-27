@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
-import com.android.common.utils.LogUtils;
-import com.android.common.utils.ScreenUtils;
+import common.utils.LogUtils;
+import common.utils.ScreenUtils;
 
 import static android.content.ContentValues.TAG;
 
@@ -43,8 +43,10 @@ public class ScreenUtilsTest extends Activity {
 
     }
 
+
+
     public void getScreenSize() {
-        int[] screenSize = ScreenUtils.getScreenSize();
+        int[] screenSize = ScreenUtils.getScreenSize(this);
         LogUtils.d("ScreenUtilsTest", "手机 宽 : " + screenSize[0] + ", 高 = " + screenSize[1]);
     }
 
@@ -65,7 +67,7 @@ public class ScreenUtilsTest extends Activity {
     }
 
     public boolean isScreenLock() {
-        boolean screenLock = ScreenUtils.isScreenLock();
+        boolean screenLock = ScreenUtils.isScreenLock(this);
         LogUtils.d(TAG, "手机锁屏 ? " + screenLock);
         return screenLock;
     }

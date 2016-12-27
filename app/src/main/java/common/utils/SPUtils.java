@@ -1,8 +1,7 @@
 package common.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.cleaner.commonandroid.utils.Utils;
 
 /**
  * 描述: SharedPreferences 工具类
@@ -14,8 +13,8 @@ public class SPUtils {
     private SharedPreferences.Editor edit;
 
 
-    public SPUtils(String name, int mode) {
-        this.sp = Utils.getInstance().getSharedPreferences(name, mode);
+    public SPUtils(Context context,String name, int mode) {
+        this.sp = context.getApplicationContext().getSharedPreferences(name, mode);
         this.edit = this.sp.edit();
     }
 

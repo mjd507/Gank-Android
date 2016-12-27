@@ -2,9 +2,9 @@ package com.cleaner.commonandroid;
 
 import android.app.Application;
 
-import com.android.common.utils.logger.AndroidLogAdapter;
-import com.android.common.utils.logger.LogLevel;
-import com.android.common.utils.logger.Logger;
+import common.utils.logger.AndroidLogAdapter;
+import common.utils.logger.LogLevel;
+import common.utils.logger.Logger;
 
 /**
  * 描述:
