@@ -10,40 +10,52 @@ import android.content.SharedPreferences;
 
 public class SPUtils {
     private SharedPreferences sp;
-    private SharedPreferences.Editor edit;
+    private SharedPreferences.Editor editor;
 
 
-    public SPUtils(Context context,String name, int mode) {
+    public SPUtils(Context context, String name, int mode) {
         this.sp = context.getApplicationContext().getSharedPreferences(name, mode);
-        this.edit = this.sp.edit();
+        this.editor = this.sp.edit();
     }
 
-    /**
-     * @return 返回器
-     */
-    public SharedPreferences.Editor getEdit() {
-        return this.edit;
+    public SharedPreferences.Editor getEditor() {
+        return this.editor;
     }
-
 
     public void putBoolean(String key, boolean value) {
-        this.edit.putBoolean(key, value).commit();
+        this.editor.putBoolean(key, value).commit();
     }
 
     public boolean getBoolean(String key, boolean defValue) {
         return this.sp.getBoolean(key, defValue);
     }
 
+    public void putFloat(String key, float value) {
+        this.editor.putFloat(key, value).commit();
+    }
+
+    public float getFloat(String key, float defValue) {
+        return this.sp.getFloat(key, defValue);
+    }
+
     public void putInt(String key, int value) {
-        this.edit.putInt(key, value).commit();
+        this.editor.putInt(key, value).commit();
     }
 
     public int getInt(String key, int defValue) {
         return this.sp.getInt(key, defValue);
     }
 
+    public void putLong(String key, long value) {
+        this.editor.putLong(key, value).commit();
+    }
+
+    public long getLong(String key, long defValue) {
+        return this.sp.getLong(key, defValue);
+    }
+
     public void putString(String key, String value) {
-        this.edit.putString(key, value).commit();
+        this.editor.putString(key, value).commit();
     }
 
     public String getString(String key, String defValue) {
@@ -51,7 +63,7 @@ public class SPUtils {
     }
 
     public void remove(String key) {
-        this.edit.remove(key).commit();
+        this.editor.remove(key).commit();
     }
 
 }

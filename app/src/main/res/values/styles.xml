@@ -3,11 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Light">
         <!-- Customize your theme here. -->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+
+        <item name="android:windowNoTitle">true</item><!--No Title-->
+        <item name="android:windowBackground">@color/bg_application</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
     </style>
 
+    <!-- activity之间的切换动画效果  -->
+    <style name="WindowAnimationStyle" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/right_out</item>
+        <item name="android:taskOpenEnterAnimation">@anim/right_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/left_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/left_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/right_out</item>
+    </style>
+
+    <!--对话框样式-->
     <style name="CommonDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -17,4 +31,12 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <!--分割线样式-->
+    <style name="DividerLineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_size</item>
+        <item name="android:background">@color/line_gray</item>
+    </style>
+
 </resources>

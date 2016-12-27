@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -45,7 +45,9 @@ public class NetworkUtils {
      * 打开网络设置界面
      */
     public static void openWirelessSettings(Context context) {
-        context.getApplicationContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
 
     }
 
@@ -70,7 +72,7 @@ public class NetworkUtils {
      * 判断网络是否可用
      */
     public static boolean isAvailableByPing() {
-        ShellUtils.CommandResult result = ShellUtils.execCmd(new String[]{"ping -c 1 -w 1 123.125.114.144"}, false);
+        ShellUtils.CommandResult result = ShellUtils.execCmd(new String[]{"ping -c 1 -w 1 123.125.114.144"}, false); //123.125.114.144 --> www.baidu.com
         boolean ret = result.result == 0;
         if (result.errorMsg != null) {
             LogUtils.d("isAvailableByPing errorMsg", result.errorMsg);
@@ -83,34 +85,35 @@ public class NetworkUtils {
 
     /**
      * 判断移动数据是否打开
+     * 需系统应用 需添加权限{@code <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>}
      */
-    public static boolean getDataEnabled(Context context) {
-        try {
-            TelephonyManager tm = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-            Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("getDataEnabled");
-            if (null != getMobileDataEnabledMethod) {
-                return (boolean) getMobileDataEnabledMethod.invoke(tm);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public static boolean getDataEnabled(Context context) {
+//        try {
+//            TelephonyManager tm = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+//            Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("getDataEnabled");
+//            if (null != getMobileDataEnabledMethod) {
+//                return (boolean) getMobileDataEnabledMethod.invoke(tm);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     /**
      * 打开或关闭移动数据
      */
-    public static void setDataEnabled(Context context, boolean enabled) {
-        try {
-            TelephonyManager tm = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-            Method setMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
-            if (null != setMobileDataEnabledMethod) {
-                setMobileDataEnabledMethod.invoke(tm, enabled);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void setDataEnabled(Context context, boolean enabled) {
+//        try {
+//            TelephonyManager tm = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+//            Method setMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
+//            if (null != setMobileDataEnabledMethod) {
+//                setMobileDataEnabledMethod.invoke(tm, enabled);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 判断网络是否是4G
