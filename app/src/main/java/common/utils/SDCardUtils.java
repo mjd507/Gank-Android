@@ -11,6 +11,7 @@ import java.io.File;
 /**
  * 描述: SD 卡工具类
  * Created by mjd on 2016/12/19.
+ *
  */
 
 public class SDCardUtils {
@@ -69,7 +70,7 @@ public class SDCardUtils {
         return sd.toString();
     }
 
-    public static class SDCardInfo {
+    private static class SDCardInfo {
         boolean isExist;
         long totalBlocks;
         long freeBlocks;

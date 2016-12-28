@@ -11,8 +11,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import common.utils.LogUtils;
 import common.utils.ScreenUtils;
 import common.utils.ToastUtils;
@@ -23,11 +21,7 @@ import common.utils.ToastUtils;
  */
 
 public class ScreenUtilsTest extends Activity {
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
     private ImageView ivFull;
     private ImageView ivNoFull;
 

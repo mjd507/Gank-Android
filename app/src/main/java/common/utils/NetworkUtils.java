@@ -161,7 +161,7 @@ public class NetworkUtils {
      * 判断wifi数据是否可用
      */
     public static boolean isWifiAvailable(Context context) {
-        return getWifiEnabled(context.getApplicationContext()) && isAvailableByPing();
+        return isWifiConnected(context.getApplicationContext()) && isAvailableByPing();
     }
 
     /**
