@@ -60,7 +60,7 @@ public class FileUtils {
     /**
      * 判断目录是否存在，不存在则判断是否创建成功
      */
-    private static boolean isDirExistsOrCreated(File fileDir) {
+    public static boolean isDirExistsOrCreated(File fileDir) {
         if (fileDir != null) {
             if (fileDir.exists()) {
                 return fileDir.isDirectory();

@@ -9,6 +9,6 @@ package common.utils;
 public class StringUtils {
 
     public static boolean isEmpty(CharSequence s) {
-        return s == null || s.length() == 0;
+        return s == null || s.toString().trim().length() == 0;
     }
 }
