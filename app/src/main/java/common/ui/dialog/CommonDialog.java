@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.ui.dialog;
+package common.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -31,7 +31,7 @@ public class CommonDialog extends Dialog {
     }
 
     private void initView(Context context) {
-        View rootView = LayoutInflater.from(context).inflate(R.layout.common_dialog_view, null);
+        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
         mTitle = (TextView) rootView.findViewById(R.id.tv_dialog_title);
         mMessage = (TextView) rootView.findViewById(R.id.tv_dialog_message);
         mCancelBtn = (TextView) rootView.findViewById(R.id.dialog_left_btn);

@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/abc_oval_shape_white"
+        android:background="@drawable/shape_white"
         android:orientation="vertical"
         android:paddingTop="20dp">
 
@@ -47,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/abc_selector_dialog_ok"
+                android:background="@drawable/selector_dialog_btnOk"
                 android:gravity="center"
                 android:text="取消"
                 android:textColor="@color/dialog_btn_cancel" />
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/abc_selector_dialog_ok"
+                android:background="@drawable/selector_dialog_btnOk"
                 android:gravity="center"
                 android:text="确认"
                 android:textColor="@color/dialog_btn_ok" />

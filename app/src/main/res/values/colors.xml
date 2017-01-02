@@ -20,6 +20,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="half_transparent">#10000000</color>
+    <color name="transparent">#00000000</color>
 
     <color name="bg_application">#efefef</color>
     <color name="bg_title">#4dd0c8</color>

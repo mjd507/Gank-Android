@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.ui.dialog;
+package common.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,6 +27,10 @@ public class LoadingDialog extends Dialog {
         this.mContext = context;
     }
 
+    public LoadingDialog(Context context, String msg) {
+        super(context);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +40,7 @@ public class LoadingDialog extends Dialog {
 
     private void initView() {
         ImageView iv = new ImageView(mContext);
-        iv.setImageResource(R.drawable.dialog_anim);
+        iv.setImageResource(R.drawable.anim_dialog);
         iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mAnimDrawable = (AnimationDrawable) iv.getDrawable();
         mAnimDrawable.start();
