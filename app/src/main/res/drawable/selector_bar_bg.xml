@@ -4,3 +4,4 @@
     <item android:drawable="@color/half_transparent" android:state_pressed="true" />
     <item android:drawable="@color/transparent" />
 </selector>
+<!-- 标题栏 左右控件的 背景选择器 -->

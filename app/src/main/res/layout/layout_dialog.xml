@@ -1,71 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_item_normal"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/space_medium"
+        android:textColor="@color/text_app"
+        android:textSize="@dimen/text_large"
+        tools:text="提示" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="3"
+        android:padding="@dimen/space_large"
+        android:textColor="@color/text_app"
+        android:textSize="@dimen/text_small"
+        tools:text="您确定删除么" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_line"
+        android:background="@color/bg_item_divider" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_white"
-        android:orientation="vertical"
-        android:paddingTop="20dp">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
 
-        <TextView
-            android:id="@+id/tv_dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/btn_negative"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_item_bg"
             android:gravity="center"
-            android:text="提示"
-            android:textColor="@color/dialog_title"
-            android:textSize="18sp"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_dialog_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:lineSpacingMultiplier="1.2"
-            android:maxLines="3"
-            android:padding="15dp"
-            android:text="您确定删除么"
-            android:textColor="@color/dialog_msg" />
+            android:textColor="@color/text_app"
+            android:textSize="@dimen/text_small"
+            tools:text="取消" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/dialog_divider_line" />
+            android:layout_width="@dimen/divider_line"
+            android:layout_height="match_parent"
+            android:background="@color/bg_item_divider" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
-                android:id="@+id/dialog_left_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selector_dialog_btnOk"
-                android:gravity="center"
-                android:text="取消"
-                android:textColor="@color/dialog_btn_cancel" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/dialog_divider_line" />
-
-            <TextView
-                android:id="@+id/dialog_right_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selector_dialog_btnOk"
-                android:gravity="center"
-                android:text="确认"
-                android:textColor="@color/dialog_btn_ok" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_positive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_item_bg"
+            android:gravity="center"
+            android:textColor="@color/text_app"
+            android:textSize="@dimen/text_small"
+            tools:text="确认" />
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

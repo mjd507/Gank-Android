@@ -35,8 +35,8 @@
     <!--分割线样式-->
     <style name="DividerLineStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/line_size</item>
-        <item name="android:background">@color/line_gray</item>
+        <item name="android:layout_height">@dimen/divider_line</item>
+        <item name="android:background">@color/bg_item_divider</item>
     </style>
 
 </resources>

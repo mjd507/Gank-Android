@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.cleaner.commonandroid.R;
@@ -15,40 +14,26 @@ import com.cleaner.commonandroid.R;
  */
 
 public class LoadingDialog extends Dialog {
-    private Context mContext;
     private AnimationDrawable mAnimDrawable;
 
     public LoadingDialog(Context context) {
-        this(context, 0);
+        this(context, R.style.CommonDialogStyle);
     }
 
     public LoadingDialog(Context context, int themeResId) {
         super(context, themeResId);
-        this.mContext = context;
+        initView(context);
     }
 
-    public LoadingDialog(Context context, String msg) {
-        super(context);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
-        initListener();
-    }
-
-    private void initView() {
-        ImageView iv = new ImageView(mContext);
+    private void initView(Context context) {
+        ImageView iv = new ImageView(context);
         iv.setImageResource(R.drawable.anim_dialog);
         iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mAnimDrawable = (AnimationDrawable) iv.getDrawable();
         mAnimDrawable.start();
         this.setContentView(iv);
-        this.setTitle(null);
-    }
-
-    private void initListener() {
+        this.setCancelable(true);
+        this.setCanceledOnTouchOutside(false);
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -58,4 +43,6 @@ public class LoadingDialog extends Dialog {
             }
         });
     }
+
+
 }

@@ -108,22 +108,22 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         startActivity(intent);
     }
 
-    private LoadingDialog progressDialog;
+    private LoadingDialog loadingDialog;
 
     /**
      * 显示加载框
      */
-    protected void showLoading(String msg) {
-        progressDialog = new LoadingDialog(getActivity(), msg);
-        progressDialog.show();
+    protected void showLoading() {
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.show();
     }
 
     /**
      * 关闭加载框
      */
     protected void closeLoading() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
         }
     }
 

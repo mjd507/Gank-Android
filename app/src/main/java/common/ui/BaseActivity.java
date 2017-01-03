@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
+
 import common.ui.dialog.LoadingDialog;
 
 /**
@@ -114,22 +115,23 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
 
-    private LoadingDialog progressDialog;
+    private LoadingDialog loadingDialog;
 
     /**
      * 显示加载框
      */
-    protected void showLoading(String msg) {
-        progressDialog = new LoadingDialog(this, msg);
-        progressDialog.show();
+    protected void showLoading() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
     }
 
     /**
      * 关闭加载框
      */
-    protected void closeLoading(){
-        if(progressDialog != null){
-            progressDialog.dismiss();
+    protected void closeLoading() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+            loadingDialog = null;
         }
     }
 
