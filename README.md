@@ -17,8 +17,12 @@
 **Common Utils 模块**
 
 - logger 日志,copy 自 [orhanobut/logger](https://github.com/orhanobut/logger)
-- AppUtils 获取应用版本,安装应用,清除应用所有数据
-- BarUtils 获取状态栏高度
+- AppUtils
+    * 获取应用版本
+    * 安装应用
+    * 清除应用所有数据
+- BarUtils
+    * 获取状态栏高度
 - CleanUtils
     * 清除内部缓存
     * 清除内部文件
@@ -29,8 +33,9 @@
 - ConstUtils
     * KB, MB, GB 的倍数关系
     * MSEC, SEC, MIN, HOUR, DAY 的倍数关系
-    * 一些通用的正则匹配 (手机,身份证,邮箱,日期......)
-- DensityUtils dp 与 px , sp 与 px 的相互转化
+    * 一些通用的正则匹配规则 (手机,身份证,邮箱,日期......)
+- DensityUtils
+    * dp 与 px , sp 与 px 的相互转化
 - DeviceUtils
     * 获取设备系统版本号
     * 获取设备AndroidID
@@ -56,10 +61,65 @@
     * 注册定位监听
     * 解注册定位监听
     * 根据经纬度获取地理位置相关的信息
-- LogUtils 简单的 log 管理类
-- MD5Utils 生成 MD5 加密串
+- LogUtils
+    * 简单的 log 管理类
+- MD5Utils
+    * 生成 MD5 加密串
 - NetworkUtils
-
+    * 打开网络设置界面
+    * 判断网络是否连接
+    * 判断网络是否可用
+    * 判断网络是否是4G
+    * 判断wifi是否打开
+    * 打开或关闭wifi
+    * 判断wifi是否连接状态
+    * 判断wifi数据是否可用
+    * 获取网络运营商名称
+    * 获取当前网络类型
+    * 获取IP地址
+    * 获取域名ip地址
+- RegexUtils
+    * 验证手机号（精确）
+    * 验证电话号码
+    * 验证身份证号码15位
+    * 验证身份证号码18位
+    * 验证邮箱
+    * 验证URL
+    * 验证汉字
+    * 验证yyyy-MM-dd格式的日期校验，已考虑平闰年
+    * ......
+- ScreenUtils
+    * 获取屏幕宽高
+    * 获取屏幕旋转角度
+    * 获取当前屏幕截图，包含状态栏
+    * 获取当前屏幕截图，不包含状态栏
+    * 判断是否锁屏
+- SDCardUtils
+    * SD 卡是否挂载
+    * 获取 SD 卡路径/获取 SD 卡 data 路径
+    * 获取 SD 卡剩余空间
+- ShellUtils
+    * 执行命令
+- SPUtils
+    * SharedPreferences 读写常见数据类型
+- StringUtils
+    * 判断字符串是否为空
+- TimeUtils
+    * millis => String
+    * millis <==> date
+    * date => String
+    * 获取合适型两个时间差(返回天、小时、分钟、秒和毫秒)
+    * 获取友好型与当前时间的差(刚刚/30秒前/3分钟前/今天15:32/昨天15:32/2017-01-06)
+    * 判断是否同一天/判断是否闰年
+    * 获取星期/获取星期 index/获取月份中的第几周/获取年份中的第几周
+    * 获取生肖
+    * 获取星座
+- ToastUtils
+    * 长吐司/短吐司
+- ZipUtils
+    * 压缩文件/目录
+    * 解压文件
+    
 **test 模块**
 - 用来测试 以上模块代码正确性的模块。
 - 没有多余的布局文件,所有 Activity 的测试布局都是代码动态生成,保证了项目的干净。
