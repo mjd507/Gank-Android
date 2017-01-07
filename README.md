@@ -4,17 +4,17 @@
 
 下面是项目的包含的一些模块
 
-**Base UI 模块**
+## Base UI 模块
 - Base App Theme 的设定,使所有 Activity 有统一的 进入退出 效果
 - BaseActivity 的封装,包括统一 TitleBar,以及 TitleBar 上返回键的处理,也可以自定义标题栏按钮的图片和功能。
 - BaseFragment 的封装,与 BaseActivity 几乎一致。
 - CommonAdapter/CommonViewHolder 的封装,简化项目大量使用 BaseAdapter 时写的重复代码。
 - CommonDialog/LoadingDialog 的封装,统一项目的 对话框和加载框。
 
-**MVP Sample**
+## MVP 模块
 - 如果你的项目想使用 MVP 架构,可以参考以这个非常容易理解的 MVP 架构的业务模型案例。
 
-**Common Utils 模块**
+## Common Utils 模块
 
 - logger 日志,copy 自 [orhanobut/logger](https://github.com/orhanobut/logger)
 - AppUtils
@@ -119,7 +119,7 @@
 - ZipUtils
     * 压缩文件/目录
     * 解压文件
-    
-**test 模块**
+
+## test 模块
 - 用来测试 以上模块代码正确性的模块。
 - 没有多余的布局文件,所有 Activity 的测试布局都是代码动态生成,保证了项目的干净。
