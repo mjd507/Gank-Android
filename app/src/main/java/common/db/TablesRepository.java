@@ -3,8 +3,9 @@ package common.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import common.db.dao.DbManager;
 import common.db.entity.TableEntity;
-import common.db.exception.TADBNotOpenException;
+import common.db.exception.DbNotOpenException;
 import common.utils.logger.Logger;
 
 /**
@@ -72,15 +73,15 @@ public class TablesRepository {
     /**
      * 创建容器中的所有表
      */
-    public void createTables(boolean dropTablesFirst, CommonDb db) {
+    public void createTables(boolean dropTablesFirst, DbManager db) {
         try {
-            for (TableEntity m : entityList) {
+            for (TableEntity tableEntity : entityList) {
                 if (dropTablesFirst) {
-                    db.execute(m.getDropTableStatement(), null);
+                    db.execute(tableEntity.getDropTableStatement(), null);
                 }
-                db.execute(m.getCreateTableStatement(), null);
+                db.execute(tableEntity.getCreateTableStatement(), null);
             }
-        } catch (TADBNotOpenException ex) {
+        } catch (DbNotOpenException ex) {
             Logger.e(TAG, ex.getMessage());
         }
     }

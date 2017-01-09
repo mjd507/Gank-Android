@@ -4,10 +4,10 @@ package common.db.exception;
  * 描述:
  * Created by mjd on 2017/1/9.
  */
-public class TADBException extends Exception {
+public class DbException extends Exception {
 
 
-    public TADBException(String detailException) {
+    public DbException(String detailException) {
         super(detailException);
     }
 }

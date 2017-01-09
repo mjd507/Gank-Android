@@ -24,8 +24,8 @@ public class DbHelper extends SQLiteOpenHelper {
         this.dbUpdateListener = dbUpdateListener;
     }
 
-    public void setOndbUpdateListener(DbUpdateListener tadbUpdateListener) {
-        this.dbUpdateListener = tadbUpdateListener;
+    public void setOnDbUpdateListener(DbUpdateListener dbUpdateListener) {
+        this.dbUpdateListener = dbUpdateListener;
     }
 
     @Override

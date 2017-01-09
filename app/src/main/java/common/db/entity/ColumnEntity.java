@@ -49,18 +49,15 @@ public class ColumnEntity {
 
     public void setValue(ColumnEntity entity, Object value) {
         try {
-            if (type.equals(boolean.class)) {
-                value = ((Integer) value).intValue() == 0 ? false : true;
-            }
             field.set(entity, value);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public Object getValue(ColumnEntity entity) {
+    public Object getValue() {
         try {
-            return field.get(entity);
+            return field.get(this);
         } catch (Exception ex) {
             return null;
         }

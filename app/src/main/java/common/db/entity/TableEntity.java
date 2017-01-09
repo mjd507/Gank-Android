@@ -1,7 +1,5 @@
 package common.db.entity;
 
-import android.content.ContentValues;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -70,38 +68,6 @@ public class TableEntity {
             index++;
         }
         return sb.toString();
-    }
-
-    public ContentValues createContentValues(ColumnEntity entity) {
-
-        ContentValues contentValues = new ContentValues();
-
-        for (ColumnEntity field : fields) {
-            if (field.isPrimaryKey())
-                continue;
-            Object value = field.getValue(entity);
-            if (value == null)
-                continue;
-            if (value instanceof String) {
-                contentValues.put(field.getName(), (String) value);
-            } else if (value instanceof Short) {
-                contentValues.put(field.getName(), (Short) value);
-            } else if (value instanceof Integer) {
-                contentValues.put(field.getName(), (Integer) value);
-            } else if (value instanceof Long) {
-                contentValues.put(field.getName(), (Long) value);
-            } else if (value instanceof Float) {
-                contentValues.put(field.getName(), (Float) value);
-            } else if (value instanceof Double) {
-                contentValues.put(field.getName(), (Double) value);
-            } else if (value instanceof Boolean) {
-                contentValues.put(field.getName(), (Boolean) value);
-            } else {
-                contentValues.put(field.getName(), value.toString());
-            }
-        }
-
-        return contentValues;
     }
 
 }
