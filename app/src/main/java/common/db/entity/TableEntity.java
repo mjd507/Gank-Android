@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import common.db.annotation.Table;
 
 /**
- * 描述:
+ * 描述: 表实体的元数据
  * Created by mjd on 2017/1/7.
  */
 

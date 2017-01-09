@@ -1,4 +1,4 @@
-package common.db.GeneralWriting;
+package common.db.sample;
 
 /**
  * 描述:

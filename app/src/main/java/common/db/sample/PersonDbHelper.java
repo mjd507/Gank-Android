@@ -1,4 +1,4 @@
-package common.db.GeneralWriting;
+package common.db.sample;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
