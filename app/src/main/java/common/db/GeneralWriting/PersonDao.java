@@ -1,4 +1,4 @@
-package common.db.dao;
+package common.db.GeneralWriting;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import common.db.GeneralWriting.Person;
-import common.db.GeneralWriting.PersonDbHelper;
 
 /**
  * 描述:

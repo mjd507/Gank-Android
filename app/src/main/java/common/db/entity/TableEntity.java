@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import common.db.annotation.Column;
 import common.db.annotation.Table;
 
 /**
@@ -14,22 +13,13 @@ import common.db.annotation.Table;
  */
 
 public class TableEntity {
-    /**
-     * 类型
-     */
-    private Class<?> type;
-    /**
-     * 表名
-     */
+
     private String tableName;
-    /**
-     * 数据库实体的字段信息
-     */
+
+    private Class<?> type;
+
     private ArrayList<ColumnEntity> fields;
 
-    /**
-     * 构造
-     */
     public TableEntity(Class<?> type) {
         this.type = type;
         if (type.isAnnotationPresent(Table.class)) {
@@ -44,16 +34,30 @@ public class TableEntity {
         }
     }
 
-    /**
-     * 获取删除表sql语句
-     */
+    public String getTableName() {
+        return tableName;
+    }
+
+    public Class<?> getType() {
+        return type;
+    }
+
+    public ArrayList<ColumnEntity> getFields() {
+        return fields;
+    }
+
+    public ColumnEntity getField(String name) {
+        for (ColumnEntity field : fields) {
+            if (field.getName().equals(name))
+                return field;
+        }
+        return null;
+    }
+
     public String getDropTableStatement() {
         return "DROP TABLE IF EXISTS " + tableName;
     }
 
-    /**
-     * 获取创建数据库语句
-     */
     public String getCreateTableStatement() {
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("CREATE TABLE IF NOT EXISTS %s (", tableName));
@@ -73,7 +77,7 @@ public class TableEntity {
         ContentValues contentValues = new ContentValues();
 
         for (ColumnEntity field : fields) {
-            if (field.getField().getAnnotation(Column.class).primaryKey())
+            if (field.isPrimaryKey())
                 continue;
             Object value = field.getValue(entity);
             if (value == null)
@@ -100,26 +104,4 @@ public class TableEntity {
         return contentValues;
     }
 
-    public Class<?> getType() {
-        return type;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public ArrayList<ColumnEntity> getFields() {
-        return fields;
-    }
-
-    /**
-     * 通过属性名称获取属性实体对象
-     */
-    public ColumnEntity getField(String name) {
-        for (ColumnEntity field : fields) {
-            if (field.getName().equals(name))
-                return field;
-        }
-        return null;
-    }
 }
