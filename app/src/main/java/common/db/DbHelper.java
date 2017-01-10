@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import common.db.dao.DbManager.DbUpdateListener;
+import common.db.dao.CommonDbDao.DbUpdateListener;
 
 /**
  * 描述:

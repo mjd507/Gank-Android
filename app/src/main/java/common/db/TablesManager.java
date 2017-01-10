@@ -3,20 +3,19 @@ package common.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import common.db.dao.DbManager;
+import common.db.dao.CommonDbDao;
 import common.db.entity.TableEntity;
-import common.db.exception.DbNotOpenException;
 import common.utils.logger.Logger;
 
 /**
  * 描述: 所有表的实体仓库
  * Created by mjd on 2017/1/9.
  */
-public class TablesRepository {
+public class TablesManager {
 
-    private static final String TAG = TablesRepository.class.getSimpleName();
+    private static final String TAG = TablesManager.class.getSimpleName();
 
-    private static TablesRepository tablesRepository;
+    private static TablesManager tablesManager;
 
     private HashMap<Class<?>, TableEntity> entities = new HashMap<>();
 
@@ -52,11 +51,11 @@ public class TablesRepository {
     /**
      * 获取表容器单例对象
      */
-    public static TablesRepository getInstance() {
-        if (tablesRepository == null) {
-            tablesRepository = new TablesRepository();
+    public static TablesManager getInstance() {
+        if (tablesManager == null) {
+            tablesManager = new TablesManager();
         }
-        return tablesRepository;
+        return tablesManager;
     }
 
     /**
@@ -67,13 +66,13 @@ public class TablesRepository {
         entityList.clear();
         entities = null;
         entityList = null;
-        tablesRepository = null;
+        tablesManager = null;
     }
 
     /**
      * 创建容器中的所有表
      */
-    public void createTables(boolean dropTablesFirst, DbManager db) {
+    public void createTables(boolean dropTablesFirst, CommonDbDao db) {
         try {
             for (TableEntity tableEntity : entityList) {
                 if (dropTablesFirst) {
@@ -81,7 +80,7 @@ public class TablesRepository {
                 }
                 db.execute(tableEntity.getCreateTableStatement(), null);
             }
-        } catch (DbNotOpenException ex) {
+        } catch (Exception ex) {
             Logger.e(TAG, ex.getMessage());
         }
     }

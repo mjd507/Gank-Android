@@ -9,34 +9,32 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 
 import common.db.DbHelper;
-import common.db.TablesRepository;
+import common.db.TablesManager;
 import common.db.entity.ColumnEntity;
 import common.db.entity.TableEntity;
-import common.db.exception.DbException;
-import common.db.exception.DbNotOpenException;
 import common.utils.logger.Logger;
 
 /**
  * 描述:
  * Created by mjd on 2017/1/9.
  */
-public class DbManager {
+public class CommonDbDao {
 
     // default config
     private final static String DB_NAME = "common_android.db";
     private final static int DB_VERSION = 1;
-    private static final String TAG = DbManager.class.getSimpleName();
+    private static final String TAG = CommonDbDao.class.getSimpleName();
 
     private DbHelper dbHelper;
     private SQLiteDatabase db;
     private DbUpdateListener dbUpdateListener;
 
-    public DbManager(Context context) {
+    public CommonDbDao(Context context) {
         DbParams params = new DbParams();
         this.dbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
     }
 
-    public DbManager(Context context, DbParams params) {
+    public CommonDbDao(Context context, DbParams params) {
         this.dbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
     }
 
@@ -66,8 +64,7 @@ public class DbManager {
     /**
      * INSERT, UPDATE, DELETE
      */
-    public void execute(String sql, String[] bindArgs)
-            throws DbNotOpenException {
+    public void execute(String sql, String[] bindArgs) throws Exception {
         Logger.i(TAG, "准备执行SQL[" + sql + "]语句");
         if (db.isOpen()) {
             if (!TextUtils.isEmpty(sql)) {
@@ -79,15 +76,15 @@ public class DbManager {
                 Logger.i(TAG, "执行完毕！");
             }
         } else {
-            throw new DbNotOpenException("数据库未打开！");
+            throw new Exception("数据库未打开！");
         }
 
     }
 
-    public long insert(Class<?> tableClazz, ArrayList<ColumnEntity> entities) {
+    public long insert(Class<?> tableClazz) {
         if (db.isOpen()) {
-            TableEntity tableEntity = TablesRepository.getInstance().find(tableClazz);
-            return db.insert(tableEntity.getTableName(), null, createContentValues(entities));
+            TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
+            return db.insert(tableEntity.getTableName(), null, createContentValues(tableEntity.getFields()));
         } else {
             Logger.e(TAG, "数据库未打开！");
             return -1;
@@ -129,7 +126,7 @@ public class DbManager {
 
     public Boolean delete(Class<?> tableClazz, String whereClause, String[] whereArgs) {
         if (db.isOpen()) {
-            TableEntity tableEntity = TablesRepository.getInstance().find(tableClazz);
+            TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
             return db.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
         } else {
             Logger.e(TAG, "数据库未打开！");
@@ -140,7 +137,7 @@ public class DbManager {
     public Boolean update(Class<?> tableClazz, ArrayList<ColumnEntity> entities,
                           String whereClause, String[] whereArgs) {
         if (db.isOpen()) {
-            TableEntity tableEntity = TablesRepository.getInstance().find(tableClazz);
+            TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
             return db.update(tableEntity.getTableName(), createContentValues(entities), whereClause,
                     whereArgs) > 0;
         } else {
@@ -157,16 +154,16 @@ public class DbManager {
     public <T> ArrayList<T> query(boolean distinct,
                                   Class<T> tableclazz, String where, String[] columns, String selection,
                                   String[] selectionArgs, String groupBy, String having,
-                                  String orderBy, String limit) throws DbException {
+                                  String orderBy, String limit) throws Exception {
         if (db.isOpen()) {
-            TableEntity tableEntity = TablesRepository.getInstance().find(tableclazz);
+            TableEntity tableEntity = TablesManager.getInstance().find(tableclazz);
             // 获取结果集
             Cursor cursor = db.query(distinct,
                     tableEntity.getTableName(), columns, selection,
                     selectionArgs, groupBy, having, orderBy, limit);
             return getQueryCursorData(cursor, tableclazz);
         } else {
-            throw new DbException("数据库连接不可用");
+            throw new Exception("数据库连接不可用");
         }
 
     }
@@ -175,7 +172,7 @@ public class DbManager {
         ArrayList<T> arrayList = new ArrayList<T>();
         try {
             int columnCount = cursor.getColumnCount();
-            TableEntity tableEntity = TablesRepository.getInstance().find(tableclazz);
+            TableEntity tableEntity = TablesManager.getInstance().find(tableclazz);
             while (cursor.moveToNext()) {
                 T t = tableclazz.newInstance();
                 for (int i = 0; i < columnCount; i++) {
