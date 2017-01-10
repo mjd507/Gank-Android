@@ -18,47 +18,51 @@ import common.utils.logger.Logger;
  * 描述:
  * Created by mjd on 2017/1/9.
  */
-public class CommonDbDao {
+public class DbDao {
 
-    // default config
-    private final static String DB_NAME = "common_android.db";
+    private final static String DB_NAME = "common_android.mDb";
     private final static int DB_VERSION = 1;
-    private static final String TAG = CommonDbDao.class.getSimpleName();
+    private static final String TAG = DbDao.class.getSimpleName();
 
-    private DbHelper dbHelper;
-    private SQLiteDatabase db;
-    private DbUpdateListener dbUpdateListener;
+    private DbHelper mDbHelper;
+    private SQLiteDatabase mDb;
+    private DbUpdateListener mDbUpdateListener;
 
-    public CommonDbDao(Context context) {
+    public DbDao(Context context) {
         DbParams params = new DbParams();
-        this.dbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
+        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
     }
 
-    public CommonDbDao(Context context, DbParams params) {
-        this.dbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
+    public DbDao(Context context, DbParams params) {
+        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
     }
 
     public void setOnDbUpdateListener(DbUpdateListener dbUpdateListener) {
-        this.dbUpdateListener = dbUpdateListener;
-        if (this.dbUpdateListener != null) {
-            dbHelper.setOnDbUpdateListener(this.dbUpdateListener);
+        this.mDbUpdateListener = dbUpdateListener;
+        if (this.mDbUpdateListener != null) {
+            mDbHelper.setOnDbUpdateListener(this.mDbUpdateListener);
         }
     }
 
     public SQLiteDatabase openDatabase(DbUpdateListener dbUpdateListener, Boolean isWritableDb) {
         if (dbUpdateListener != null) {
-            this.dbUpdateListener = dbUpdateListener;
+            this.mDbUpdateListener = dbUpdateListener;
         }
-        if (this.dbUpdateListener != null) {
-            dbHelper.setOnDbUpdateListener(this.dbUpdateListener);
+        if (this.mDbUpdateListener != null) {
+            mDbHelper.setOnDbUpdateListener(this.mDbUpdateListener);
         }
         if (isWritableDb) {
-            db = dbHelper.getWritableDatabase();
+            mDb = mDbHelper.getWritableDatabase();
         } else {
-            db = dbHelper.getReadableDatabase();
+            mDb = mDbHelper.getReadableDatabase();
         }
-        return db;
+        return mDb;
 
+    }
+
+
+    public boolean isOpen() {
+        return mDb != null && mDb.isOpen();
     }
 
     /**
@@ -66,12 +70,12 @@ public class CommonDbDao {
      */
     public void execute(String sql, String[] bindArgs) throws Exception {
         Logger.i(TAG, "准备执行SQL[" + sql + "]语句");
-        if (db.isOpen()) {
+        if (isOpen()) {
             if (!TextUtils.isEmpty(sql)) {
                 if (bindArgs != null) {
-                    db.execSQL(sql, bindArgs);
+                    mDb.execSQL(sql, bindArgs);
                 } else {
-                    db.execSQL(sql);
+                    mDb.execSQL(sql);
                 }
                 Logger.i(TAG, "执行完毕！");
             }
@@ -82,9 +86,9 @@ public class CommonDbDao {
     }
 
     public long insert(Class<?> tableClazz) {
-        if (db.isOpen()) {
+        if (isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            return db.insert(tableEntity.getTableName(), null, createContentValues(tableEntity.getFields()));
+            return mDb.insert(tableEntity.getTableName(), null, createContentValues(tableEntity.getFields()));
         } else {
             Logger.e(TAG, "数据库未打开！");
             return -1;
@@ -125,9 +129,9 @@ public class CommonDbDao {
     }
 
     public Boolean delete(Class<?> tableClazz, String whereClause, String[] whereArgs) {
-        if (db.isOpen()) {
+        if (isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            return db.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
+            return mDb.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
         } else {
             Logger.e(TAG, "数据库未打开！");
             return false;
@@ -136,9 +140,9 @@ public class CommonDbDao {
 
     public Boolean update(Class<?> tableClazz, ArrayList<ColumnEntity> entities,
                           String whereClause, String[] whereArgs) {
-        if (db.isOpen()) {
+        if (isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            return db.update(tableEntity.getTableName(), createContentValues(entities), whereClause,
+            return mDb.update(tableEntity.getTableName(), createContentValues(entities), whereClause,
                     whereArgs) > 0;
         } else {
             Logger.e(TAG, "数据库未打开！");
@@ -147,7 +151,7 @@ public class CommonDbDao {
     }
 
     public <T> ArrayList query(String sql, String[] selectionArgs, Class<T> clazz) {
-        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Cursor cursor = mDb.rawQuery(sql, selectionArgs);
         return getQueryCursorData(cursor, clazz);
     }
 
@@ -155,10 +159,10 @@ public class CommonDbDao {
                                   Class<T> tableclazz, String where, String[] columns, String selection,
                                   String[] selectionArgs, String groupBy, String having,
                                   String orderBy, String limit) throws Exception {
-        if (db.isOpen()) {
+        if (isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableclazz);
             // 获取结果集
-            Cursor cursor = db.query(distinct,
+            Cursor cursor = mDb.query(distinct,
                     tableEntity.getTableName(), columns, selection,
                     selectionArgs, groupBy, having, orderBy, limit);
             return getQueryCursorData(cursor, tableclazz);
@@ -207,7 +211,7 @@ public class CommonDbDao {
     }
 
     public void close() {
-        db.close();
+        mDb.close();
     }
 
     public static class DbParams {
