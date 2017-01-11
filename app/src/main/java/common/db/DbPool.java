@@ -17,17 +17,18 @@ import common.utils.logger.Logger;
  */
 
 public class DbPool {
+
     private static final String TAG = DbPool.class.getSimpleName();
-    private String testTable = "Sqlite_master"; // 测试连接是否可用的测试表名，默认Sqlite_master为测试表
+
     private int initialSQLiteDatabase = 2; // 连接池的初始大小
     private int incrementalSQLiteDatabase = 2;// 连接池自动增加的大小
     private int maxSQLiteDatabase = 10; // 连接池最大的大小
-    private Vector<PooledSQLiteDatabase> pSQLiteDatabases = null; // 存放连接池中数据库连接的向量
+    private Vector<PooledSQLiteDatabase> mDbPoolVector = null; // 存放连接池中数据库连接的向量
     private Context context;
     private DbParams params;
     private DbUpdateListener mDBUpdateListener; // 升级时监听器
     private Boolean isWrite = false;
-    private static HashMap<String, DbPool> poolMap = new HashMap<String, DbPool>();
+    private static HashMap<String, DbPool> poolMap = new HashMap<>();
 
     public synchronized static DbPool getInstance(Context context, DbParams params, Boolean isWrite) {
         String dbName = params.getDbName().trim();
@@ -83,24 +84,12 @@ public class DbPool {
         this.maxSQLiteDatabase = maxSQLiteDatabase;
     }
 
-    public void setTestTable(String testTable) {
-        this.testTable = testTable;
-    }
-
-    public String getTestTable() {
-        return this.testTable;
-    }
-
-    /**
-     * 创建一个数据库连接池，连接池中的可用连接的数量采用类成员 initialSQLiteDatabase 中设置的值
-     */
     public synchronized void createPool() {
-        if (pSQLiteDatabases != null) {
+        if (mDbPoolVector != null) {
             return;
         }
-        pSQLiteDatabases = new Vector<PooledSQLiteDatabase>();
+        mDbPoolVector = new Vector<>();
         createSQLiteDatabase(this.initialSQLiteDatabase);
-        Logger.i(TAG, " 数据库连接池创建成功！ ");
     }
 
     /**
@@ -110,21 +99,17 @@ public class DbPool {
 
         // 循环创建指定数目的数据库连接
         for (int x = 0; x < numSQLiteDatabase; x++) {
-            if (this.maxSQLiteDatabase > 0 && this.pSQLiteDatabases.size() >= this.maxSQLiteDatabase) {
+            if (this.maxSQLiteDatabase > 0 && this.mDbPoolVector.size() >= this.maxSQLiteDatabase) {
                 break;
             }
             try {
-                pSQLiteDatabases.addElement(new PooledSQLiteDatabase(newSQLiteDatabase()));
+                mDbPoolVector.addElement(new PooledSQLiteDatabase(newSQLiteDatabase()));
             } catch (Exception e) {
                 Logger.i(TAG, " 创建数据库连接失败！ " + e.getMessage());
             }
-            Logger.i(TAG, "数据库连接己创建 ......");
         }
     }
 
-    /**
-     * 创建一个新的数据库连接并返回它
-     */
     private DbDao newSQLiteDatabase() {
         DbDao dao = new DbDao(context, params);
         dao.openDatabase(mDBUpdateListener, isWrite);
@@ -132,7 +117,7 @@ public class DbPool {
     }
 
     public synchronized DbDao getSQLiteDatabase() {
-        if (pSQLiteDatabases == null) {
+        if (mDbPoolVector == null) {
             return null;
         }
 
@@ -162,7 +147,7 @@ public class DbPool {
         DbDao dao = null;
         PooledSQLiteDatabase pSQLiteDatabase = null;
 
-        Enumeration<PooledSQLiteDatabase> enumerate = pSQLiteDatabases.elements();
+        Enumeration<PooledSQLiteDatabase> enumerate = mDbPoolVector.elements();
 
         while (enumerate.hasMoreElements()) {
             pSQLiteDatabase = enumerate.nextElement();
@@ -184,19 +169,19 @@ public class DbPool {
         return dao != null && dao.isOpen();
     }
 
-    public void releaseSQLiteDatabase(DbDao sqLiteDatabase) {
-        if (pSQLiteDatabases == null) {
+    public void releaseSQLiteDatabase(DbDao dao) {
+        if (mDbPoolVector == null) {
             Logger.d(TAG, " 连接池不存在，无法返回此连接到连接池中 !");
             return;
         }
         PooledSQLiteDatabase pSqLiteDatabase = null;
 
-        Enumeration<PooledSQLiteDatabase> enumerate = pSQLiteDatabases.elements();
+        Enumeration<PooledSQLiteDatabase> enumerate = mDbPoolVector.elements();
 
         while (enumerate.hasMoreElements()) {
             pSqLiteDatabase = enumerate.nextElement();
 
-            if (sqLiteDatabase == pSqLiteDatabase.getDao()) {
+            if (dao == pSqLiteDatabase.getDao()) {
                 pSqLiteDatabase.setBusy(false);
                 break;
             }
@@ -204,13 +189,13 @@ public class DbPool {
     }
 
     public synchronized void refreshSQLiteDatabase() {
-        if (pSQLiteDatabases == null) {
+        if (mDbPoolVector == null) {
             Logger.d(TAG, " 连接池不存在，无法刷新 !");
             return;
         }
 
         PooledSQLiteDatabase pSqLiteDatabase = null;
-        Enumeration<PooledSQLiteDatabase> enumerate = pSQLiteDatabases.elements();
+        Enumeration<PooledSQLiteDatabase> enumerate = mDbPoolVector.elements();
         while (enumerate.hasMoreElements()) {
 
             pSqLiteDatabase = enumerate.nextElement();
@@ -226,12 +211,12 @@ public class DbPool {
     }
 
     public synchronized void closeAllSQLiteDatabase() {
-        if (pSQLiteDatabases == null) {
+        if (mDbPoolVector == null) {
             Logger.d(TAG, "连接池不存在，无法关闭 !");
             return;
         }
         PooledSQLiteDatabase pSqLiteDatabase = null;
-        Enumeration<PooledSQLiteDatabase> enumerate = pSQLiteDatabases.elements();
+        Enumeration<PooledSQLiteDatabase> enumerate = mDbPoolVector.elements();
         while (enumerate.hasMoreElements()) {
             pSqLiteDatabase = enumerate.nextElement();
 
@@ -239,13 +224,13 @@ public class DbPool {
                 wait(5000);
             }
             closeSQLiteDatabase(pSqLiteDatabase.getDao());
-            pSQLiteDatabases.removeElement(pSqLiteDatabase);
+            mDbPoolVector.removeElement(pSqLiteDatabase);
         }
-        pSQLiteDatabases = null;
+        mDbPoolVector = null;
     }
 
-    private void closeSQLiteDatabase(DbDao sqlLiteDatabase) {
-        sqlLiteDatabase.close();
+    private void closeSQLiteDatabase(DbDao dao) {
+        dao.close();
     }
 
     private void wait(int mSeconds) {
