@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 
 import common.db.DbHelper;
+import common.db.DbManager.DbParams;
+import common.db.DbManager.DbUpdateListener;
 import common.db.TablesManager;
 import common.db.entity.ColumnEntity;
 import common.db.entity.TableEntity;
@@ -20,18 +22,12 @@ import common.utils.logger.Logger;
  */
 public class DbDao {
 
-    private final static String DB_NAME = "common_android.mDb";
-    private final static int DB_VERSION = 1;
+
     private static final String TAG = DbDao.class.getSimpleName();
 
     private DbHelper mDbHelper;
     private SQLiteDatabase mDb;
     private DbUpdateListener mDbUpdateListener;
-
-    public DbDao(Context context) {
-        DbParams params = new DbParams();
-        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
-    }
 
     public DbDao(Context context, DbParams params) {
         this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
@@ -59,7 +55,6 @@ public class DbDao {
         return mDb;
 
     }
-
 
     public boolean isOpen() {
         return mDb != null && mDb.isOpen();
@@ -212,40 +207,6 @@ public class DbDao {
 
     public void close() {
         mDb.close();
-    }
-
-    public static class DbParams {
-        private String dbName = DB_NAME;
-        private int dbVersion = DB_VERSION;
-
-        public DbParams() {
-
-        }
-
-        public DbParams(String dbName, int dbVersion) {
-            this.dbName = dbName;
-            this.dbVersion = dbVersion;
-        }
-
-        public String getDbName() {
-            return dbName;
-        }
-
-        public void setDbName(String dbName) {
-            this.dbName = dbName;
-        }
-
-        public int getDbVersion() {
-            return dbVersion;
-        }
-
-        public void setDbVersion(int dbVersion) {
-            this.dbVersion = dbVersion;
-        }
-    }
-
-    public interface DbUpdateListener {
-        void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
     }
 
 }

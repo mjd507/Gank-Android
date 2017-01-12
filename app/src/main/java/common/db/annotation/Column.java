@@ -19,11 +19,6 @@ public @interface Column {
     String name();
 
     /**
-     * 表字段属性,不指定默认空字符串
-     */
-    String property() default "";
-
-    /**
      * 是否为主键 默认不是主键
      */
     boolean primaryKey() default false;

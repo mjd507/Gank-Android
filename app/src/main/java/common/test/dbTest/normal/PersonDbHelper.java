@@ -1,4 +1,4 @@
-package common.db.sample;
+package common.test.dbTest.normal;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +33,4 @@ public class PersonDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-
 }

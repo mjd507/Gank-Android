@@ -3,8 +3,7 @@ package common.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import common.db.dao.DbDao.DbUpdateListener;
+import common.db.DbManager.DbUpdateListener;
 
 /**
  * 描述:
