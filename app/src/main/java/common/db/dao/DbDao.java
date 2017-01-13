@@ -13,7 +13,7 @@ import common.db.DbManager.DbUpdateListener;
 import common.db.TablesManager;
 import common.db.entity.ColumnEntity;
 import common.db.entity.TableEntity;
-import common.utils.logger.Logger;
+import common.utils.LogUtils;
 
 /**
  * 描述:
@@ -62,7 +62,7 @@ public class DbDao {
      * INSERT, UPDATE, DELETE
      */
     public void execute(String sql, String[] bindArgs) throws Exception {
-        Logger.i(TAG, "准备执行SQL[" + sql + "]语句");
+        LogUtils.i(TAG, "准备执行SQL[ " + sql + " ]语句");
         if (isOpen()) {
             if (!TextUtils.isEmpty(sql)) {
                 if (bindArgs != null) {
@@ -70,7 +70,7 @@ public class DbDao {
                 } else {
                     mDb.execSQL(sql);
                 }
-                Logger.i(TAG, "执行完毕！");
+                LogUtils.i(TAG, "执行完毕！");
             }
         } else {
             throw new Exception("数据库未打开！");
@@ -83,7 +83,7 @@ public class DbDao {
             TableEntity tableEntity = TablesManager.getInstance().find(entity.getClass());
             return mDb.insert(tableEntity.getTableName(), null, tableEntity.createContentValues(entity));
         } else {
-            Logger.e(TAG, "数据库未打开！");
+            LogUtils.e(TAG, "数据库未打开！");
             return -1;
         }
     }
@@ -93,7 +93,7 @@ public class DbDao {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
             return mDb.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
         } else {
-            Logger.e(TAG, "数据库未打开！");
+            LogUtils.e(TAG, "数据库未打开！");
             return false;
         }
     }
@@ -105,7 +105,7 @@ public class DbDao {
             return mDb.update(tableEntity.getTableName(), tableEntity.createContentValues(entity),
                     whereClause, whereArgs);
         } else {
-            Logger.e(TAG, "数据库未打开！");
+            LogUtils.e(TAG, "数据库未打开！");
             return -1;
         }
     }
@@ -151,13 +151,13 @@ public class DbDao {
                     arrayList.add(entity);
                 }
             } catch (Exception e) {
-                Logger.e(TAG, e.getMessage());
+                LogUtils.e(TAG, e.getMessage());
             } finally {
                 cursor.close();
             }
             return arrayList;
         } else {
-            Logger.e(TAG, "数据库未打开！");
+            LogUtils.e(TAG, "数据库未打开！");
             return null;
         }
     }

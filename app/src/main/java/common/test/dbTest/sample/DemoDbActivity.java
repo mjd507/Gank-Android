@@ -23,6 +23,7 @@ public class DemoDbActivity extends Activity {
 
     private DbManager dbManager;
     private DbDao dao;
+    private TablesManager tablesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,13 @@ public class DemoDbActivity extends Activity {
 
         MyApplication application = (MyApplication) getApplication();
         dbManager = application.getDbManager();
+        //创建数据库
+        dao = dbManager.getDao();
+        dao.openDatabase(null, true);
+        //创建数据表(将表注册到表管理器中,已存在的话,不会重复创建)
+        tablesManager = TablesManager.getInstance();
+        tablesManager.register(Person.class);
+        tablesManager.createTables(false, dao);
 
         Button btnCreateDb = new Button(this);
         btnCreateDb.setText("创建数据库");
@@ -70,6 +78,7 @@ public class DemoDbActivity extends Activity {
                         count++;
                     } else {
                         success = false;
+                        break;
                     }
                 }
                 if (success) {
@@ -109,7 +118,7 @@ public class DemoDbActivity extends Activity {
             }
         });
         Button btnQuery = new Button(this);
-        btnQuery.setText("修改数据");
+        btnQuery.setText("查询数据");
         btnQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,8 +131,8 @@ public class DemoDbActivity extends Activity {
             }
         });
 
-        contentView.addView(btnCreateDb);
-        contentView.addView(btnCreateTable);
+//        contentView.addView(btnCreateDb);
+//        contentView.addView(btnCreateTable);
         contentView.addView(btnInsert);
         contentView.addView(btnDelete);
         contentView.addView(btnUpdate);
@@ -131,4 +140,11 @@ public class DemoDbActivity extends Activity {
         setContentView(contentView);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tablesManager.destroyInstance();
+        dao.close();
+    }
 }

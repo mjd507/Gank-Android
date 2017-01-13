@@ -20,6 +20,7 @@ public class ColumnEntity {
 
     public ColumnEntity(Field field) {
         this.field = field;
+        field.setAccessible(true);//设置访问权限
         if (field.isAnnotationPresent(Column.class)) {
             this.name = field.getAnnotation(Column.class).name();
             this.primaryKey = field.getAnnotation(Column.class).primaryKey();
@@ -58,7 +59,8 @@ public class ColumnEntity {
     public Object getValue(Object entity) {
         try {
             return field.get(entity);
-        } catch (Exception ex) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
             return null;
         }
     }

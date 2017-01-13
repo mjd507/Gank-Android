@@ -29,7 +29,7 @@ public class TableEntity {
         }
 
         fields = new ArrayList<>();
-        for (Field field : type.getFields()) {
+        for (Field field : type.getDeclaredFields()) {
             fields.add(new ColumnEntity(field));
         }
     }

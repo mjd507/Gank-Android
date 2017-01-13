@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import common.db.dao.DbDao;
 import common.db.entity.TableEntity;
-import common.utils.logger.Logger;
+import common.utils.LogUtils;
 
 /**
  * 描述: 所有表的实体仓库
@@ -63,7 +63,7 @@ public class TablesManager {
                 dao.execute(tableEntity.getCreateTableStatement(), null);
             }
         } catch (Exception ex) {
-            Logger.e(TAG, ex.getMessage());
+            LogUtils.e(TAG, "表创建失败");
         }
     }
 }
