@@ -28,6 +28,7 @@ public class PersonDao {
         values.put(dbHelper.COLUMN_NAME, person.getName());
         values.put(dbHelper.COLUMN_AGE, person.getAge());
         db.insert(dbHelper.TABLE_NAME, null, values);
+        db.close();
     }
 
     public List<Person> queryAll() {
@@ -40,6 +41,7 @@ public class PersonDao {
             list.add(new Person(name, age));
         }
         cursor.close();
+        db.close();
         return list;
     }
 
@@ -49,11 +51,13 @@ public class PersonDao {
         values.put(dbHelper.COLUMN_NAME, person.getName());
         values.put(dbHelper.COLUMN_AGE, person.getAge());
         db.update(dbHelper.TABLE_NAME, values, null, null);
+        db.close();
     }
 
     public void delete(Person person) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(dbHelper.TABLE_NAME, person.getAge() + " = ? ", new String[]{person.getAge() + ""});
+        db.close();
     }
 
 }

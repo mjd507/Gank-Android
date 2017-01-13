@@ -47,7 +47,7 @@ public class ColumnEntity {
         return field;
     }
 
-    public void setValue(ColumnEntity entity, Object value) {
+    public void setValue(Object entity, Object value) {
         try {
             field.set(entity, value);
         } catch (Exception ex) {
@@ -55,9 +55,9 @@ public class ColumnEntity {
         }
     }
 
-    public Object getValue() {
+    public Object getValue(Object entity) {
         try {
-            return field.get(this);
+            return field.get(entity);
         } catch (Exception ex) {
             return null;
         }

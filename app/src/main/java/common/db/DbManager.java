@@ -51,12 +51,6 @@ public class DbManager {
         return mDao;
     }
 
-    public void setOnDbUpdateListener(DbUpdateListener dbUpdateListener) {
-        if (mDao != null) {
-            mDao.setOnDbUpdateListener(dbUpdateListener);
-        }
-    }
-
     public static class DbParams {
         private String dbName;
         private int dbVersion;

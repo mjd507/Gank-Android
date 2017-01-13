@@ -22,9 +22,9 @@ public class TablesManager {
     private ArrayList<TableEntity> entityList = new ArrayList<>();
 
     public TableEntity[] getEntities() {
-        TableEntity[] metadatas = new TableEntity[entityList.size()];
-        entityList.toArray(metadatas);
-        return metadatas;
+        TableEntity[] entities = new TableEntity[entityList.size()];
+        entityList.toArray(entities);
+        return entities;
     }
 
     public void register(Class<?>... types) {
@@ -54,13 +54,13 @@ public class TablesManager {
         mTablesManager = null;
     }
 
-    public void createTables(boolean dropTablesFirst, DbDao db) {
+    public void createTables(boolean dropTablesFirst, DbDao dao) {
         try {
             for (TableEntity tableEntity : entityList) {
                 if (dropTablesFirst) {
-                    db.execute(tableEntity.getDropTableStatement(), null);
+                    dao.execute(tableEntity.getDropTableStatement(), null);
                 }
-                db.execute(tableEntity.getCreateTableStatement(), null);
+                dao.execute(tableEntity.getCreateTableStatement(), null);
             }
         } catch (Exception ex) {
             Logger.e(TAG, ex.getMessage());
