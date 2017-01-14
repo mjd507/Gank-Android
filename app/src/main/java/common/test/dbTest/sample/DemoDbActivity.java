@@ -132,7 +132,7 @@ public class DemoDbActivity extends Activity {
         });
 
 //        contentView.addView(btnCreateDb);
-//        contentView.addView(btnCreateTable);
+        contentView.addView(btnCreateTable);
         contentView.addView(btnInsert);
         contentView.addView(btnDelete);
         contentView.addView(btnUpdate);

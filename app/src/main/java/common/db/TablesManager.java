@@ -29,6 +29,10 @@ public class TablesManager {
 
     public void register(Class<?>... types) {
         for (Class<?> type : types) {
+            if (find(type) != null) {
+                LogUtils.d(TAG,"表已注册过");
+                continue;
+            }
             TableEntity m = new TableEntity(type);
             entities.put(type, m);
             entityList.add(m);
