@@ -1,15 +1,55 @@
 # CommonAndroid
 
-封装了 Android 开发中出现频率较高的工具类,以及多数应用通用的框架,方便独立开发者快速开发出属于自己的应用。
-
-下面是项目的包含的一些模块
-
+封装了 Android 开发中出现频率较高的工具类,以及多数应用通用的框架,方便独立开发者快速开发出属于自己的应用。该库是本人在工作之余挤出的时间来不断的完善的,借鉴了 GitHub 上不少资源, 这里也欢迎大家 star 或者 fork 来一同完善。项目已经包含的一些模块
 ## Base UI 模块
 - Base App Theme 的设定,使所有 Activity 有统一的 进入退出 效果
 - BaseActivity 的封装,包括统一 TitleBar,以及 TitleBar 上返回键的处理,也可以自定义标题栏按钮的图片和功能。
 - BaseFragment 的封装,与 BaseActivity 几乎一致。
 - CommonAdapter/CommonViewHolder 的封装,简化项目大量使用 BaseAdapter 时写的重复代码。
 - CommonDialog/LoadingDialog 的封装,统一项目的 对话框和加载框。
+
+## DB 模块
+可能是最简单的数据库封装,算上注解总共只有 7 个类,使用方法:
+
+- 在 Application onCreate() 时初始化 DbManager
+    ```
+        //初始化 数据库
+        DbManager.DbParams params = new DbManager.DbParams();
+        params.setDbName("xx.db");
+        params.setDbVersion(1);
+        dbManager = DbManager.getInstance(this, params);
+    ```
+- 创建数据库
+    ```
+        DbDao dao = dbManager.getDao(null); //param  --> dbUpdateListener
+        dao.openDatabase(true); // params --> isWritableDatabase
+    ```
+- 创建表
+    ```
+        TablesManager tablesManager = TablesManager.getInstance();
+        tablesManager.register(Person.class);
+        tablesManager.createTables(false, dao);
+    ```
+- 增删改查
+    ```
+        Person person = new Person();
+        person.setName("张三");
+        person.setAge(20);
+
+        //insert
+        long result = dao.insert(person);
+
+        //delete
+        Boolean delete = dao.delete(Person.class, "name=?", new String[]{"张三"});
+
+        //update
+        Person person = new Person("李四", 18);
+        long update = dao.update(Person.class, person, "name = ?", new String[]{"张三"});
+
+        //query
+        ArrayList<Person> personList = dao.query(false, Person.class, null, null, null, null, null, null, null);
+
+    ```
 
 ## MVP 模块
 - 如果你的项目想使用 MVP 架构,可以参考以这个非常容易理解的 MVP 架构的业务模型案例。

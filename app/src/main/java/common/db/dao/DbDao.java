@@ -21,32 +21,17 @@ import common.utils.LogUtils;
  */
 public class DbDao {
 
-
     private static final String TAG = DbDao.class.getSimpleName();
 
     private DbHelper mDbHelper;
     private SQLiteDatabase mDb;
-    private DbUpdateListener mDbUpdateListener;
 
-    public DbDao(Context context, DbParams params) {
-        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion());
+    public DbDao(Context context, DbParams params, DbUpdateListener dbUpdateListener) {
+        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion(), dbUpdateListener);
     }
 
-    public void setOnDbUpdateListener(DbUpdateListener dbUpdateListener) {
-        this.mDbUpdateListener = dbUpdateListener;
-        if (this.mDbUpdateListener != null) {
-            mDbHelper.setOnDbUpdateListener(this.mDbUpdateListener);
-        }
-    }
-
-    public SQLiteDatabase openDatabase(DbUpdateListener dbUpdateListener, Boolean isWritableDb) {
-        if (dbUpdateListener != null) {
-            this.mDbUpdateListener = dbUpdateListener;
-        }
-        if (this.mDbUpdateListener != null) {
-            mDbHelper.setOnDbUpdateListener(this.mDbUpdateListener);
-        }
-        if (isWritableDb) {
+    public SQLiteDatabase openDatabase(boolean isWritableDatabase) {
+        if (isWritableDatabase) {
             mDb = mDbHelper.getWritableDatabase();
         } else {
             mDb = mDbHelper.getReadableDatabase();

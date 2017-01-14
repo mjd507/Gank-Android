@@ -5,8 +5,6 @@ import android.content.ContentValues;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import common.db.annotation.Table;
-
 /**
  * 描述: 表实体的元数据
  * Created by mjd on 2017/1/7.
@@ -22,11 +20,8 @@ public class TableEntity {
 
     public TableEntity(Class<?> type) {
         this.type = type;
-        if (type.isAnnotationPresent(Table.class)) {
-            tableName = type.getAnnotation(Table.class).name();
-        } else {
-            tableName = type.getSimpleName();
-        }
+
+        tableName = type.getSimpleName();
 
         fields = new ArrayList<>();
         for (Field field : type.getDeclaredFields()) {

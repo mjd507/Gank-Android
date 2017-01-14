@@ -30,7 +30,7 @@ public class TablesManager {
     public void register(Class<?>... types) {
         for (Class<?> type : types) {
             if (find(type) != null) {
-                LogUtils.d(TAG,"表已注册过");
+                LogUtils.d(TAG, "表已注册过");
                 continue;
             }
             TableEntity m = new TableEntity(type);
@@ -67,7 +67,7 @@ public class TablesManager {
                 dao.execute(tableEntity.getCreateTableStatement(), null);
             }
         } catch (Exception ex) {
-            LogUtils.e(TAG, "表创建失败");
+            LogUtils.e(TAG, "表创建失败:" + ex.getMessage());
         }
     }
 }

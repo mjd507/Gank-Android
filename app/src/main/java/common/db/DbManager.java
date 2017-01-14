@@ -44,9 +44,9 @@ public class DbManager {
 
     private DbDao mDao;
 
-    public DbDao getDao() {
+    public DbDao getDao(DbUpdateListener dbUpdateListener) {
         if (mDao == null) {
-            mDao = new DbDao(context, params);
+            mDao = new DbDao(context, params, dbUpdateListener);
         }
         return mDao;
     }

@@ -1,6 +1,7 @@
 package common.test.dbTest.sample;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,9 @@ import java.util.ArrayList;
 import common.db.DbManager;
 import common.db.TablesManager;
 import common.db.dao.DbDao;
+import common.db.entity.TableEntity;
 import common.test.dbTest.been.Person;
+import common.utils.LogUtils;
 import common.utils.ToastUtils;
 
 /**
@@ -34,20 +37,36 @@ public class DemoDbActivity extends Activity {
         MyApplication application = (MyApplication) getApplication();
         dbManager = application.getDbManager();
         //创建数据库
-        dao = dbManager.getDao();
-        dao.openDatabase(null, true);
-        //创建数据表(将表注册到表管理器中,已存在的话,不会重复创建)
+        dao = dbManager.getDao(new DbManager.DbUpdateListener() {
+            @Override
+            public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                LogUtils.d("onUpgrade", "-------start--------");
+                //先删除
+                db.execSQL("DROP TABLE IF EXISTS Person");
+                //再创建
+                tablesManager = TablesManager.getInstance();
+                tablesManager.register(Person.class);
+                TableEntity tableEntity = tablesManager.find(Person.class);
+                db.execSQL(tableEntity.getCreateTableStatement());
+                LogUtils.d("onUpgrade", "-------end--------");
+            }
+        });
+
+        LogUtils.d("main", "-------start--------");
+        dao.openDatabase(true);
         tablesManager = TablesManager.getInstance();
+        LogUtils.d("main", "-------middle--------");
         tablesManager.register(Person.class);
         tablesManager.createTables(false, dao);
+        LogUtils.d("main", "-------end--------");
 
         Button btnCreateDb = new Button(this);
         btnCreateDb.setText("创建数据库");
         btnCreateDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dao = dbManager.getDao();
-                dao.openDatabase(null, true);
+                dao = dbManager.getDao(null);
+                dao.openDatabase(true);
             }
         });
 
@@ -56,6 +75,7 @@ public class DemoDbActivity extends Activity {
         btnCreateTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //创建数据表(将表注册到表管理器中,已存在的话,不会重复创建)
                 TablesManager tablesManager = TablesManager.getInstance();
                 tablesManager.register(Person.class);
                 tablesManager.createTables(false, dao);
@@ -139,6 +159,8 @@ public class DemoDbActivity extends Activity {
         contentView.addView(btnQuery);
 
         setContentView(contentView);
+
+
     }
 
 
@@ -148,4 +170,6 @@ public class DemoDbActivity extends Activity {
         tablesManager.destroyInstance();
         dao.close();
     }
+
+
 }

@@ -3,32 +3,29 @@ package common.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import common.db.DbManager.DbUpdateListener;
 
 /**
  * 描述:
  * Created by mjd on 2017/1/9.
  */
-
 public class DbHelper extends SQLiteOpenHelper {
+
     private DbUpdateListener mUbUpdateListener;
 
-    public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DbUpdateListener dbUpdateListener) {
         super(context, name, factory, version);
-    }
-
-    public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version,
-                    DbUpdateListener dbUpdateListener) {
-        super(context, name, factory, version);
-        this.mUbUpdateListener = dbUpdateListener;
-    }
-
-    public void setOnDbUpdateListener(DbUpdateListener dbUpdateListener) {
-        this.mUbUpdateListener = dbUpdateListener;
+        if (dbUpdateListener != null) {
+            mUbUpdateListener = dbUpdateListener;
+        }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //sql will be execute and this table will be managed by TableManager.
+
+        //tablesManager = TablesManager.getInstance().register(Person.class).createTables(boolean drop, dao);
 
     }
 
