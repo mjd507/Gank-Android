@@ -1,6 +1,6 @@
 # CommonAndroid
 
-封装了 Android 开发中出现频率较高的工具类,以及多数应用通用的框架,方便独立开发者快速开发出属于自己的应用。该库是本人在工作之余挤出的时间来不断的完善的,借鉴了 GitHub 上不少资源, 这里也欢迎大家 star 或者 fork 来一同完善。项目已经包含的一些模块
+封装了 Android 开发中出现频率较高的工具类,以及多数应用通用的框架,方便独立开发者快速开发出属于自己的应用。该库是本人在工作之余挤出时间来不断的完善,借鉴了 GitHub 上不少资源, 这里也欢迎大家 star 或者 fork 来一同完善。项目已经包含的一些模块
 ## Base UI 模块
 - Base App Theme 的设定,使所有 Activity 有统一的 进入退出 效果
 - BaseActivity 的封装,包括统一 TitleBar,以及 TitleBar 上返回键的处理,也可以自定义标题栏按钮的图片和功能。
@@ -19,17 +19,20 @@
         params.setDbVersion(1);
         dbManager = DbManager.getInstance(this, params);
     ```
+
 - 创建数据库
     ```
         DbDao dao = dbManager.getDao(null); //param  --> dbUpdateListener
         dao.openDatabase(true); // params --> isWritableDatabase
     ```
+
 - 创建表
     ```
         TablesManager tablesManager = TablesManager.getInstance();
         tablesManager.register(Person.class);
         tablesManager.createTables(false, dao);
     ```
+
 - 增删改查
     ```
         Person person = new Person();
