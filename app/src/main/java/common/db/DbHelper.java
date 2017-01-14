@@ -23,9 +23,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //sql will be execute and this table will be managed by TableManager.
-
-        //tablesManager = TablesManager.getInstance().register(Person.class).createTables(boolean drop, dao);
 
     }
 

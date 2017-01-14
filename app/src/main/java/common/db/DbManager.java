@@ -12,7 +12,6 @@ import common.db.dao.DbDao;
 
 public class DbManager {
 
-    private static final String TAG = DbManager.class.getSimpleName();
     private final static String DB_NAME = "common_android.db";
     private final static int DB_VERSION = 1;
 
@@ -27,8 +26,8 @@ public class DbManager {
                 if (dbManager == null) {
                     if (params == null) {
                         params = new DbParams();
-                        params.setDbName(DB_NAME);
-                        params.setDbVersion(DB_VERSION);
+                        params.dbName = DB_NAME;
+                        params.dbVersion = DB_VERSION;
                     }
                     dbManager = new DbManager(context.getApplicationContext(), params);
                 }
@@ -52,32 +51,8 @@ public class DbManager {
     }
 
     public static class DbParams {
-        private String dbName;
-        private int dbVersion;
-
-        public DbParams() {
-        }
-
-        public DbParams(String dbName, int dbVersion) {
-            this.dbName = dbName;
-            this.dbVersion = dbVersion;
-        }
-
-        public String getDbName() {
-            return dbName;
-        }
-
-        public void setDbName(String dbName) {
-            this.dbName = dbName;
-        }
-
-        public int getDbVersion() {
-            return dbVersion;
-        }
-
-        public void setDbVersion(int dbVersion) {
-            this.dbVersion = dbVersion;
-        }
+        public String dbName;
+        public int dbVersion;
     }
 
     public interface DbUpdateListener {

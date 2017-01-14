@@ -41,23 +41,23 @@ public class DemoDbActivity extends Activity {
             @Override
             public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
                 LogUtils.d("onUpgrade", "-------start--------");
-                //先删除
-                db.execSQL("DROP TABLE IF EXISTS Person");
-                //再创建
                 tablesManager = TablesManager.getInstance();
                 tablesManager.register(Person.class);
                 TableEntity tableEntity = tablesManager.find(Person.class);
+                //先删除
+                db.execSQL(tableEntity.getDropTableStatement());
+                //再创建
                 db.execSQL(tableEntity.getCreateTableStatement());
                 LogUtils.d("onUpgrade", "-------end--------");
             }
         });
 
         LogUtils.d("main", "-------start--------");
-        dao.openDatabase(true);
-        tablesManager = TablesManager.getInstance();
+        dao.openDatabase(true); // if db version update,this method will wait util onUpgrade has been executed.
         LogUtils.d("main", "-------middle--------");
+        tablesManager = TablesManager.getInstance();
         tablesManager.register(Person.class);
-        tablesManager.createTables(false, dao);
+        tablesManager.createTables(dao);
         LogUtils.d("main", "-------end--------");
 
         Button btnCreateDb = new Button(this);
@@ -78,7 +78,7 @@ public class DemoDbActivity extends Activity {
                 //创建数据表(将表注册到表管理器中,已存在的话,不会重复创建)
                 TablesManager tablesManager = TablesManager.getInstance();
                 tablesManager.register(Person.class);
-                tablesManager.createTables(false, dao);
+                tablesManager.createTables(dao);
             }
         });
 
@@ -128,7 +128,7 @@ public class DemoDbActivity extends Activity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person person = new Person("李四", 18);
+                Person person = new Person("李四", 18, true);
                 long update = dao.update(Person.class, person, "name = ?", new String[]{"张三1"});
                 if (update != -1) {
                     ToastUtils.showShort(getApplicationContext(), "修改成功");
@@ -145,6 +145,11 @@ public class DemoDbActivity extends Activity {
                 ArrayList<Person> personList = dao.query(false, Person.class, null, null, null, null, null, null, null);
                 if (personList.size() > 0) {
                     ToastUtils.showShort(getApplicationContext(), "查询成功" + "共 " + personList.size() + " 条数据");
+                    for (Person person : personList
+                            ) {
+                        LogUtils.d("result", person.toString());
+                    }
+
                 } else {
                     ToastUtils.showShort(getApplicationContext(), "查询失败");
                 }

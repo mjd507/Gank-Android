@@ -21,10 +21,15 @@ public class TablesManager {
 
     private ArrayList<TableEntity> entityList = new ArrayList<>();
 
-    public TableEntity[] getEntities() {
-        TableEntity[] entities = new TableEntity[entityList.size()];
-        entityList.toArray(entities);
-        return entities;
+    public static TablesManager getInstance() {
+        if (mTablesManager == null) {
+            synchronized (TablesManager.class) {
+                if (mTablesManager == null) {
+                    mTablesManager = new TablesManager();
+                }
+            }
+        }
+        return mTablesManager;
     }
 
     public void register(Class<?>... types) {
@@ -43,31 +48,19 @@ public class TablesManager {
         return entities.get(type);
     }
 
-    public static TablesManager getInstance() {
-        if (mTablesManager == null) {
-            mTablesManager = new TablesManager();
-        }
-        return mTablesManager;
-    }
-
     public void destroyInstance() {
         entities.clear();
         entityList.clear();
-        entities = null;
-        entityList = null;
-        mTablesManager = null;
     }
 
-    public void createTables(boolean dropTablesFirst, DbDao dao) {
+    public void createTables(DbDao dao) {
         try {
             for (TableEntity tableEntity : entityList) {
-                if (dropTablesFirst) {
-                    dao.execute(tableEntity.getDropTableStatement(), null);
-                }
                 dao.execute(tableEntity.getCreateTableStatement(), null);
             }
         } catch (Exception ex) {
             LogUtils.e(TAG, "表创建失败:" + ex.getMessage());
         }
     }
+
 }

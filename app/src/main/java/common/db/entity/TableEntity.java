@@ -14,15 +14,10 @@ public class TableEntity {
 
     private String tableName;
 
-    private Class<?> type;
-
     private ArrayList<ColumnEntity> fields;
 
     public TableEntity(Class<?> type) {
-        this.type = type;
-
         tableName = type.getSimpleName();
-
         fields = new ArrayList<>();
         for (Field field : type.getDeclaredFields()) {
             fields.add(new ColumnEntity(field));
@@ -31,14 +26,6 @@ public class TableEntity {
 
     public String getTableName() {
         return tableName;
-    }
-
-    public Class<?> getType() {
-        return type;
-    }
-
-    public ArrayList<ColumnEntity> getFields() {
-        return fields;
     }
 
     public ColumnEntity getField(String name) {
@@ -54,7 +41,7 @@ public class TableEntity {
     }
 
     public String getCreateTableStatement() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(String.format("CREATE TABLE IF NOT EXISTS %s (", tableName));
         int index = 0;
 
@@ -91,7 +78,7 @@ public class TableEntity {
             } else if (value instanceof Double) {
                 contentValues.put(columnEntity.getName(), (Double) value);
             } else if (value instanceof Boolean) {
-                contentValues.put(columnEntity.getName(), (Boolean) value);
+                contentValues.put(columnEntity.getName(), (Boolean) value ? 1 : 2);//true 1; false 2
             } else {
                 contentValues.put(columnEntity.getName(), value.toString());
             }

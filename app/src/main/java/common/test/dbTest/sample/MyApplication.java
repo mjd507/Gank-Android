@@ -19,8 +19,8 @@ public class MyApplication extends Application {
 
         //初始化 数据库
         DbManager.DbParams params = new DbManager.DbParams();
-        params.setDbName("TuHu.db");
-        params.setDbVersion(1);
+        params.dbName = "TuHu.db";
+        params.dbVersion = 2;
         dbManager = DbManager.getInstance(this, params);
 
     }

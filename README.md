@@ -15,22 +15,22 @@
     ```
         //初始化 数据库
         DbManager.DbParams params = new DbManager.DbParams();
-        params.setDbName("xx.db");
-        params.setDbVersion(1);
+        params.dbName = "xx.db";
+        params.dbVersion = 1;
         dbManager = DbManager.getInstance(this, params);
     ```
 
 - 创建数据库
     ```
-        DbDao dao = dbManager.getDao(null); //param  --> dbUpdateListener
+        DbDao dao = dbManager.getDao(null); //param  --> dbUpdateListener -- see DemoDbActivity how to use
         dao.openDatabase(true); // params --> isWritableDatabase
     ```
 
 - 创建表
     ```
         TablesManager tablesManager = TablesManager.getInstance();
-        tablesManager.register(Person.class);
-        tablesManager.createTables(false, dao);
+        tablesManager.register(Person.class);  // Person -- javabeen
+        tablesManager.createTables(dao);
     ```
 
 - 增删改查

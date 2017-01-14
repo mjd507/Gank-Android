@@ -18,7 +18,7 @@ public class ColumnEntity {
 
     private Field field;
 
-    public ColumnEntity(Field field) {
+    ColumnEntity(Field field) {
         this.field = field;
         field.setAccessible(true);//设置访问权限
         if (field.isAnnotationPresent(Column.class)) {
@@ -40,32 +40,11 @@ public class ColumnEntity {
         return type;
     }
 
-    public boolean isPrimaryKey() {
+    boolean isPrimaryKey() {
         return primaryKey;
     }
 
-    public Field getField() {
-        return field;
-    }
-
-    public void setValue(Object entity, Object value) {
-        try {
-            field.set(entity, value);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public Object getValue(Object entity) {
-        try {
-            return field.get(entity);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public String getSqlType() {
+    String getSqlType() {
         if (primaryKey) {
             return "INTEGER PRIMARY KEY AUTOINCREMENT";
         } else if (type.equals(String.class)) {
@@ -81,4 +60,25 @@ public class ColumnEntity {
         }
         return null;
     }
+
+    public void setValue(Object entity, Object value) {
+        try {
+            if (type.equals(boolean.class)) {
+                value = ((Integer) value) == 1; //true 1; false 2
+            }
+            field.set(entity, value);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    Object getValue(Object entity) {
+        try {
+            return field.get(entity);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

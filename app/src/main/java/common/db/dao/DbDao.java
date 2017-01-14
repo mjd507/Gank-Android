@@ -27,7 +27,7 @@ public class DbDao {
     private SQLiteDatabase mDb;
 
     public DbDao(Context context, DbParams params, DbUpdateListener dbUpdateListener) {
-        this.mDbHelper = new DbHelper(context, params.getDbName(), null, params.getDbVersion(), dbUpdateListener);
+        this.mDbHelper = new DbHelper(context, params.dbName, null, params.dbVersion, dbUpdateListener);
     }
 
     public SQLiteDatabase openDatabase(boolean isWritableDatabase) {
@@ -99,52 +99,52 @@ public class DbDao {
                                   Class<?> tableClazz, String[] columns, String selection,
                                   String[] selectionArgs, String groupBy, String having,
                                   String orderBy, String limit) {
-        if (isOpen()) {
-            TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            // 获取结果集
-            Cursor cursor = mDb.query(distinct,
-                    tableEntity.getTableName(), columns, selection,
-                    selectionArgs, groupBy, having, orderBy, limit);
-
-            ArrayList<T> arrayList = new ArrayList<>();
-
-            int columnCount = cursor.getColumnCount();
-            try {
-                while (cursor.moveToNext()) {
-                    T entity = (T) tableClazz.newInstance();
-                    for (int i = 0; i < columnCount; i++) {
-                        ColumnEntity columnEntity = tableEntity.getField(cursor.getColumnName(i));
-
-                        Object value;
-                        if (columnEntity.getType().equals(String.class)) {
-                            value = cursor.getString(i);
-                        } else if (columnEntity.getType().equals(short.class)) {
-                            value = cursor.getShort(i);
-                        } else if (columnEntity.getType().equals(long.class)) {
-                            value = cursor.getLong(i);
-                        } else if (columnEntity.getType().equals(float.class)) {
-                            value = cursor.getFloat(i);
-                        } else if (columnEntity.getType().equals(double.class)) {
-                            value = cursor.getDouble(i);
-                        } else if (columnEntity.getType().equals(boolean.class)) {
-                            value = cursor.getInt(i);
-                        } else {
-                            value = cursor.getInt(i);
-                        }
-                        columnEntity.setValue(entity, value);
-                    }
-                    arrayList.add(entity);
-                }
-            } catch (Exception e) {
-                LogUtils.e(TAG, e.getMessage());
-            } finally {
-                cursor.close();
-            }
-            return arrayList;
-        } else {
+        if (!isOpen()) {
             LogUtils.e(TAG, "数据库未打开！");
             return null;
         }
+
+        TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
+        // 获取结果集
+        Cursor cursor = mDb.query(distinct,
+                tableEntity.getTableName(), columns, selection,
+                selectionArgs, groupBy, having, orderBy, limit);
+
+        ArrayList<T> arrayList = new ArrayList<>();
+
+        int columnCount = cursor.getColumnCount();
+        try {
+            while (cursor.moveToNext()) {
+                T entity = (T) tableClazz.newInstance();
+                for (int i = 0; i < columnCount; i++) {
+                    ColumnEntity columnEntity = tableEntity.getField(cursor.getColumnName(i));
+
+                    Object value;
+                    if (columnEntity.getType().equals(String.class)) {
+                        value = cursor.getString(i);
+                    } else if (columnEntity.getType().equals(short.class)) {
+                        value = cursor.getShort(i);
+                    } else if (columnEntity.getType().equals(long.class)) {
+                        value = cursor.getLong(i);
+                    } else if (columnEntity.getType().equals(float.class)) {
+                        value = cursor.getFloat(i);
+                    } else if (columnEntity.getType().equals(double.class)) {
+                        value = cursor.getDouble(i);
+                    } else if (columnEntity.getType().equals(boolean.class)) {
+                        value = cursor.getInt(i);
+                    } else {
+                        value = cursor.getInt(i);
+                    }
+                    columnEntity.setValue(entity, value);
+                }
+                arrayList.add(entity);
+            }
+        } catch (Exception e) {
+            LogUtils.e(TAG, e.getMessage());
+        } finally {
+            cursor.close();
+        }
+        return arrayList;
     }
 
     public void close() {
