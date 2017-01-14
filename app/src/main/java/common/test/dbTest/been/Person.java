@@ -6,6 +6,10 @@ package common.test.dbTest.been;
  */
 
 public class Person {
+
+//    @Column(name = "_id", primaryKey = true)
+//    private int id;
+
     private String name;
     private int age;
 

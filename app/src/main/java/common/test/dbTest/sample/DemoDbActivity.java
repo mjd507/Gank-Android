@@ -136,6 +136,7 @@ public class DemoDbActivity extends Activity {
         contentView.addView(btnInsert);
         contentView.addView(btnDelete);
         contentView.addView(btnUpdate);
+        contentView.addView(btnQuery);
 
         setContentView(contentView);
     }

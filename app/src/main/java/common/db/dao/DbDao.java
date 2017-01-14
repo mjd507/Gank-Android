@@ -130,7 +130,7 @@ public class DbDao {
                     for (int i = 0; i < columnCount; i++) {
                         ColumnEntity columnEntity = tableEntity.getField(cursor.getColumnName(i));
 
-                        Object value = null;
+                        Object value;
                         if (columnEntity.getType().equals(String.class)) {
                             value = cursor.getString(i);
                         } else if (columnEntity.getType().equals(short.class)) {
