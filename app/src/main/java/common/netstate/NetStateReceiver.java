@@ -21,8 +21,6 @@ public class NetStateReceiver extends BroadcastReceiver {
 
     private ArrayList<NetChangeObserver> observers = new ArrayList<>();
 
-    private NetworkType oldNetType;// 上一次的网络类型
-
     public static NetStateReceiver getReceiver() {
         if (receiver == null) {
             receiver = new NetStateReceiver();
@@ -43,13 +41,12 @@ public class NetStateReceiver extends BroadcastReceiver {
             if (observer != null) {
                 boolean isConnected = NetworkUtils.isConnected(context);
                 NetworkType currentType = NetworkUtils.getNetworkType(context);
-                if (currentType == oldNetType) break; //do not need to notify all observers
                 if (isConnected) {
+                    // 2/3/4G <--> WIFI 之间的网络切换, 也会进入此回调
                     observer.onConnect(currentType);
                 } else {
                     observer.onDisConnect();
                 }
-                oldNetType = currentType;
             }
         }
 
@@ -60,7 +57,7 @@ public class NetStateReceiver extends BroadcastReceiver {
      */
     public void registerObserver(NetChangeObserver observer) {
         if (observers == null) {
-            observers = new ArrayList<NetChangeObserver>();
+            observers = new ArrayList<>();
         }
         observers.add(observer);
     }

@@ -72,7 +72,7 @@ public class NetworkUtils {
     /**
      * 注册网络状态广播
      */
-    public static NetStateReceiver registerNetStateReceiver(NetStateReceiver receiver, Context context) {
+    public static NetStateReceiver registerNetStateReceiver(Context context, NetStateReceiver receiver) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(NetStateReceiver.ANDROID_NET_CHANGE_ACTION);
         context.getApplicationContext().registerReceiver(receiver, filter);
@@ -82,7 +82,7 @@ public class NetworkUtils {
     /**
      * 注销网络状态广播
      */
-    public static void unRegisterNetStateReceiver(NetStateReceiver receiver, Context context) {
+    public static void unRegisterNetStateReceiver(Context context, NetStateReceiver receiver) {
         try {
             context.getApplicationContext().unregisterReceiver(receiver);
         } finally {

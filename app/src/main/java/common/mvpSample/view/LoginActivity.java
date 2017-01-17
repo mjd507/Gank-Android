@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import common.CommonApplication;
 import common.mvpSample.presenter.LoginPresenter;
 import common.ui.BaseActivity;
 import common.utils.ToastUtils;
@@ -45,30 +46,37 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void handleClick(View view) {
-        if(view == mLoginBtn){
+        if (view == mLoginBtn) {
             String username = mUserNameEditText.getText().toString();
             String password = mPwdEditText.getText().toString();
-            loginPresenter.login(username,password);
+            loginPresenter.login(username, password);
         }
     }
 
     @Override
     public void showLoginSuccess() {
-        ToastUtils.showShort(this,"登录成功");
+        ToastUtils.showShort(this, "登录成功");
     }
 
     @Override
     public void showLoginFail() {
-        ToastUtils.showShort(this,"登录失败");
+        ToastUtils.showShort(this, "登录失败");
     }
 
     @Override
     public void showInputNoNull() {
-        ToastUtils.showShort(this,"用户名和密码不能为空");
+        ToastUtils.showShort(this, "用户名和密码不能为空");
     }
 
     @Override
     public void showUsernameLengthError() {
-        ToastUtils.showShort(this,"用户名长度不正确");
+        ToastUtils.showShort(this, "用户名长度不正确");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CommonApplication application = (CommonApplication) this.getApplication();
+        application.destroyReceiver();
     }
 }
