@@ -1,4 +1,4 @@
-package common.test;
+package common.test.uiTest;
 
 import android.app.Dialog;
 import android.view.View;

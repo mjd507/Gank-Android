@@ -1,4 +1,4 @@
-package common.test;
+package common.test.utilsTest;
 
 import android.app.Service;
 import android.content.Intent;

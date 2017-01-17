@@ -1,4 +1,4 @@
-package common.test;
+package common.test.uiTest;
 
 import android.app.Activity;
 import android.content.Context;
