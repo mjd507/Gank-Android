@@ -78,7 +78,7 @@ public class CommonApplication extends Application {
     //释放广播接受者(建议在 最后一个 Activity 退出前调用)
     public void destroyReceiver() {
         //移除里面的观察者
-        netStateReceiver.removeRegisterObserver(netChangeObserver);
+        netStateReceiver.removeObserver(netChangeObserver);
         //解注册广播接受者,
         NetworkUtils.unRegisterNetStateReceiver(this, netStateReceiver);
     }

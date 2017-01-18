@@ -65,7 +65,7 @@ public class NetStateReceiver extends BroadcastReceiver {
     /**
      * 注销网络连接观察者
      */
-    public void removeRegisterObserver(NetChangeObserver observer) {
+    public void removeObserver(NetChangeObserver observer) {
         if (observers != null) {
             observers.remove(observer);
         }
