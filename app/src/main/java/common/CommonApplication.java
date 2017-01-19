@@ -57,12 +57,12 @@ public class CommonApplication extends Application {
         }
     };
 
-    public void onNetDisConnect() {
+    protected void onNetDisConnect() {
         ToastUtils.showShort(this, "网络已断开,请检查网络设置");
         mNetType = NetworkUtils.NetworkType.NETWORK_NONE;
     }
 
-    public void onNetConnect(NetworkUtils.NetworkType type) {
+    protected void onNetConnect(NetworkUtils.NetworkType type) {
         if (type == mNetType) return; //net not change
         switch (type) {
             case NETWORK_WIFI:
