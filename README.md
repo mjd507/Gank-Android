@@ -54,6 +54,44 @@
 
     ```
 
+## NetState 网络监测模块
+采用 单例 + 观察者模式, 监测网络状态的变化。无需在每个 Activity 注册 广播,解放了一定的生产力。
+使用方式:在 Application 创建时,初始化 NetStateReceiver
+```
+    /**
+     * 应用全局的网络变化处理
+     */
+    private void initNetChangeReceiver() {
+
+        //获取当前网络类型
+        mNetType = NetworkUtils.getNetworkType(this);
+
+        //定义网络状态的广播接受者
+        netStateReceiver = NetStateReceiver.getReceiver();
+
+        //给广播接受者注册一个观察者
+        netStateReceiver.registerObserver(netChangeObserver);
+
+        //注册网络变化广播
+        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
+
+    }
+
+    private NetChangeObserver netChangeObserver = new NetChangeObserver() {
+
+        @Override
+        public void onConnect(NetworkUtils.NetworkType type) {
+            //do something
+        }
+
+        @Override
+        public void onDisConnect() {
+            //do something
+        }
+    };
+```
+
+
 ## MVP 模块
 - 如果你的项目想使用 MVP 架构,可以参考以这个非常容易理解的 MVP 架构的业务模型案例。
 
