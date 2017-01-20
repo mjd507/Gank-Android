@@ -14,11 +14,6 @@ import java.lang.annotation.Target;
 public @interface Column {
 
     /**
-     * 表字段名
-     */
-    String name();
-
-    /**
      * 是否为主键 默认不是主键
      */
     boolean primaryKey() default false;

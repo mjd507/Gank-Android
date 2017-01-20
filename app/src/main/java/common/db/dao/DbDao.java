@@ -30,25 +30,13 @@ public class DbDao {
         this.mDbHelper = new DbHelper(context, params.dbName, null, params.dbVersion, dbUpdateListener);
     }
 
-    public SQLiteDatabase openDatabase(boolean isWritableDatabase) {
-        if (isWritableDatabase) {
-            mDb = mDbHelper.getWritableDatabase();
-        } else {
-            mDb = mDbHelper.getReadableDatabase();
-        }
-        return mDb;
-    }
-
-    public boolean isOpen() {
-        return mDb != null && mDb.isOpen();
-    }
-
     /**
      * INSERT, UPDATE, DELETE
      */
     public void execute(String sql, String[] bindArgs) throws Exception {
         LogUtils.i(TAG, "准备执行SQL[ " + sql + " ]语句");
-        if (isOpen()) {
+        mDb = mDbHelper.getWritableDatabase();
+        if (mDb.isOpen()) {
             if (!TextUtils.isEmpty(sql)) {
                 if (bindArgs != null) {
                     mDb.execSQL(sql, bindArgs);
@@ -60,23 +48,28 @@ public class DbDao {
         } else {
             throw new Exception("数据库未打开！");
         }
-
     }
 
     public long insert(Object entity) {
-        if (isOpen()) {
+        mDb = mDbHelper.getWritableDatabase();
+        if (mDb.isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(entity.getClass());
-            return mDb.insert(tableEntity.getTableName(), null, tableEntity.createContentValues(entity));
+            long result = mDb.insert(tableEntity.getTableName(), null, tableEntity.createContentValues(entity));
+            mDb.close();
+            return result;
         } else {
             LogUtils.e(TAG, "数据库未打开！");
             return -1;
         }
     }
 
-    public Boolean delete(Class<?> tableClazz, String whereClause, String[] whereArgs) {
-        if (isOpen()) {
+    public boolean delete(Class<?> tableClazz, String whereClause, String[] whereArgs) {
+        mDb = mDbHelper.getWritableDatabase();
+        if (mDb.isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            return mDb.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
+            boolean result = mDb.delete(tableEntity.getTableName(), whereClause, whereArgs) > 0;
+            mDb.close();
+            return result;
         } else {
             LogUtils.e(TAG, "数据库未打开！");
             return false;
@@ -85,10 +78,13 @@ public class DbDao {
 
     public long update(Class<?> tableClazz, Object entity,
                        String whereClause, String[] whereArgs) {
-        if (isOpen()) {
+        mDb = mDbHelper.getWritableDatabase();
+        if (mDb.isOpen()) {
             TableEntity tableEntity = TablesManager.getInstance().find(tableClazz);
-            return mDb.update(tableEntity.getTableName(), tableEntity.createContentValues(entity),
+            int result = mDb.update(tableEntity.getTableName(), tableEntity.createContentValues(entity),
                     whereClause, whereArgs);
+            mDb.close();
+            return result;
         } else {
             LogUtils.e(TAG, "数据库未打开！");
             return -1;
@@ -99,7 +95,8 @@ public class DbDao {
                                   Class<?> tableClazz, String[] columns, String selection,
                                   String[] selectionArgs, String groupBy, String having,
                                   String orderBy, String limit) {
-        if (!isOpen()) {
+        mDb = mDbHelper.getReadableDatabase();
+        if (!mDb.isOpen()) {
             LogUtils.e(TAG, "数据库未打开！");
             return null;
         }
@@ -143,12 +140,9 @@ public class DbDao {
             LogUtils.e(TAG, e.getMessage());
         } finally {
             cursor.close();
+            mDb.close();
         }
         return arrayList;
-    }
-
-    public void close() {
-        mDb.close();
     }
 
 }

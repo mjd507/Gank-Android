@@ -17,13 +17,13 @@
         DbManager.DbParams params = new DbManager.DbParams();
         params.dbName = "xx.db";
         params.dbVersion = 1;
-        dbManager = DbManager.getInstance(this, params);
+        DbManager dbManager = DbManager.getInstance();
+        dbManager.init(this, params);
     ```
 
 - 创建数据库
     ```
         DbDao dao = dbManager.getDao(null); //param  --> dbUpdateListener -- see DemoDbActivity how to use
-        dao.openDatabase(true); // params --> isWritableDatabase
     ```
 
 - 创建表

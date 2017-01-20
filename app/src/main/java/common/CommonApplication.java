@@ -2,6 +2,7 @@ package common;
 
 import android.app.Application;
 
+import common.db.DbManager;
 import common.netstate.NetChangeObserver;
 import common.netstate.NetStateReceiver;
 import common.netstate.NetworkUtils;
@@ -23,6 +24,19 @@ public class CommonApplication extends Application {
 
         initNetChangeReceiver();
 
+        initDbManager();
+
+    }
+
+    /**
+     * 初始化数据库管理者
+     */
+    private void initDbManager() {
+        DbManager.DbParams params = new DbManager.DbParams();
+        params.dbName = "TuHu.db";
+        params.dbVersion = 2;
+        DbManager dbManager = DbManager.getInstance();
+        dbManager.init(this, params);
     }
 
     /**

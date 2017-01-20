@@ -20,24 +20,24 @@ public class DbManager {
 
     private static DbManager dbManager;
 
-    public static DbManager getInstance(Context context, DbParams params) {
+    public static DbManager getInstance() {
         if (dbManager == null) {
             synchronized (DbManager.class) {
                 if (dbManager == null) {
-                    if (params == null) {
-                        params = new DbParams();
-                        params.dbName = DB_NAME;
-                        params.dbVersion = DB_VERSION;
-                    }
-                    dbManager = new DbManager(context.getApplicationContext(), params);
+                    dbManager = new DbManager();
                 }
             }
         }
         return dbManager;
     }
 
-    private DbManager(Context context, DbParams params) {
+    public void init(Context context, DbParams params) {
         this.context = context;
+        if (params == null) {
+            params = new DbParams();
+            params.dbName = DB_NAME;
+            params.dbVersion = DB_VERSION;
+        }
         this.params = params;
     }
 

@@ -11,7 +11,6 @@ import common.db.DbManager;
 
 public class MyApplication extends Application {
 
-    public DbManager dbManager;
 
     @Override
     public void onCreate() {
@@ -21,12 +20,8 @@ public class MyApplication extends Application {
         DbManager.DbParams params = new DbManager.DbParams();
         params.dbName = "TuHu.db";
         params.dbVersion = 2;
-        dbManager = DbManager.getInstance(this, params);
+        DbManager.getInstance().init(this, params);
 
-    }
-
-    public DbManager getDbManager() {
-        return dbManager;
     }
 
 }

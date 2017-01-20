@@ -21,14 +21,8 @@ public class ColumnEntity {
     ColumnEntity(Field field) {
         this.field = field;
         field.setAccessible(true);//设置访问权限
-        if (field.isAnnotationPresent(Column.class)) {
-            this.name = field.getAnnotation(Column.class).name();
-            this.primaryKey = field.getAnnotation(Column.class).primaryKey();
-        } else {
-            this.name = field.getName();
-            this.primaryKey = false;
-        }
-
+        this.name = field.getName();
+        this.primaryKey = field.isAnnotationPresent(Column.class) && field.getAnnotation(Column.class).primaryKey();
         this.type = field.getType();
     }
 
@@ -42,23 +36,6 @@ public class ColumnEntity {
 
     boolean isPrimaryKey() {
         return primaryKey;
-    }
-
-    String getSqlType() {
-        if (primaryKey) {
-            return "INTEGER PRIMARY KEY AUTOINCREMENT";
-        } else if (type.equals(String.class)) {
-            return "TEXT";
-        } else if (type.equals(int.class) || type.equals(Integer.class)) {
-            return "INT";
-        } else if (type.equals(long.class) || type.equals(Long.class)) {
-            return "INT";
-        } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
-            return "INT";
-        } else if (type.equals(double.class) || type.equals(Double.class)) {
-            return "FLOAT";
-        }
-        return null;
     }
 
     public void setValue(Object entity, Object value) {

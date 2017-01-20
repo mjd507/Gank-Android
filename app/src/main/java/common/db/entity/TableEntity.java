@@ -47,11 +47,29 @@ public class TableEntity {
 
         for (ColumnEntity field : fields) {
             sb.append(field.getName()).append(" ");
-            sb.append(field.getSqlType()).append(" ");
+            sb.append(getSqlType(field)).append(" ");
             sb.append(index < fields.size() - 1 ? "," : ")");
             index++;
         }
         return sb.toString();
+    }
+
+    private String getSqlType(ColumnEntity field) {
+        Class type = field.getType();
+        if (field.isPrimaryKey()) {
+            return "INTEGER PRIMARY KEY AUTOINCREMENT";
+        } else if (type.equals(String.class)) {
+            return "TEXT";
+        } else if (type.equals(int.class) || type.equals(Integer.class)) {
+            return "INT";
+        } else if (type.equals(long.class) || type.equals(Long.class)) {
+            return "INT";
+        } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
+            return "INT";
+        } else if (type.equals(double.class) || type.equals(Double.class)) {
+            return "FLOAT";
+        }
+        return null;
     }
 
     public ContentValues createContentValues(Object entity) {
