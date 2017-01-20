@@ -1,4 +1,4 @@
-package common.test.utilsTest;
+package com.cleaner.commonandroid.utilsTest;
 
 
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package common.test.dbTest.normal;
+package com.cleaner.commonandroid.dbTest.normal;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

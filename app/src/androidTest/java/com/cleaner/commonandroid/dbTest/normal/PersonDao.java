@@ -1,14 +1,14 @@
-package common.test.dbTest.normal;
+package com.cleaner.commonandroid.dbTest.normal;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.cleaner.commonandroid.dbTest.been.Person;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import common.test.dbTest.been.Person;
 
 /**
  * 描述:

@@ -319,7 +319,7 @@ public class FileUtils {
 
     public static String byte2MemorySize(long byteNum) {
         if (byteNum < 0) {
-            return "shouldn't be less than zero!";
+            return "";
         } else if (byteNum < ConstUtils.KB) {  // < 1 KB  -> 保留整数
             return String.format("%dB", byteNum);
         } else if (byteNum < ConstUtils.MB) {   // < 1 MB  -> 保留 1 位小数

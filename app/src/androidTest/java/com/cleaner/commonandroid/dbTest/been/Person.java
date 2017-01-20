@@ -1,4 +1,4 @@
-package common.test.dbTest.been;
+package com.cleaner.commonandroid.dbTest.been;
 
 /**
  * 描述:

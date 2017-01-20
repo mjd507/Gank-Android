@@ -36,26 +36,11 @@ public class EncodeUtils {
         }
     }
 
-
     /**
      * Base64编码
      */
     public static byte[] base64Encode(byte[] input) {
         return Base64.encode(input, Base64.NO_WRAP);
-    }
-
-    /**
-     * Base64编码
-     */
-    public static String base64Encode2String(byte[] input) {
-        return Base64.encodeToString(input, Base64.NO_WRAP);
-    }
-
-    /**
-     * Base64解码
-     */
-    public static byte[] base64Decode(String input) {
-        return Base64.decode(input, Base64.NO_WRAP);
     }
 
     /**
