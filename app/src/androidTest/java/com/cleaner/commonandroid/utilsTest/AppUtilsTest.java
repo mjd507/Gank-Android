@@ -40,75 +40,16 @@ public class AppUtilsTest {
         LogUtils.d("AppUtilsTest", "版本号:" + appVersionName + "  版本码:" + appVersionCode);
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        LinearLayout contentView = new LinearLayout(this);
-//        contentView.setOrientation(LinearLayout.VERTICAL);
-//
-//        Button btnInstallApp = new Button(this);
-//        btnInstallApp.setText("安装下载好的 app");
-//        btnInstallApp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AppUtils.installApp(getApplicationContext(), new File(SDCardUtils.getSDCardPath() + "SDCardUtilsTest.apk"));
-//            }
-//        });
-//
-//
-//        Button btnAppInfo = new Button(this);
-//        btnAppInfo.setText("app 版本号 和 版本码");
-//        btnAppInfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String appVersionName = AppUtils.getAppVersionName(getApplicationContext());
-//                int appVersionCode = AppUtils.getAppVersionCode(getApplicationContext());
-//                ToastUtils.showShort(getApplicationContext(), "版本号:" + appVersionName + "  版本码:" + appVersionCode);
-//            }
-//        });
-//
-//        Button btnAppForeground = new Button(this);
-//        btnAppForeground.setText("app 是否在前台");
-//        btnAppForeground.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean appForeground = AppUtils.isAppForeground(getApplicationContext());
-//                ToastUtils.showShort(getApplicationContext(), appForeground ? "app在前台" : "app进入后台");
-//            }
-//        });
-//
-//
-//        Button btnAppClean = new Button(this);
-//        btnAppClean.setText("清除 app 数据");
-//        btnAppClean.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean b = AppUtils.cleanAppData(getApplicationContext(), new File[]{});
-//                ToastUtils.showShort(getApplicationContext(), b ? "清除成功" : "清除失败");
-//            }
-//        });
-//
-//        contentView.addView(btnInstallApp);
-//        contentView.addView(btnAppInfo);
-//        contentView.addView(btnAppForeground);
-//        contentView.addView(btnAppClean);
-//
-//
-//        setContentView(contentView);
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        boolean appForeground = AppUtils.isAppForeground(getApplicationContext());
-//        ToastUtils.showShort(getApplicationContext(), appForeground ? "app在前台" : "app进入后台");
-//    }
-//
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        boolean appForeground = AppUtils.isAppForeground(getApplicationContext());
-//        ToastUtils.showShort(getApplicationContext(), appForeground ? "app在前台" : "app进入后台");
-//    }
+    @Test
+    public void isForeground() {
+        boolean appForeground = AppUtils.isAppForeground(context);
+        LogUtils.d("AppUtilsTest", "isForeground:" + appForeground);
+    }
+
+    @Test
+    public void cleanData(){
+        boolean b = AppUtils.cleanAppData(context, new File[]{});
+        LogUtils.d("AppUtilsTest", b ? "清除成功" : "清除失败");
+    }
+
 }

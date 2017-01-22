@@ -1,9 +1,7 @@
-package com.cleaner.commonandroid.dbTest.sample;
+package com.cleaner.commonandroid.dbTest;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
-import com.cleaner.commonandroid.dbTest.been.Person;
 
 import org.junit.Before;
 import org.junit.Test;
