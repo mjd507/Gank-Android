@@ -3,6 +3,7 @@ package common;
 import android.app.Application;
 
 import common.db.DbManager;
+import common.http.volley.VolleyFactory;
 import common.netstate.NetChangeObserver;
 import common.netstate.NetStateReceiver;
 import common.netstate.NetworkUtils;
@@ -26,6 +27,11 @@ public class CommonApplication extends Application {
 
         initDbManager();
 
+        initVolleyFactory();
+    }
+
+    private void initVolleyFactory() {
+        VolleyFactory instance = VolleyFactory.getInstance(this);
     }
 
     /**
