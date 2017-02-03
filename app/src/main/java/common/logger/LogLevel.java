@@ -1,4 +1,4 @@
-package common.utils.logger;
+package common.logger;
 
 public enum LogLevel {
 

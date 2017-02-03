@@ -1,4 +1,4 @@
-package common.utils.logger;
+package common.logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;

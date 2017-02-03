@@ -1,4 +1,4 @@
-package common.utils.logger;
+package common.logger;
 
 public interface LogAdapter {
   void d(String tag, String message);
