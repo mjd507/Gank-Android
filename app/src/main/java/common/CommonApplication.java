@@ -4,6 +4,9 @@ import android.app.Application;
 
 import common.db.DbManager;
 import common.http.volley.VolleyFactory;
+import common.logger.AndroidLogAdapter;
+import common.logger.LogLevel;
+import common.logger.Logger;
 import common.netstate.NetChangeObserver;
 import common.netstate.NetStateReceiver;
 import common.netstate.NetworkUtils;
@@ -28,6 +31,18 @@ public class CommonApplication extends Application {
         initDbManager();
 
         initVolleyFactory();
+
+        initLogger();
+    }
+
+    private void initLogger() {
+        Logger
+                .init("COMMON_TAG")                 // default PRETTYLOGGER or use just init()
+                .methodCount(3)                 // default 2
+                .hideThreadInfo()               // default shown
+                .logLevel(LogLevel.FULL)        // default LogLevel.FULL
+                .methodOffset(2)                // default 0
+                .logAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
     }
 
     private void initVolleyFactory() {
@@ -39,8 +54,8 @@ public class CommonApplication extends Application {
      */
     private void initDbManager() {
         DbManager.DbParams params = new DbManager.DbParams();
-        params.dbName = "TuHu.db";
-        params.dbVersion = 2;
+        params.dbName = "Common.db";
+        params.dbVersion = 1;
         DbManager dbManager = DbManager.getInstance();
         dbManager.init(this, params);
     }

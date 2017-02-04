@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley;
 import common.cache.LruBitmapCache;
 
 /**
- * 描述: 网络请求队列的生产工厂
+ * 描述:
  * Created by mjd on 2017/2/3.
  */
 
