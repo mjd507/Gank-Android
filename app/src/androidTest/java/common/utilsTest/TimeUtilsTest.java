@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.utilsTest;
+package common.utilsTest;
 
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class TimeUtilsTest {
         System.out.println(s2);
     }
 //
-//    @Test
+//    @DownLoadTest
 //    public void string2Millis() {
 //        String time = "2016-12-23 10:22:19";
 //        long l = TimeUtils.string2Millis(time);
@@ -33,7 +33,7 @@ public class TimeUtilsTest {
 //        System.out.println(l2);
 //    }
 //
-//    @Test
+//    @DownLoadTest
 //    public void string2Date() {
 //        String time = "2016-12-23 10:22:19";
 //        Date date = TimeUtils.string2Date(time);

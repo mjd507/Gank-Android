@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.uiTest;
+package common.uiTest;
 
 import android.app.Activity;
 import android.content.Context;

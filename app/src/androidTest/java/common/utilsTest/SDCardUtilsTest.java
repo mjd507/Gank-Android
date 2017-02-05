@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.utilsTest;
+package common.utilsTest;
 
 import android.support.test.runner.AndroidJUnit4;
 

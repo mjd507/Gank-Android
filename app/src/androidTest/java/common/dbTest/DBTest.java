@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.dbTest;
+package common.dbTest;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;

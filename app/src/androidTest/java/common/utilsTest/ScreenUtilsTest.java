@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.utilsTest;
+package common.utilsTest;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -30,19 +30,19 @@ public class ScreenUtilsTest {
         LogUtils.d("ScreenUtilsTest", "手机 宽 : " + screenSize[0] + ", 高 : " + screenSize[1]);
     }
 
-//    @Test
+//    @DownLoadTest
 //    public void getScreenRotation() {
 //        int screenRotation = ScreenUtils.getScreenRotation(context);
 //        LogUtils.d("ScreenUtilsTest", "手机旋转的角度为 : " + screenRotation);
 //    }
 //
-//    @Test
+//    @DownLoadTest
 //    public void captureWithStatusBar() {
 //        Bitmap bitmap = ScreenUtils.captureWithStatusBar(context);
 //        LogUtils.d("ScreenUtilsTest", "captureWithStatusBar : " + bitmap.getHeight());
 //    }
 //
-//    @Test
+//    @DownLoadTest
 //    public void captureWithoutStatusBar() {
 //        Bitmap bitmap = ScreenUtils.captureWithStatusBar(context);
 //        LogUtils.d("ScreenUtilsTest", "captureWithoutStatusBar : " + bitmap.getHeight());

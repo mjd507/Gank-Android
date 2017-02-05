@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.dbTest;
+package common.dbTest;
 
 /**
  * 描述:

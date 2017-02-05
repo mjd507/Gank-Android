@@ -22,15 +22,14 @@ public class DownloadThread extends Thread {
     private int threadId;
     private int startPos;
     private int endPos;
-    private File file;
+    private File desFile;
 
-
-    public DownloadThread(URL url, int threadId, int startPos, int endPos, File file) {
+    public DownloadThread(URL url, int threadId, int startPos, int endPos, File desFile) {
         this.url = url;
         this.threadId = threadId;
         this.startPos = startPos;
         this.endPos = endPos;
-        this.file = file;
+        this.desFile = desFile;
     }
 
     @Override
@@ -44,29 +43,32 @@ public class DownloadThread extends Thread {
             conn.setRequestProperty("Range", "bytes=" + startPos + "-" + endPos);
             conn.setRequestMethod("GET");
 
-            LogUtils.d(TAG, "线程 ：" + threadId + "下载：--  " + startPos + "-->" + endPos);
+            LogUtils.d(TAG, "thread ：" + threadId + " download ：--  " + startPos + "-->" + endPos);
 
             int code = conn.getResponseCode();//从服务器请求全部资源200 ok 如果从服务器请求部分资源 206 ok
             if (code == 206) {
                 InputStream is = conn.getInputStream();
 
-                RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+                RandomAccessFile raf = new RandomAccessFile(desFile, "rwd");
                 raf.seek(startPos);//随机写文件的时候 从哪个位置开始写
+
                 byte[] buffer = new byte[2048];
-                int len = 0;
+                int len;
                 while ((len = is.read(buffer)) != -1) {
                     raf.write(buffer, 0, len);
                 }
                 is.close();
                 raf.close();
-                LogUtils.d(TAG, "线程：" + threadId + "下载完毕！");
-
+                LogUtils.d(TAG, "Thread ：" + threadId + " download complete ！");
             } else {
-                LogUtils.d(TAG, "线程：" + threadId + "下载失败！");
+                LogUtils.d(TAG, "Thread ：" + threadId + " download failure ！");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            //notify you can use handler or broadcast
+
         }
 
 

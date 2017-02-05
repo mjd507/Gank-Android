@@ -1,4 +1,4 @@
-package com.cleaner.commonandroid.uiTest;
+package common.uiTest;
 
 import android.app.Dialog;
 import android.content.Context;
