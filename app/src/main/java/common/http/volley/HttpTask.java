@@ -1,7 +1,5 @@
 package common.http.volley;
 
-import android.content.Context;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,31 +9,26 @@ import org.json.JSONObject;
 
 import common.CommonApplication;
 import common.netstate.NetworkUtils;
-import common.ui.dialog.LoadingDialog;
-import common.utils.ToastUtils;
 
 /**
- * 描述: 
+ * 描述: 每个网络请求的统一任务栈
  * Created by mjd on 2017/2/7.
  */
 
 public class HttpTask {
 
-    private Context context;
     private VolleyFactory volleyFactory;
-    private NetworkUtils.NetworkType mNetType;
 
+    //每个请求相关元素的封装
+    private NetworkUtils.NetworkType mNetType;
     public String url;
     public boolean isShowLoadingDialog = true;
     public boolean isPost = false;
+    public Object tag;
 
-    private LoadingDialog loadingDialog;
-
-    public HttpTask(Context context) {
-        this.context = context;
-        volleyFactory = VolleyFactory.getInstance(context);
-        CommonApplication appContext = (CommonApplication) context.getApplicationContext();
-        mNetType = appContext.mNetType;
+    public HttpTask() {
+        volleyFactory = VolleyFactory.getInstance();
+        mNetType = CommonApplication.getInstance().mNetType;
     }
 
     private Listener listener;
@@ -44,56 +37,52 @@ public class HttpTask {
         this.listener = listener;
     }
 
-    public <T> void start() {
+    public void cancelAll() {
+        volleyFactory.getRequestQueue().cancelAll(tag);
+    }
+
+    public void start() {
+        if (listener == null) return;
         if (mNetType != NetworkUtils.NetworkType.NETWORK_NONE) {
-            if (isShowLoadingDialog) {
-                showLoading();
-            }
+
+            if (isShowLoadingDialog) listener.showLoading();
+
             int method = isPost ? Request.Method.POST : Request.Method.GET;
 
             JsonObjectRequest request = new JsonObjectRequest(method, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    closeLoading();
-                    if (listener != null) {
-                        listener.onResponse(response);
-                    }
+                    if (isShowLoadingDialog) listener.hideLoading();
+                    listener.onResponse(response);
                 }
-            }, new com.android.volley.Response.ErrorListener() {
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    closeLoading();
-                    if (listener != null) {
-                        listener.onErrorResponse(error);
-                    }
+                    if (isShowLoadingDialog) listener.hideLoading();
+                    listener.onErrorResponse(error);
                 }
             });
-
+            if (tag != null) request.setTag(tag);
             volleyFactory.addToRequestQueue(request);
 
         } else {
-            ToastUtils.showShort(context, "当前网络不可用");
+            listener.netUnConnect();
         }
     }
 
-
-    private void showLoading() {
-        loadingDialog = new LoadingDialog(context);
-        loadingDialog.show();
-    }
-
-    private void closeLoading() {
-        if (loadingDialog != null) {
-            loadingDialog.dismiss();
-            loadingDialog = null;
-        }
-    }
 
     public interface Listener {
+
+        void showLoading();
+
+        void hideLoading();
+
+        void netUnConnect();
 
         void onResponse(JSONObject response);
 
         void onErrorResponse(VolleyError error);
+
     }
 
 }

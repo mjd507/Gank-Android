@@ -19,12 +19,15 @@ import common.utils.ToastUtils;
 
 public class CommonApplication extends Application {
 
+    private static CommonApplication application ;
     public NetworkUtils.NetworkType mNetType;
     private NetStateReceiver netStateReceiver;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        application = this;
 
         initNetChangeReceiver();
 
@@ -33,6 +36,10 @@ public class CommonApplication extends Application {
         initVolleyFactory();
 
         initLogger();
+    }
+
+    public static CommonApplication getInstance(){
+        return application;
     }
 
     private void initLogger() {
@@ -46,7 +53,7 @@ public class CommonApplication extends Application {
     }
 
     private void initVolleyFactory() {
-        VolleyFactory.getInstance(this);
+        VolleyFactory.getInstance().init(this);
     }
 
     /**

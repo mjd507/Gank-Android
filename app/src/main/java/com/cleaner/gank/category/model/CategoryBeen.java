@@ -1,4 +1,4 @@
-package com.cleaner.gank.model.been;
+package com.cleaner.gank.category.model;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * Created by mjd on 2017/2/7.
  */
 
-public class CategoryData extends BaseBeen{
+public class CategoryBeen {
 
     public String _id;
     public String createdAt;

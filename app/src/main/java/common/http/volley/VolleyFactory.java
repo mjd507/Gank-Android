@@ -21,21 +21,24 @@ public class VolleyFactory {
     private ImageLoader mImageLoader;
     private Context mCtx;
 
-    public static VolleyFactory getInstance(Context context){
-        if(mVolleyFactory == null){
-            mVolleyFactory = new VolleyFactory(context);
+    private VolleyFactory() {
+    }
+
+    public static VolleyFactory getInstance() {
+        if (mVolleyFactory == null) {
+            mVolleyFactory = new VolleyFactory();
         }
         return mVolleyFactory;
     }
 
-    private VolleyFactory(Context context){
+    public void init(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
         mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(LruBitmapCache.getCacheSize(mCtx)));
     }
 
-    private RequestQueue getRequestQueue() {
-        if(mRequestQueue == null){
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
         return mRequestQueue;

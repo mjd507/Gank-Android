@@ -37,7 +37,7 @@ public class HttpResponse {
     }
 
 
-    public <T> List<T> getList(String key, T type) {
+    public <T> List<T> getList(String key) {
         if (jsonObject == null) return null;
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(key);
@@ -48,5 +48,19 @@ public class HttpResponse {
         }
         return null;
     }
+
+
+    public <T> Object getObj(String key, T type) {
+        if (jsonObject == null) return null;
+        try {
+            JSONObject jsonObject = this.jsonObject.getJSONObject(key);
+            Gson gson = new Gson();
+            return gson.fromJson(jsonObject.toString(), type.getClass());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
