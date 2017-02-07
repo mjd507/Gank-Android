@@ -26,6 +26,10 @@ public class HttpResponse {
             Logger.json(jsonObject.toString());
     }
 
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
     public boolean getState(String key) {
         if (jsonObject == null) return false;
         try {
@@ -42,7 +46,8 @@ public class HttpResponse {
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(key);
             Gson gson = new Gson();
-            return gson.fromJson(jsonArray.toString(), new TypeToken<List<T>>() {}.getType());
+            return gson.fromJson(jsonArray.toString(), new TypeToken<List<T>>() {
+            }.getType());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -50,12 +55,12 @@ public class HttpResponse {
     }
 
 
-    public <T> Object getObj(String key, T type) {
+    public <T> T getObj(String key, Class<T> type) {
         if (jsonObject == null) return null;
         try {
             JSONObject jsonObject = this.jsonObject.getJSONObject(key);
             Gson gson = new Gson();
-            return gson.fromJson(jsonObject.toString(), type.getClass());
+            return (T) gson.fromJson(jsonObject.toString(), type);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
-package com.cleaner.gank.category;
+package com.cleaner.gank.tag.view;
 
-import com.cleaner.gank.category.model.CategoryBeen;
+import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  * Created by mjd on 2017/2/7.
  */
 
-public interface ICategoryInfoView {
+public interface ITagInfoView {
 
-    void showSuccessView(List<CategoryBeen> results);
+    void showSuccessView(List<TagInfoBeen> results);
 
     void showErrorView();
 

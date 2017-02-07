@@ -1,4 +1,4 @@
-package com.cleaner.gank.model;
+package com.cleaner.gank;
 
 /**
  * 描述:

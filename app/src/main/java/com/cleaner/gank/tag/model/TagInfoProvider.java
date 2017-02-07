@@ -1,9 +1,9 @@
-package com.cleaner.gank.category.model;
+package com.cleaner.gank.tag.model;
 
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
-import com.cleaner.gank.model.Urls;
+import com.cleaner.gank.Urls;
 
 import org.json.JSONObject;
 
@@ -20,15 +20,15 @@ import static com.android.volley.VolleyLog.TAG;
  * Created by mjd on 2017/2/7.
  */
 
-public class CategoryInfoProvider {
+public class TagInfoProvider {
 
-    private CategoryInfoListener categoryInfoListener;
+    private TagInfoListener tagInfoListener;
 
-    public CategoryInfoProvider(@NonNull CategoryInfoListener categoryInfoListener) {
-        this.categoryInfoListener = categoryInfoListener;
+    public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
+        this.tagInfoListener = tagInfoListener;
     }
 
-    public void getCategoryInfo(String category, String count, String page) {
+    public void getTagInfo(String category, String count, String page) {
 
         String url = Urls.GET_CATEGORY_INFO + category + "/" + count + "/" + page;
 
@@ -40,17 +40,17 @@ public class CategoryInfoProvider {
         task.setListener(new HttpTask.Listener() {
             @Override
             public void showLoading() {
-                categoryInfoListener.showLoading();
+                tagInfoListener.showLoading();
             }
 
             @Override
             public void hideLoading() {
-                categoryInfoListener.hideLoading();
+                tagInfoListener.hideLoading();
             }
 
             @Override
             public void netUnConnect() {
-                categoryInfoListener.netUnConnect();
+                tagInfoListener.netUnConnect();
             }
 
             @Override
@@ -60,7 +60,7 @@ public class CategoryInfoProvider {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                categoryInfoListener.onError(error);
+                tagInfoListener.onError(error);
             }
         });
         task.start();
@@ -70,13 +70,13 @@ public class CategoryInfoProvider {
     private void handlerResponse(JSONObject response) {
         HttpResponse res = new HttpResponse(response);
         boolean error = res.getState("error");
-        List<CategoryBeen> results = null;
+        List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
             results = res.getList("results");
         }
-        categoryInfoListener.onSuccess(results);
+        tagInfoListener.onSuccess(results);
     }
 
 

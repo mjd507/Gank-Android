@@ -1,4 +1,4 @@
-package com.cleaner.gank.category.model;
+package com.cleaner.gank.tag.model;
 
 import com.android.volley.VolleyError;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by mjd on 2017/2/7.
  */
 
-public interface CategoryInfoListener {
+public interface TagInfoListener {
 
     void showLoading();
 
@@ -17,7 +17,7 @@ public interface CategoryInfoListener {
 
     void netUnConnect();
 
-    void onSuccess(List<CategoryBeen> results);
+    void onSuccess(List<TagInfoBeen> results);
 
     void onError(VolleyError error);
 }

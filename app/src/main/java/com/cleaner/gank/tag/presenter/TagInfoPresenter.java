@@ -1,9 +1,10 @@
-package com.cleaner.gank.category;
+package com.cleaner.gank.tag.presenter;
 
 import com.android.volley.VolleyError;
-import com.cleaner.gank.category.model.CategoryBeen;
-import com.cleaner.gank.category.model.CategoryInfoListener;
-import com.cleaner.gank.category.model.CategoryInfoProvider;
+import com.cleaner.gank.tag.model.TagInfoBeen;
+import com.cleaner.gank.tag.model.TagInfoListener;
+import com.cleaner.gank.tag.model.TagInfoProvider;
+import com.cleaner.gank.tag.view.ITagInfoView;
 
 import java.util.List;
 
@@ -12,13 +13,13 @@ import java.util.List;
  * Created by mjd on 2017/2/7.
  */
 
-public class CategoryInfoPresenter {
+public class TagInfoPresenter {
 
-    private ICategoryInfoView ICategoryInfoView;
+    private ITagInfoView ITagInfoView;
     private int count = 10; //分页加载，每页十条数据
 
-    public CategoryInfoPresenter(ICategoryInfoView ICategoryInfoView) {
-        this.ICategoryInfoView = ICategoryInfoView;
+    public TagInfoPresenter(ITagInfoView ITagInfoView) {
+        this.ITagInfoView = ITagInfoView;
     }
 
     public void getAndroidInfo(String page) {
@@ -46,35 +47,35 @@ public class CategoryInfoPresenter {
     }
 
     private void getInfo(String category, String count, String page) {
-        CategoryInfoProvider categoryInfoProvider = new CategoryInfoProvider(categoryInfoListener);
-        categoryInfoProvider.getCategoryInfo(category, count, page);
+        TagInfoProvider tagInfoProvider = new TagInfoProvider(tagInfoListener);
+        tagInfoProvider.getTagInfo(category, count, page);
     }
 
-    private CategoryInfoListener categoryInfoListener = new CategoryInfoListener() {
+    private TagInfoListener tagInfoListener = new TagInfoListener() {
 
         @Override
         public void showLoading() {
-            ICategoryInfoView.showLoading();
+            ITagInfoView.showLoading();
         }
 
         @Override
         public void hideLoading() {
-            ICategoryInfoView.hideLoading();
+            ITagInfoView.hideLoading();
         }
 
         @Override
         public void netUnConnect() {
-            ICategoryInfoView.netUnConnect();
+            ITagInfoView.netUnConnect();
         }
 
         @Override
-        public void onSuccess(List<CategoryBeen> results) {
-            ICategoryInfoView.showSuccessView(results);
+        public void onSuccess(List<TagInfoBeen> results) {
+            ITagInfoView.showSuccessView(results);
         }
 
         @Override
         public void onError(VolleyError error) {
-            ICategoryInfoView.showErrorView();
+            ITagInfoView.showErrorView();
         }
     };
 
