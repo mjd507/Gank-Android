@@ -46,7 +46,7 @@ public class CommonApplication extends Application {
     }
 
     private void initVolleyFactory() {
-        VolleyFactory instance = VolleyFactory.getInstance(this);
+        VolleyFactory.getInstance(this);
     }
 
     /**
