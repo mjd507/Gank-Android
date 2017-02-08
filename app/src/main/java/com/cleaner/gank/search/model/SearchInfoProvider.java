@@ -1,4 +1,4 @@
-package com.cleaner.gank.tag.model;
+package com.cleaner.gank.search.model;
 
 import android.support.annotation.NonNull;
 
@@ -17,67 +17,60 @@ import static com.android.volley.VolleyLog.TAG;
 
 /**
  * 描述:
- * Created by mjd on 2017/2/7.
+ * Created by mjd on 2017/2/8.
  */
 
-public class TagInfoProvider {
+public class SearchInfoProvider {
 
-    private TagInfoListener tagInfoListener;
+    private SearchInfoListener searchInfoListener;
 
-    public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
-        this.tagInfoListener = tagInfoListener;
+    public SearchInfoProvider(@NonNull SearchInfoListener searchInfoListener) {
+        this.searchInfoListener = searchInfoListener;
     }
 
-    public void getTagInfo(String category, String page) {
-        //每页返回十条数据
-        String url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
-
+    public void getSearchInfo(String category, String page) {
         HttpTask task = new HttpTask();
-        task.url = url;
-        task.isPost = false;
+        task.url = Urls.GET_SEARCH + category + "/count/10/" + page;    //  /Android/count/10/page/1
         task.isShowLoadingDialog = true;
-        task.tag = category;
+        task.isPost = false;
+        task.tag = null;
         task.setListener(new HttpTask.Listener() {
             @Override
             public void showLoading() {
-                tagInfoListener.showLoading();
+                searchInfoListener.showLoading();
             }
 
             @Override
             public void hideLoading() {
-                tagInfoListener.hideLoading();
+                searchInfoListener.hideLoading();
             }
 
             @Override
             public void netUnConnect() {
-                tagInfoListener.netUnConnect();
+                searchInfoListener.netUnConnect();
             }
 
             @Override
             public void onResponse(JSONObject response) {
-                handlerResponse(response);
+                handleResponse(response);
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                tagInfoListener.onError(error);
+                searchInfoListener.onError(error);
             }
         });
         task.start();
-
     }
 
-    private void handlerResponse(JSONObject response) {
+    private void handleResponse(JSONObject response) {
         HttpResponse res = new HttpResponse(response);
         boolean error = res.getState("error");
-        List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            results = res.getList("results");
+            List<SearchBeen> results = res.getList("results");
+            searchInfoListener.onSuccess(results);
         }
-        tagInfoListener.onSuccess(results);
     }
-
-
 }

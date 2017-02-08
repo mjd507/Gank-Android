@@ -1,6 +1,6 @@
-package com.cleaner.gank.daily;
+package com.cleaner.gank.daily.view;
 
-import com.cleaner.gank.tag.model.TagInfoBeen;
+import com.cleaner.gank.daily.model.DailyBeen;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IDailyView {
 
-    void showSuccessView(List<TagInfoBeen> results);
+    void showSuccessView(List<DailyBeen> results);
 
     void showErrorView();
 
