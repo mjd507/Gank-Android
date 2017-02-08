@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import common.http.volley.HttpResponse;
@@ -54,7 +52,7 @@ public class TagInfoProvider {
             }
 
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(HttpResponse response) {
                 handlerResponse(response);
             }
 
@@ -67,14 +65,13 @@ public class TagInfoProvider {
 
     }
 
-    private void handlerResponse(JSONObject response) {
-        HttpResponse res = new HttpResponse(response);
-        boolean error = res.getState("error");
+    private void handlerResponse(HttpResponse response) {
+        boolean error = response.getState("error");
         List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            results = res.getList("results");
+            results = response.getList("results");
         }
         tagInfoListener.onSuccess(results);
     }

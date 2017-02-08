@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import common.http.volley.HttpResponse;
@@ -51,7 +49,7 @@ public class SearchInfoProvider {
             }
 
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(HttpResponse response) {
                 handleResponse(response);
             }
 
@@ -63,13 +61,12 @@ public class SearchInfoProvider {
         task.start();
     }
 
-    private void handleResponse(JSONObject response) {
-        HttpResponse res = new HttpResponse(response);
-        boolean error = res.getState("error");
+    private void handleResponse(HttpResponse response) {
+        boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            List<SearchBeen> results = res.getList("results");
+            List<SearchBeen> results = response.getList("results");
             searchInfoListener.onSuccess(results);
         }
     }

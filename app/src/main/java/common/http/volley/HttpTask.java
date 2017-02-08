@@ -53,7 +53,8 @@ public class HttpTask {
                 @Override
                 public void onResponse(JSONObject response) {
                     if (isShowLoadingDialog) listener.hideLoading();
-                    listener.onResponse(response);
+                    HttpResponse res = new HttpResponse(response);
+                    listener.onResponse(res);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -79,7 +80,7 @@ public class HttpTask {
 
         void netUnConnect();
 
-        void onResponse(JSONObject response);
+        void onResponse(HttpResponse response);
 
         void onErrorResponse(VolleyError error);
 

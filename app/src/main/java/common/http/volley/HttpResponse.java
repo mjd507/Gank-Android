@@ -26,7 +26,7 @@ public class HttpResponse {
             Logger.json(jsonObject.toString());
     }
 
-    public JSONObject getJsonObject() {
+    public JSONObject getResponse() {
         return jsonObject;
     }
 

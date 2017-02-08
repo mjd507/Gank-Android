@@ -9,62 +9,65 @@ import android.content.SharedPreferences;
  */
 
 public class SPUtils {
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
+    private static final String SHARED_PREFERENCES_NAME = "common";
+    private static SharedPreferences sp;
 
-
-    public SPUtils(Context context, String name, int mode) {
-        this.sp = context.getApplicationContext().getSharedPreferences(name, mode);
-        this.editor = this.sp.edit();
+    public static void putString(Context context, String key, String value) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        sp.edit().putString(key, value).commit();
     }
 
-    public SharedPreferences.Editor getEditor() {
-        return this.editor;
+    public static String getString(Context context, String key, String defaultValue) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        return sp.getString(key, defaultValue);
     }
 
-    public void putBoolean(String key, boolean value) {
-        this.editor.putBoolean(key, value).commit();
+    public static void putInt(Context context, String key, int value) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        sp.edit().putInt(key, value).commit();
     }
 
-    public boolean getBoolean(String key, boolean defValue) {
-        return this.sp.getBoolean(key, defValue);
+    public static int getInt(Context context, String key, int defaultValue) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        return sp.getInt(key, defaultValue);
     }
 
-    public void putFloat(String key, float value) {
-        this.editor.putFloat(key, value).commit();
+    public static void putBoolean(Context context, String key, boolean value) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        sp.edit().putBoolean(key, value).commit();
     }
 
-    public float getFloat(String key, float defValue) {
-        return this.sp.getFloat(key, defValue);
+    public static boolean getBoolean(Context context, String key, boolean defaultValue) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        return sp.getBoolean(key, defaultValue);
     }
 
-    public void putInt(String key, int value) {
-        this.editor.putInt(key, value).commit();
+    public static void putLong(Context context, String key, long value) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        sp.edit().putLong(key, value).commit();
     }
 
-    public int getInt(String key, int defValue) {
-        return this.sp.getInt(key, defValue);
+    public static long getLong(Context context, String key, long defaultValue) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        }
+        return sp.getLong(key, defaultValue);
     }
 
-    public void putLong(String key, long value) {
-        this.editor.putLong(key, value).commit();
-    }
-
-    public long getLong(String key, long defValue) {
-        return this.sp.getLong(key, defValue);
-    }
-
-    public void putString(String key, String value) {
-        this.editor.putString(key, value).commit();
-    }
-
-    public String getString(String key, String defValue) {
-        return this.sp.getString(key, defValue);
-    }
-
-    public void remove(String key) {
-        this.editor.remove(key).commit();
-    }
 
 }
 

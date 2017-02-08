@@ -6,7 +6,6 @@ import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +58,7 @@ public class DailyInfoProvider {
             }
 
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(HttpResponse response) {
                 handlerResponse(response);
             }
 
@@ -72,16 +71,15 @@ public class DailyInfoProvider {
 
     }
 
-    private void handlerResponse(JSONObject response) {
-        HttpResponse res = new HttpResponse(response);
+    private void handlerResponse(HttpResponse response) {
         List<DailyBeen> dailyInfo = new ArrayList<>();
-        boolean error = res.getState("error");
+        boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            List<String> categories = res.getList("category");
+            List<String> categories = response.getList("category");
             try {
-                HttpResponse results = new HttpResponse(response.getJSONObject("results"));
+                HttpResponse results = new HttpResponse(response.getResponse().getJSONObject("results"));
                 for (int i = 0; i < categories.size(); i++) {
                     String category = categories.get(i);
                     List<DailyBeen> dailyBeen = results.getList(category);

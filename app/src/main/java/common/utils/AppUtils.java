@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-import android.webkit.MimeTypeMap;
 
 import java.io.File;
 import java.util.List;
+
+import common.download.DownLoader;
 
 /**
  * 描述:
@@ -19,29 +19,19 @@ import java.util.List;
 
 public class AppUtils {
 
-    /**
-     * 安装App（支持6.0）
-     */
-    public static void installApp(Context context, File file) {
-        if (file != null && file.exists()) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            String type;
-            if (Build.VERSION.SDK_INT < 23) {
-                type = "application/vnd.android.package-archive";
-            } else {
-                String filePath = file.getPath();
-                String extension = "";
-                int lastPoi = filePath.lastIndexOf('.');
-                int lastSep = filePath.lastIndexOf(File.separator);
-                if (lastPoi != -1 && lastSep >= lastPoi) {
-                    extension = filePath.substring(lastPoi + 1);
-                }
-                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-            }
-            intent.setDataAndType(Uri.fromFile(file), type);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        }
+    public static long updateApp(Context context, String url, String title) {
+        return DownLoader.getInstance(context).download(url, title, "下载完成后点击安装");
+    }
+
+    public static void removeDownload(Context context, long id) {
+        DownLoader.getInstance(context).getDownloadManager().remove(id);
+    }
+
+    public static void installApp(Context context, Uri uri) {
+        Intent intent = new Intent();
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     /**
@@ -89,6 +79,7 @@ public class AppUtils {
 
     /**
      * 清除App所有数据
+     *
      * @param dirs 自定义的目录 (不指定默认会清除 应用内部的 File,DB,SP,Cache,ExternalCache)
      */
     public static boolean cleanAppData(Context context, File... dirs) {

@@ -36,6 +36,7 @@ public class CommonApplication extends Application {
         initVolleyFactory();
 
         initLogger();
+
     }
 
     public static CommonApplication getInstance(){
