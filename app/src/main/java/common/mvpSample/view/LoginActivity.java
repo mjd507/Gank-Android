@@ -1,5 +1,7 @@
 package common.mvpSample.view;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,7 +9,6 @@ import android.widget.LinearLayout;
 
 import common.CommonApplication;
 import common.mvpSample.presenter.LoginPresenter;
-import common.ui.BaseActivity;
 import common.utils.ToastUtils;
 
 /**
@@ -15,14 +16,15 @@ import common.utils.ToastUtils;
  * Created by mjd on 2017/1/6.
  */
 
-public class LoginActivity extends BaseActivity implements ILoginView {
+public class LoginActivity extends Activity implements ILoginView, View.OnClickListener {
 
     EditText mUserNameEditText, mPwdEditText;
     Button mLoginBtn;
     private LoginPresenter loginPresenter;
 
     @Override
-    protected void initViews() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         LinearLayout contentView = new LinearLayout(this);
         contentView.setOrientation(LinearLayout.VERTICAL);
         mUserNameEditText = new EditText(this);
@@ -32,20 +34,15 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         contentView.addView(mPwdEditText);
         contentView.addView(mLoginBtn);
         setContentView(contentView);
-    }
 
-    @Override
-    protected void initData() {
         loginPresenter = new LoginPresenter(this);
-    }
 
-    @Override
-    protected void initListeners() {
         mLoginBtn.setOnClickListener(this);
     }
 
+
     @Override
-    protected void handleClick(View view) {
+    public void onClick(View view) {
         if (view == mLoginBtn) {
             String username = mUserNameEditText.getText().toString();
             String password = mPwdEditText.getText().toString();

@@ -34,16 +34,16 @@ public class DownLoader {
     }
 
 
-    public long download(String uri, String title, String description) {
+    public long download(String uri, String title, String description,String filename) {
 
         DownloadManager.Request req = new DownloadManager.Request(Uri.parse(uri));
 
         req.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
 
-        req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
 
         //file:///storage/emulated/0/Android/data/your-package/files/Download/
-        req.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, "update.apk");
+        req.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, filename);
 
         // 设置一些基本显示信息
         req.setTitle(title);

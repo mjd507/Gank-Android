@@ -19,8 +19,8 @@ import common.download.DownLoader;
 
 public class AppUtils {
 
-    public static long updateApp(Context context, String url, String title) {
-        return DownLoader.getInstance(context).download(url, title, "下载完成后点击安装");
+    public static long updateApp(Context context, String url, String title, String desc, String filename) {
+        return DownLoader.getInstance(context).download(url, title, desc, filename);
     }
 
     public static void removeDownload(Context context, long id) {
@@ -28,7 +28,7 @@ public class AppUtils {
     }
 
     public static void installApp(Context context, Uri uri) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

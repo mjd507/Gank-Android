@@ -2,11 +2,16 @@ package com.cleaner.gank;
 
 import android.app.DownloadManager;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
+import common.download.DownLoader;
 import common.download.DownloadCompleteReceiver;
 import common.ui.BaseActivity;
+import common.utils.AppUtils;
+import common.utils.LogUtils;
 
 /**
  * 描述:
@@ -21,7 +26,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(new TextView(this));
         isNeedUpdate = isNeedUpdate();
         if (isNeedUpdate) {
 
@@ -29,19 +34,20 @@ public class SplashActivity extends BaseActivity {
             completeReceiver.setListener(new DownloadCompleteReceiver.Listener() {
                 @Override
                 public void downloadSuccess(long id) {
-
+                    Uri downloadUri = DownLoader.getInstance(getApplicationContext()).getDownloadUri(id);
+                    LogUtils.d("downloadSuccess", "uri = " + downloadUri);
+                    AppUtils.installApp(SplashActivity.this, downloadUri);
                 }
             });
             IntentFilter filter = new IntentFilter();
             filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-            String permission = "";
-            registerReceiver(completeReceiver, filter, permission, null);
+            registerReceiver(completeReceiver, filter);
             updateApp();
         }
     }
 
     private void updateApp() {
-
+        AppUtils.updateApp(this, "http://releases.b0.upaiyun.com/hoolay.apk", "正在下载", "完成后点击安装", "hoolay.apk");
     }
 
     private boolean isNeedUpdate() {
