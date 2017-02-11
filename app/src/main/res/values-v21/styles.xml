@@ -3,7 +3,7 @@
 
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/colorPrimary</item>
@@ -13,8 +13,9 @@
         <item name="android:colorAccent">@color/colorAccent</item>
 
         <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
 
-        <!--<item name="android:windowNoTitle">true</item>-->
         <item name="android:windowBackground">@color/bg_application</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
     </style>

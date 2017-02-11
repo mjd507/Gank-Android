@@ -1,12 +1,14 @@
 package common.http.volley;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import common.logger.Logger;
@@ -41,13 +43,20 @@ public class HttpResponse {
     }
 
 
-    public <T> List<T> getList(String key) {
+    public <T> List<T> getList(String key, Class<T> type) {
         if (jsonObject == null) return null;
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(key);
             Gson gson = new Gson();
-            return gson.fromJson(jsonArray.toString(), new TypeToken<List<T>>() {
-            }.getType());
+
+            List<JsonObject> jsonObjectList = gson.fromJson(jsonArray.toString(), new TypeToken<List<JsonObject>>() {}.getType());
+
+            List<T> list = new ArrayList<>();
+            for (JsonObject jsonObject : jsonObjectList) {
+                list.add(gson.fromJson(jsonObject, type));
+            }
+            return list;
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

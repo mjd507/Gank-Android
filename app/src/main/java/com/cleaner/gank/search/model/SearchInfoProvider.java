@@ -66,7 +66,7 @@ public class SearchInfoProvider {
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            List<SearchBeen> results = response.getList("results");
+            List<SearchBeen> results = response.getList("results",SearchBeen.class);
             searchInfoListener.onSuccess(results);
         }
     }

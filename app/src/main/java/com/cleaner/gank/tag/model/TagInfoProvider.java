@@ -71,7 +71,7 @@ public class TagInfoProvider {
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            results = response.getList("results");
+            results = response.getList("results",TagInfoBeen.class);
         }
         tagInfoListener.onSuccess(results);
     }

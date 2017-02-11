@@ -1,7 +1,7 @@
 package common.ui;
 
 
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import common.ui.dialog.LoadingDialog;
 import common.utils.ToastUtils;
@@ -10,14 +10,14 @@ import common.utils.ToastUtils;
  * 描述:
  * Created by mjd on 2017/1/2.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
 
     /**
      * 显示加载框
      */
-    protected void showBaseLoading() {
+    public void showBaseLoading() {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.show();
     }
@@ -25,19 +25,19 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * 关闭加载框
      */
-    protected void closeBaseLoading() {
+    public void closeBaseLoading() {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
             loadingDialog = null;
         }
     }
 
-    protected void NetBaseUnConnect() {
+    public void showNetError() {
         ToastUtils.showShort(this, "网络不可用");
     }
 
 
-    protected void showBaseErrorView() {
+    public void showBaseErrorView() {
 
     }
 

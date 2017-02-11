@@ -2,6 +2,8 @@ package com.cleaner.gank.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
@@ -23,6 +25,8 @@ public class AndroidTagFrag extends TagFragment {
     @Override
     public void showSuccessView(List<TagInfoBeen> results) {
         super.showSuccessView(results);
-
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerView.Adapter mAdapter = new MyAdapter(results);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

@@ -77,12 +77,12 @@ public class DailyInfoProvider {
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            List<String> categories = response.getList("category");
+            List<String> categories = response.getList("category", String.class);
             try {
                 HttpResponse results = new HttpResponse(response.getResponse().getJSONObject("results"));
                 for (int i = 0; i < categories.size(); i++) {
                     String category = categories.get(i);
-                    List<DailyBeen> dailyBeen = results.getList(category);
+                    List<DailyBeen> dailyBeen = results.getList(category, DailyBeen.class);
                     dailyInfo.addAll(dailyBeen);
                 }
                 dailyInfoListener.onSuccess(dailyInfo);
