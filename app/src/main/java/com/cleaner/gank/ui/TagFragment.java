@@ -19,6 +19,8 @@ import com.cleaner.gank.tag.view.ITagInfoView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import common.http.volley.VolleyFactory;
 import common.ui.BaseActivity;
 import common.ui.BaseFragment;
@@ -31,10 +33,9 @@ import common.utils.ToastUtils;
 
 public class TagFragment extends BaseFragment implements ITagInfoView {
     protected TagInfoPresenter presenter;
-    private View view;
 
-    //@BindView(R.id.recyclerView)
-    protected RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
 
     private BaseActivity mActivity;
 
@@ -46,10 +47,9 @@ public class TagFragment extends BaseFragment implements ITagInfoView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_tag,null);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-       // ButterKnife.bind(this, view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tag, container, false);
+        ButterKnife.bind(this,view);
         return view;
     }
 
@@ -61,7 +61,7 @@ public class TagFragment extends BaseFragment implements ITagInfoView {
 
     @Override
     public void showSuccessView(List<TagInfoBeen> results) {
-        ToastUtils.showShort(mActivity,"加载成功");
+        ToastUtils.showShort(mActivity, "加载成功");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TagFragment extends BaseFragment implements ITagInfoView {
         mActivity.showBaseLoading();
     }
 
-    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         private List<TagInfoBeen> infos;
 
@@ -104,7 +104,7 @@ public class TagFragment extends BaseFragment implements ITagInfoView {
             ImageLoader imageLoader = VolleyFactory.getInstance().getImageLoader();
             holder.tvDesc.setText(infos.get(position).desc);
             List<String> images = infos.get(position).images;
-            if(images != null&& images.size()>0){
+            if (images != null && images.size() > 0) {
                 imageLoader.get(images.get(0), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -124,7 +124,7 @@ public class TagFragment extends BaseFragment implements ITagInfoView {
             return infos.size();
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder{
+        class MyViewHolder extends RecyclerView.ViewHolder {
 
             private final TextView tvDesc;
             private final ImageView ivImage;

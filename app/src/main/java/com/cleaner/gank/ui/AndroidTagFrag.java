@@ -19,7 +19,7 @@ public class AndroidTagFrag extends TagFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.getInfo("Android","1");
+        presenter.getInfo("Android", "1");
     }
 
     @Override

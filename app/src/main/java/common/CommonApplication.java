@@ -2,6 +2,8 @@ package common;
 
 import android.app.Application;
 
+import butterknife.BuildConfig;
+import butterknife.ButterKnife;
 import common.db.DbManager;
 import common.http.volley.VolleyFactory;
 import common.logger.AndroidLogAdapter;
@@ -19,13 +21,14 @@ import common.utils.ToastUtils;
 
 public class CommonApplication extends Application {
 
-    private static CommonApplication application ;
+    private static CommonApplication application;
     public NetworkUtils.NetworkType mNetType;
     private NetStateReceiver netStateReceiver;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        ButterKnife.setDebug(BuildConfig.DEBUG);
 
         application = this;
 
@@ -39,7 +42,7 @@ public class CommonApplication extends Application {
 
     }
 
-    public static CommonApplication getInstance(){
+    public static CommonApplication getInstance() {
         return application;
     }
 
