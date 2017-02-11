@@ -1,5 +1,7 @@
 package com.cleaner.gank.tag.presenter;
 
+import android.widget.ImageView;
+
 import com.android.volley.VolleyError;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.model.TagInfoListener;
@@ -16,14 +18,19 @@ import java.util.List;
 public class TagInfoPresenter implements TagInfoListener {
 
     private ITagInfoView ITagInfoView;
+    private TagInfoProvider tagInfoProvider;
 
     public TagInfoPresenter(ITagInfoView ITagInfoView) {
         this.ITagInfoView = ITagInfoView;
+        tagInfoProvider = new TagInfoProvider(this);
     }
 
     public void getInfo(String category, String page) {
-        TagInfoProvider tagInfoProvider = new TagInfoProvider(this);
         tagInfoProvider.getTagInfo(category, page);
+    }
+
+    public void getImage(ImageView iv, String url, int defaultImage, int errorImage) {
+        tagInfoProvider.getImage(iv, url, defaultImage, errorImage);
     }
 
     @Override
@@ -50,4 +57,6 @@ public class TagInfoPresenter implements TagInfoListener {
     public void onError(VolleyError error) {
         ITagInfoView.showErrorView();
     }
+
+
 }

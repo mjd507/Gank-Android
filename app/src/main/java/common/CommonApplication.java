@@ -28,6 +28,7 @@ public class CommonApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         ButterKnife.setDebug(BuildConfig.DEBUG);
 
         application = this;

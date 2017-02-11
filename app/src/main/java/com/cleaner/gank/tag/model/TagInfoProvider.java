@@ -1,14 +1,17 @@
 package com.cleaner.gank.tag.model;
 
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.cleaner.gank.Urls;
 
 import java.util.List;
 
 import common.http.volley.HttpResponse;
 import common.http.volley.HttpTask;
+import common.http.volley.VolleyFactory;
 import common.utils.LogUtils;
 
 import static com.android.volley.VolleyLog.TAG;
@@ -71,9 +74,16 @@ public class TagInfoProvider {
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            results = response.getList("results",TagInfoBeen.class);
+            results = response.getList("results", TagInfoBeen.class);
         }
         tagInfoListener.onSuccess(results);
+    }
+
+
+    public void getImage(ImageView iv, String url, int defaultImage, int errorImage) {
+        ImageLoader imageLoader = VolleyFactory.getInstance().getImageLoader();
+        ImageLoader.ImageListener imageListener = ImageLoader.getImageListener(iv, defaultImage, errorImage);
+        imageLoader.get(url, imageListener);
     }
 
 

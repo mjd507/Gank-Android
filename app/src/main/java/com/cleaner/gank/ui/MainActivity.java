@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.cleaner.commonandroid.R;
+import com.cleaner.gank.tag.view.frag.AndroidTagFrag;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
