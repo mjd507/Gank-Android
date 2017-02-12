@@ -48,10 +48,9 @@ public class MainActivity extends BaseActivity {
         mViewPageAdapter.addFragment(androidTagFrag, TagType.Android);
         mViewPageAdapter.addFragment(iosTagFrag, TagType.iOS);
         mViewPageAdapter.addFragment(webTagFrag, TagType.Web);
+
         mViewPager.setAdapter(mViewPageAdapter);
-        mTabLayout.addTab(mTabLayout.newTab().setText(TagType.Android));
-        mTabLayout.addTab(mTabLayout.newTab().setText(TagType.iOS));
-        mTabLayout.addTab(mTabLayout.newTab().setText(TagType.Web));
+
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

@@ -3,8 +3,6 @@ package common.ui;
 
 import android.support.v4.app.Fragment;
 
-import common.utils.LogUtils;
-
 /**
  * 描述:
  * Created by mjd on 2017/1/2.
@@ -27,19 +25,13 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
     protected void onInvisible() {
-        LogUtils.d("BaseFragment", "do  onInvisible");
     }
 
     protected void onVisible() {
-        LogUtils.d("BaseFragment", "do  onVisible---");
         lazyLoad();
     }
 
     protected abstract void lazyLoad();
-
-}
-
 
 }

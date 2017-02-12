@@ -26,7 +26,7 @@ public class TagInfoPresenter implements TagInfoListener {
     }
 
     public void getInfo(String category, String page) {
-        tagInfoProvider.getTagInfo(category, page);
+        tagInfoProvider.getTagInfoFromNet(category, page);
     }
 
     public void getImage(ImageView iv, String url, int defaultImage, int errorImage) {

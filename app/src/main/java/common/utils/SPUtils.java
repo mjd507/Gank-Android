@@ -11,60 +11,60 @@ import android.content.SharedPreferences;
 public class SPUtils {
     private static final String SHARED_PREFERENCES_NAME = "common";
     private static SharedPreferences sp;
+    private static SPUtils spUtils;
 
-    public static void putString(Context context, String key, String value) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
-        sp.edit().putString(key, value).commit();
+    private SPUtils() {
+
     }
 
-    public static String getString(Context context, String key, String defaultValue) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    public static SPUtils getInstence() {
+        if (spUtils == null) {
+            spUtils = new SPUtils();
         }
+        return spUtils;
+    }
+
+    public void init(Context context) {
+        sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+
+    public void putString(String key, String value) {
+
+        sp.edit().putString(key, value).apply();
+    }
+
+    public String getString(String key, String defaultValue) {
+
         return sp.getString(key, defaultValue);
     }
 
-    public static void putInt(Context context, String key, int value) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
-        sp.edit().putInt(key, value).commit();
+    public void putInt(String key, int value) {
+
+        sp.edit().putInt(key, value).apply();
     }
 
-    public static int getInt(Context context, String key, int defaultValue) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
+    public int getInt(Context context, String key, int defaultValue) {
+
         return sp.getInt(key, defaultValue);
     }
 
-    public static void putBoolean(Context context, String key, boolean value) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
-        sp.edit().putBoolean(key, value).commit();
+    public void putBoolean(String key, boolean value) {
+
+        sp.edit().putBoolean(key, value).apply();
     }
 
-    public static boolean getBoolean(Context context, String key, boolean defaultValue) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
+    public boolean getBoolean(String key, boolean defaultValue) {
+
         return sp.getBoolean(key, defaultValue);
     }
 
-    public static void putLong(Context context, String key, long value) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
-        sp.edit().putLong(key, value).commit();
+    public void putLong(String key, long value) {
+
+        sp.edit().putLong(key, value).apply();
     }
 
-    public static long getLong(Context context, String key, long defaultValue) {
-        if (sp == null) {
-            sp = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
+    public long getLong(String key, long defaultValue) {
+
         return sp.getLong(key, defaultValue);
     }
 

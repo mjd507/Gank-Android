@@ -1,6 +1,5 @@
 package com.cleaner.gank.tag.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,8 +18,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import common.ui.BaseActivity;
 import common.ui.BaseFragment;
+import common.utils.ToastUtils;
 
 /**
  * 描述:
@@ -35,25 +34,20 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
 
-
-    private BaseActivity mActivity;
-
     private ItemAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    protected int page = 1;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (BaseActivity) activity;
-    }
+    protected int page;
+    private boolean isPrepared; //标记布局加载完成，避免 NullPointer
+    private boolean isLoadedTop; //控制每次 tab 切换时都加载数据的问题
+    private boolean isLoadingBottom; //控制底部加载的变量
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag, container, false);
         ButterKnife.bind(this, view);
+        isPrepared = true;
         return view;
     }
 
@@ -68,14 +62,19 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        page = 1;
+        isLoadedTop = false;
+        isLoadingBottom = false;
+        lazyLoad();
     }
 
     @Override
     public void showSuccessView(List<TagInfoBeen> results) {
-        isLoading = false;
+        isLoadingBottom = false;
 
         if (page == 1) { //first load or onRefresh
             mAdapter.getList().clear();
+            mSwipeRefreshLayout.setRefreshing(false);
         }
 
         mAdapter.addList(results);
@@ -84,26 +83,29 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
 
     @Override
     public void showErrorView() {
-        mActivity.showBaseErrorView();
+        mSwipeRefreshLayout.setRefreshing(false);
+        ToastUtils.showShort(getActivity(), "解析错误");
     }
 
     @Override
     public void netUnConnect() {
-        mActivity.showNetError();
+        mSwipeRefreshLayout.setRefreshing(false);
+        ToastUtils.showShort(getActivity(), "网络不可用");
     }
 
     @Override
     public void hideLoading() {
-        if (page == 1)
+        if(page == 1){
             mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void showLoading() {
-        if (page == 1)
+        if(page == 1){
             mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
-
 
     @Override
     public void onRefresh() {
@@ -112,7 +114,6 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
     }
 
 
-    boolean isLoading = false;
     RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
 
         private int lastVisibleItem;
@@ -122,9 +123,9 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                if (!isLoading) {
+                if (!isLoadingBottom) {
                     loadMore(++page);
-                    isLoading = true;
+                    isLoadingBottom = true;
                 }
 
             }
@@ -139,5 +140,13 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
 
     public abstract void loadMore(int page);
 
+    @Override
+    protected void lazyLoad() {
 
+        if (isPrepared && isVisible && !isLoadedTop) {
+            loadMore(page);
+            isLoadedTop = true;
+        }
+
+    }
 }

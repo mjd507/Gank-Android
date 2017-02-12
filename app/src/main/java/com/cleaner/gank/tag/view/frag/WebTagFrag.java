@@ -1,12 +1,9 @@
 package com.cleaner.gank.tag.view.frag;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
 import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.view.BaseTagFragment;
 
-import common.utils.LogUtils;
+import common.utils.EncodeUtils;
 
 /**
  * 描述:
@@ -16,15 +13,8 @@ import common.utils.LogUtils;
 public class WebTagFrag extends BaseTagFragment {
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadMore(page);
-        LogUtils.d("WebTagFrag", "onActivityCreated");
-    }
-
-    @Override
     public void loadMore(int page) {
-        presenter.getInfo(TagType.Web, page + "");
+        presenter.getInfo(EncodeUtils.urlEncode(TagType.Web), page + "");
     }
 
 

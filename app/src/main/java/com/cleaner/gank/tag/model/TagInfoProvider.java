@@ -1,6 +1,7 @@
 package com.cleaner.gank.tag.model;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
@@ -11,8 +12,10 @@ import java.util.List;
 
 import common.http.volley.HttpResponse;
 import common.http.volley.HttpTask;
+import common.http.volley.JsonUtil;
 import common.http.volley.VolleyFactory;
 import common.utils.LogUtils;
+import common.utils.SPUtils;
 
 import static com.android.volley.VolleyLog.TAG;
 
@@ -24,14 +27,25 @@ import static com.android.volley.VolleyLog.TAG;
 public class TagInfoProvider {
 
     private TagInfoListener tagInfoListener;
+    private String url;
 
     public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
         this.tagInfoListener = tagInfoListener;
     }
 
-    public void getTagInfo(String category, String page) {
+    public void getTagInfoFormLocal(String category, String page) {
         //每页返回十条数据
-        String url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
+        url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
+        String result = SPUtils.getInstence().getString(url, "");
+        if (!TextUtils.isEmpty(result)) {
+            HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
+            handlerResponse(response);
+        }
+    }
+
+    public void getTagInfoFromNet(String category, String page) {
+        //每页返回十条数据
+        url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
 
         HttpTask task = new HttpTask();
         task.url = url;
@@ -69,6 +83,7 @@ public class TagInfoProvider {
     }
 
     private void handlerResponse(HttpResponse response) {
+        SPUtils.getInstence().putString(url, response.toString());
         boolean error = response.getState("error");
         List<TagInfoBeen> results = null;
         if (error) {

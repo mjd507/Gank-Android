@@ -1,12 +1,7 @@
 package com.cleaner.gank.tag.view.frag;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
 import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.view.BaseTagFragment;
-
-import common.utils.LogUtils;
 
 /**
  * 描述:
@@ -15,12 +10,6 @@ import common.utils.LogUtils;
 
 public class AndroidTagFrag extends BaseTagFragment {
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadMore(page);
-        LogUtils.d("AndroidTagFrag", "onActivityCreated");
-    }
 
     @Override
     public void loadMore(int page) {

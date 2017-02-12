@@ -14,6 +14,7 @@ import common.logger.Logger;
 import common.netstate.NetChangeObserver;
 import common.netstate.NetStateReceiver;
 import common.netstate.NetworkUtils;
+import common.utils.SPUtils;
 import common.utils.ToastUtils;
 
 /**
@@ -46,9 +47,11 @@ public class CommonApplication extends Application {
 
         initDbManager();
 
-        initVolleyFactory();
-
         initLogger();
+
+        VolleyFactory.getInstance().init(this);
+
+        SPUtils.getInstence().init(this);
 
     }
 
@@ -64,10 +67,6 @@ public class CommonApplication extends Application {
                 .logLevel(LogLevel.FULL)        // default LogLevel.FULL
                 .methodOffset(2)                // default 0
                 .logAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
-    }
-
-    private void initVolleyFactory() {
-        VolleyFactory.getInstance().init(this);
     }
 
     /**
