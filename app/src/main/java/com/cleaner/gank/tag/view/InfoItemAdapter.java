@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by mjd on 2017/2/11.
  */
 
-public class InfoItemAdapter extends RecyclerView.Adapter<InfoItemAdapter.ItemViewHolder> {
+public class InfoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TagInfoBeen> results;
     private TagInfoPresenter presenter;
 
@@ -43,20 +43,6 @@ public class InfoItemAdapter extends RecyclerView.Adapter<InfoItemAdapter.ItemVi
         return results;
     }
 
-    public boolean isSameContent(List<TagInfoBeen> infos) {
-        if (this.results != null && infos != null && results.size() == infos.size()) {
-            for (int i = 0; i < infos.size(); i++) {
-                if (!results.get(i).equals(infos.get(i))) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private static final int TYPE_ITEM =  0;
-    private static final int TYPE_FOOTER = 1;
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,6 +50,8 @@ public class InfoItemAdapter extends RecyclerView.Adapter<InfoItemAdapter.ItemVi
         TextView tvDesc;
         @BindView(R.id.iv_iamge)
         ImageView ivImage;
+        @BindView(R.id.tv_author)
+        TextView tvAuthor;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -71,38 +59,27 @@ public class InfoItemAdapter extends RecyclerView.Adapter<InfoItemAdapter.ItemVi
         }
     }
 
-    public static class FooterViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_load_more)
-        TextView mFooterView;
-
-        public FooterViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position +  1 == getItemCount()) {
-            return TYPE_FOOTER;
-        } else {
-            return TYPE_ITEM;
-        }
-    }
-
-    @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tag, parent, false);
         return new ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.tvDesc.setText(results.get(position).desc);
-        List<String> images = results.get(position).images;
-        if (images != null && images.size() > 0) {
-            //presenter.getImage(holder.ivImage, images.get(0), R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ItemViewHolder) {
+            ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+            itemViewHolder.tvDesc.setText(results.get(position).desc);
+            List<String> images = results.get(position).images;
+            if (images != null && images.size() > 0) {
+                //图片效果不好，暂不显示
+                //String url = images.get(0) + "?imageView2/0/w/160";
+                //presenter.getImage(itemViewHolder.ivImage, url, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+            }
+            itemViewHolder.tvAuthor.setText(results.get(position).who);
         }
+
     }
 
     @Override

@@ -13,8 +13,6 @@ import com.cleaner.gank.tag.view.InfoItemAdapter;
 
 import java.util.List;
 
-import common.utils.ToastUtils;
-
 /**
  * 描述:
  * Created by mjd on 2017/2/11.
@@ -46,24 +44,14 @@ public class AndroidTagFrag extends BaseTagFragment implements SwipeRefreshLayou
             mRecyclerView.setAdapter(mAdapter);
         }
         if (page == 1) { //first load or onRefresh
-            //内容相同，没有最新内容
-            if (mAdapter.isSameContent(results)) {
-                ToastUtils.showShort(getActivity(), "暂无最新内容");
-                return;
-            } else {
-                mAdapter.getList().clear();
-                mAdapter.addList(results);
-            }
-        } else {
-            mAdapter.addList(results);
+            mAdapter.getList().clear();
         }
-
+        mAdapter.addList(results);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onRefresh() {
-        if (mSwipeRefreshLayout.isRefreshing()) return;
         page = 1;
         presenter.getInfo(TagType.Android, page + "");
     }
@@ -78,8 +66,10 @@ public class AndroidTagFrag extends BaseTagFragment implements SwipeRefreshLayou
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                if (!mSwipeRefreshLayout.isRefreshing() && !isLoading)
+                if (!isLoading) {
                     loadMore();
+                }
+
             }
         }
 

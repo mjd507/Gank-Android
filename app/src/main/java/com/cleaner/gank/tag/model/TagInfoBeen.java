@@ -17,7 +17,7 @@ public class TagInfoBeen {
     public String type;
     public String url;
     public boolean used;
-    public Object who;
+    public String who;
     public List<String> images;
 
     @Override
