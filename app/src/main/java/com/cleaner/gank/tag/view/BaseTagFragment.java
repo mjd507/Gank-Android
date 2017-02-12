@@ -3,6 +3,7 @@ package com.cleaner.gank.tag.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,12 @@ import common.ui.BaseFragment;
 
 public class BaseTagFragment extends BaseFragment implements ITagInfoView {
     protected TagInfoPresenter presenter;
-
+    protected int page = 1;
+    @BindView(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
+
 
     private BaseActivity mActivity;
 
@@ -68,12 +72,14 @@ public class BaseTagFragment extends BaseFragment implements ITagInfoView {
 
     @Override
     public void hideLoading() {
-        mActivity.closeBaseLoading();
+        if (page == 1)
+            mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showLoading() {
-        mActivity.showBaseLoading();
+        if (page == 1)
+            mSwipeRefreshLayout.setRefreshing(true);
     }
 
 

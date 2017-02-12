@@ -35,4 +35,10 @@ public class TagInfoBeen {
                 ", images=" + images +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        String id = ((TagInfoBeen) obj)._id;
+        return this._id.equals(id);
+    }
 }
