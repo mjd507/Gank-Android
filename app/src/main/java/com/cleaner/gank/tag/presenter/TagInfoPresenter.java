@@ -2,7 +2,6 @@ package com.cleaner.gank.tag.presenter;
 
 import android.widget.ImageView;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.model.TagInfoListener;
 import com.cleaner.gank.tag.model.TagInfoProvider;
@@ -54,7 +53,7 @@ public class TagInfoPresenter implements TagInfoListener {
     }
 
     @Override
-    public void onError(VolleyError error) {
+    public void onError() {
         ITagInfoView.showErrorView();
     }
 

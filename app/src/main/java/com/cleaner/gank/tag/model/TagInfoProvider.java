@@ -27,25 +27,28 @@ import static com.android.volley.VolleyLog.TAG;
 public class TagInfoProvider {
 
     private TagInfoListener tagInfoListener;
-    private String url;
 
     public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
         this.tagInfoListener = tagInfoListener;
     }
 
-    public void getTagInfoFormLocal(String category, String page) {
-        //每页返回十条数据
-        url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
+    private boolean isFromLocal;
+
+    public void getTagInfoFormLocal(String url, String category, String page) {
         String result = SPUtils.getInstence().getString(url, "");
         if (!TextUtils.isEmpty(result)) {
+            isFromLocal = true;
             HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
-            handlerResponse(response);
+            handlerResponse(url, response);
+        } else {
+            tagInfoListener.onError();
         }
     }
 
-    public void getTagInfoFromNet(String category, String page) {
+    public void getTagInfoFromNet(final String category, final String page) {
+
         //每页返回十条数据
-        url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
+        final String url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
 
         HttpTask task = new HttpTask();
         task.url = url;
@@ -65,25 +68,30 @@ public class TagInfoProvider {
 
             @Override
             public void netUnConnect() {
+                getTagInfoFormLocal(url, category, page);
                 tagInfoListener.netUnConnect();
             }
 
             @Override
             public void onResponse(HttpResponse response) {
-                handlerResponse(response);
+                handlerResponse(url, response);
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                tagInfoListener.onError(error);
+                //从网络获取失败，从本地获取
+                getTagInfoFormLocal(url, category, page);
+
             }
         });
         task.start();
 
     }
 
-    private void handlerResponse(HttpResponse response) {
-        SPUtils.getInstence().putString(url, response.toString());
+    private void handlerResponse(String url, HttpResponse response) {
+        if (!isFromLocal) { //不是从本地获取，需要写入本地
+            SPUtils.getInstence().putString(url, response.getResponse().toString());
+        }
         boolean error = response.getState("error");
         List<TagInfoBeen> results = null;
         if (error) {

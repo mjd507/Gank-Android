@@ -11,7 +11,10 @@ import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.view.adapter.PageAdapter;
 import com.cleaner.gank.tag.view.frag.AndroidTagFrag;
 import com.cleaner.gank.tag.view.frag.IOSTagFrag;
+import com.cleaner.gank.tag.view.frag.OtherTagFrag;
+import com.cleaner.gank.tag.view.frag.VideoTagFrag;
 import com.cleaner.gank.tag.view.frag.WebTagFrag;
+import com.cleaner.gank.tag.view.frag.WelfareTagFrag;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,11 +46,17 @@ public class MainActivity extends BaseActivity {
         AndroidTagFrag androidTagFrag = new AndroidTagFrag();
         IOSTagFrag iosTagFrag = new IOSTagFrag();
         WebTagFrag webTagFrag = new WebTagFrag();
+        WelfareTagFrag welfareTagFrag = new WelfareTagFrag();
+        VideoTagFrag videoTagFrag = new VideoTagFrag();
+        OtherTagFrag otherTagFrag = new OtherTagFrag();
 
         PageAdapter mViewPageAdapter = new PageAdapter(getSupportFragmentManager());
         mViewPageAdapter.addFragment(androidTagFrag, TagType.Android);
         mViewPageAdapter.addFragment(iosTagFrag, TagType.iOS);
         mViewPageAdapter.addFragment(webTagFrag, TagType.Web);
+        mViewPageAdapter.addFragment(welfareTagFrag, TagType.Welfare);
+        mViewPageAdapter.addFragment(videoTagFrag, TagType.RestVideo);
+        mViewPageAdapter.addFragment(otherTagFrag, TagType.Other);
 
         mViewPager.setAdapter(mViewPageAdapter);
 

@@ -1,7 +1,5 @@
 package com.cleaner.gank.tag.model;
 
-import com.android.volley.VolleyError;
-
 import java.util.List;
 
 /**
@@ -19,5 +17,5 @@ public interface TagInfoListener {
 
     void onSuccess(List<TagInfoBeen> results);
 
-    void onError(VolleyError error);
+    void onError();
 }
