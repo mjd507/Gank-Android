@@ -1,4 +1,4 @@
-package com.cleaner.gank.tag.view;
+package com.cleaner.gank.tag.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
  * Created by mjd on 2017/2/11.
  */
 
-public class InfoItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TagInfoBeen> results;
     private TagInfoPresenter presenter;
 
-    public InfoItemAdapter(TagInfoPresenter presenter) {
+    public ItemAdapter(TagInfoPresenter presenter) {
         if (results == null) {
             results = new ArrayList<>();
         }

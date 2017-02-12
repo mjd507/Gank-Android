@@ -13,18 +13,18 @@ import common.utils.LogUtils;
  * Created by mjd on 2017/2/11.
  */
 
-public class AndroidTagFrag extends BaseTagFragment {
+public class WebTagFrag extends BaseTagFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadMore(page);
-        LogUtils.d("AndroidTagFrag", "onActivityCreated");
+        LogUtils.d("WebTagFrag", "onActivityCreated");
     }
 
     @Override
     public void loadMore(int page) {
-        presenter.getInfo(TagType.Android, page + "");
+        presenter.getInfo(TagType.Web, page + "");
     }
 
 
