@@ -60,7 +60,7 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new ItemAdapter(presenter);
+        mAdapter = new ItemAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -146,7 +146,6 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         if (isPrepared && isVisible && !hasLoadedTop) {
             loadMore(page);
             hasLoadedTop = true;
-            isLoading = true;
         }
 
     }

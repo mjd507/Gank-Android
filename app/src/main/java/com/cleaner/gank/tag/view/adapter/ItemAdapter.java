@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
+import com.cleaner.gank.daily.image.ImagePresenter;
 import com.cleaner.gank.tag.model.TagInfoBeen;
-import com.cleaner.gank.tag.presenter.TagInfoPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +24,17 @@ import butterknife.ButterKnife;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TagInfoBeen> results;
-    private TagInfoPresenter presenter;
+    private ImagePresenter presenter;
 
-    public ItemAdapter(TagInfoPresenter presenter) {
+    public ItemAdapter() {
         if (results == null) {
             results = new ArrayList<>();
         }
-        this.presenter = presenter;
+        this.presenter = new ImagePresenter();
     }
 
     public void addList(List<TagInfoBeen> infos) {
-        if (infos != null) {
+        if (infos != null && infos.size() > 0) {
             results.addAll(infos);
         }
     }

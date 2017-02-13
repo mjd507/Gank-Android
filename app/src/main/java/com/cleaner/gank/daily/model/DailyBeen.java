@@ -17,6 +17,6 @@ public class DailyBeen {
     public String type;
     public String url;
     public boolean used;
-    public Object who;
+    public String who;
     public List<String> images;
 }

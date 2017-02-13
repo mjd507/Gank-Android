@@ -72,24 +72,25 @@ public class DailyInfoProvider {
     }
 
     private void handlerResponse(HttpResponse response) {
-        List<DailyBeen> dailyInfo = new ArrayList<>();
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
         } else {
-            List<String> categories = response.getList("category", String.class);
             try {
+                List<String> categories = response.getList("category", String.class);
+                List<DailyBeen> list = new ArrayList<>();
                 HttpResponse results = new HttpResponse(response.getResponse().getJSONObject("results"));
                 for (int i = 0; i < categories.size(); i++) {
                     String category = categories.get(i);
                     List<DailyBeen> dailyBeen = results.getList(category, DailyBeen.class);
-                    dailyInfo.addAll(dailyBeen);
+                    if (dailyBeen != null && dailyBeen.size() > 0) list.addAll(dailyBeen);
                 }
-                dailyInfoListener.onSuccess(dailyInfo);
+                dailyInfoListener.onSuccess(list);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
 }

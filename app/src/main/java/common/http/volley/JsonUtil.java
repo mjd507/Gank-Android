@@ -1,8 +1,9 @@
 package common.http.volley;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,24 +39,30 @@ public class JsonUtil {
         return false;
     }
 
-    public static <T> List<T> getList(JSONObject jsonObject, String key, Class<T> type) {
-        if (jsonObject == null) return null;
+    public static <T> List<T> getList(JSONObject jsonObj, String key, Class<T> type) {
+        if (jsonObj == null) return null;
         try {
-            JSONArray jsonArray = jsonObject.getJSONArray(key);
+            JSONArray jsonArray = jsonObj.getJSONArray(key);
             Gson gson = new Gson();
 
-            List<JsonObject> jsonObjectList = gson.fromJson(jsonArray.toString(), new TypeToken<List<JsonObject>>() {
-            }.getType());
-
             List<T> list = new ArrayList<>();
-            for (JsonObject obj : jsonObjectList) {
-                list.add(gson.fromJson(obj, type));
+            JsonArray array = new JsonParser().parse(jsonArray.toString()).getAsJsonArray();
+            for (JsonElement elem : array) {
+                list.add(new Gson().fromJson(elem, type));
             }
             return list;
+//           List<JsonObject> jsonObjectList = gson.fromJson(jsonArray.toString(), new TypeToken<List<JsonObject>>() {
+//             }.getType());
+//            List<T> list = new ArrayList<>();
+//            for (JsonObject obj : jsonObjectList) {
+//                list.add(gson.fromJson(obj, type));
+//            }
+//            return list;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

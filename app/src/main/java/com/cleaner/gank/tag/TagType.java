@@ -14,4 +14,5 @@ public class TagType {
     public static final String RestVideo = "休息视频";
     public static final String Other = "拓展资源";
     public static final String Web = "前端";
+    public static final String Mess = "瞎推荐";
 }

@@ -1,7 +1,5 @@
 package com.cleaner.gank.tag.presenter;
 
-import android.widget.ImageView;
-
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.model.TagInfoListener;
 import com.cleaner.gank.tag.model.TagInfoProvider;
@@ -26,10 +24,6 @@ public class TagInfoPresenter implements TagInfoListener {
 
     public void getInfo(String category, String page) {
         tagInfoProvider.getTagInfoFromNet(category, page);
-    }
-
-    public void getImage(ImageView iv, String url, int defaultImage, int errorImage) {
-        tagInfoProvider.getImage(iv, url, defaultImage, errorImage);
     }
 
     @Override
