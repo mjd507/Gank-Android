@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
-import com.cleaner.gank.daily.image.ImagePresenter;
 import com.cleaner.gank.daily.model.DailyBeen;
+import com.cleaner.gank.image.ImagePresenter;
 import com.cleaner.gank.tag.TagType;
 
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void addList(List<DailyBeen> result) {
         if (result != null && result.size() > 0) {
+            handleList(result);
             list.addAll(result);
-            handleList(list);
         }
     }
 

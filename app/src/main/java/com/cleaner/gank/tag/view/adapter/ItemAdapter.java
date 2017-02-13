@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
-import com.cleaner.gank.daily.image.ImagePresenter;
+import com.cleaner.gank.image.ImagePresenter;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.ArrayList;

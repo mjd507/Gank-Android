@@ -1,4 +1,4 @@
-package com.cleaner.gank.daily.image;
+package com.cleaner.gank.image;
 
 import android.widget.ImageView;
 

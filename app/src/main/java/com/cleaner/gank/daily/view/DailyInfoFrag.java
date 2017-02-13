@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.ui.BaseFragment;
 
+
 /**
  * 描述:
  * Created by mjd on 2017/2/13.
@@ -39,7 +40,6 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
 
     private boolean isPrepared;
     private boolean hasLoadedTop;
-    private boolean isLoading; //控制加载的变量
 
     @Nullable
     @Override
@@ -48,7 +48,6 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         ButterKnife.bind(this, view);
         isPrepared = true;
         hasLoadedTop = false;
-        isLoading = false;
         return view;
     }
 
@@ -61,7 +60,6 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new DailyInfoAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         loadMore();
     }
@@ -77,53 +75,23 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
     }
 
     private void loadMore() {
-
         presenter.getDailyInfo(new Date());
-
     }
-
-
-    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-
-        private int lastVisibleItem;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE
-                    && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                if (!isLoading) {
-                    loadMore();
-                    isLoading = true;
-                }
-
-            }
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-        }
-    };
-
 
     @Override
     public void showSuccessView(List<DailyBeen> results) {
-        isLoading = false;
         mAdapter.addList(results);
         mAdapter.notifyDataSetChanged();
-
     }
 
     @Override
     public void showErrorView() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void netUnConnect() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
