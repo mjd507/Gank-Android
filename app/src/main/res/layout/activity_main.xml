@@ -15,18 +15,20 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleTextColor="@color/white" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_application"
-            app:tabIndicatorColor="@color/text_red"
+            android:background="@color/colorPrimary"
             app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/text_red"
-            app:tabTextColor="@color/text_38" />
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/text_be" />
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout

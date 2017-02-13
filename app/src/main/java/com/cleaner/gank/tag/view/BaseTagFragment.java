@@ -39,8 +39,8 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
 
     protected int page;
     private boolean isPrepared; //标记布局加载完成，避免 NullPointer
-    private boolean isLoadedTop; //控制每次 tab 切换时都加载数据的问题
-    private boolean isLoadingBottom; //控制底部加载的变量
+    private boolean hasLoadedTop; //控制每次 tab 切换时都加载数据的问题
+    private boolean isLoading; //控制加载的变量
 
     @Nullable
     @Override
@@ -48,6 +48,8 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         View view = inflater.inflate(R.layout.fragment_tag, container, false);
         ButterKnife.bind(this, view);
         isPrepared = true;
+        hasLoadedTop = false;
+        isLoading = false;
         return view;
     }
 
@@ -63,14 +65,12 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         page = 1;
-        isLoadedTop = false;
-        isLoadingBottom = false;
         lazyLoad();
     }
 
     @Override
     public void showSuccessView(List<TagInfoBeen> results) {
-        isLoadingBottom = false;
+        isLoading = false;
 
         if (page == 1) { //first load or onRefresh
             mAdapter.getList().clear();
@@ -123,9 +123,9 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                if (!isLoadingBottom) {
+                if (!isLoading) {
                     loadMore(++page);
-                    isLoadingBottom = true;
+                    isLoading = true;
                 }
 
             }
@@ -143,9 +143,10 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
     @Override
     protected void lazyLoad() {
 
-        if (isPrepared && isVisible && !isLoadedTop) {
+        if (isPrepared && isVisible && !hasLoadedTop) {
             loadMore(page);
-            isLoadedTop = true;
+            hasLoadedTop = true;
+            isLoading = true;
         }
 
     }

@@ -6,6 +6,7 @@ import com.cleaner.gank.daily.model.DailyBeen;
 import com.cleaner.gank.daily.model.DailyInfoListener;
 import com.cleaner.gank.daily.model.DailyInfoProvider;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +22,9 @@ public class DailyInfoPresenter implements DailyInfoListener {
         this.dailyView = dailyView;
     }
 
-    public void getDailyInfo() {
+    public void getDailyInfo(Date date) {
         DailyInfoProvider infoProvider = new DailyInfoProvider(this);
-        infoProvider.getDailyInfo();
+        infoProvider.getDailyInfo(date);
     }
 
     @Override

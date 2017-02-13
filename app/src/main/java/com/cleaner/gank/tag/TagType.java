@@ -7,6 +7,7 @@ package com.cleaner.gank.tag;
 
 public class TagType {
 
+    public static final String Daily = "推荐";
     public static final String Android = "Android";
     public static final String iOS = "iOS";
     public static final String Welfare = "福利";

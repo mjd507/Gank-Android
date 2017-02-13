@@ -1,4 +1,4 @@
-package com.cleaner.gank.ui;
+package com.cleaner.gank;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.cleaner.commonandroid.R;
+import com.cleaner.gank.daily.view.DailyInfoFrag;
 import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.view.adapter.PageAdapter;
 import com.cleaner.gank.tag.view.frag.AndroidTagFrag;
@@ -27,7 +28,6 @@ import common.ui.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
-    private String[] tags = {TagType.Android, TagType.iOS, TagType.Web, TagType.Other, TagType.RestVideo, TagType.Welfare};
     @BindView(R.id.toolBar)
     Toolbar mToolbar;
     @BindView(R.id.viewpager)
@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(mToolbar);
 
+        DailyInfoFrag dailyInfoFrag = new DailyInfoFrag();
         AndroidTagFrag androidTagFrag = new AndroidTagFrag();
         IOSTagFrag iosTagFrag = new IOSTagFrag();
         WebTagFrag webTagFrag = new WebTagFrag();
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivity {
         OtherTagFrag otherTagFrag = new OtherTagFrag();
 
         PageAdapter mViewPageAdapter = new PageAdapter(getSupportFragmentManager());
+        mViewPageAdapter.addFragment(dailyInfoFrag, TagType.Daily);
         mViewPageAdapter.addFragment(androidTagFrag, TagType.Android);
         mViewPageAdapter.addFragment(iosTagFrag, TagType.iOS);
         mViewPageAdapter.addFragment(webTagFrag, TagType.Web);

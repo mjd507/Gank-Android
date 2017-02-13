@@ -32,8 +32,8 @@ public class DailyInfoProvider {
     }
 
 
-    public void getDailyInfo() {
-        String day = TimeUtils.date2String(new Date(), "yyyy/MM/dd");
+    public void getDailyInfo(Date date) {
+        String day = TimeUtils.date2String(date, "yyyy/MM/dd");
         String url = Urls.GET_DAILY_INFO + day;
 
         HttpTask task = new HttpTask();
