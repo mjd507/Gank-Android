@@ -85,6 +85,8 @@ public class NetworkUtils {
     public static void unRegisterNetStateReceiver(Context context, NetStateReceiver receiver) {
         try {
             context.getApplicationContext().unregisterReceiver(receiver);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             receiver.destroyInstance();
         }

@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">干货集中营</string>
-    <string name="share">分享</string>
     <string name="share_page"><![CDATA[<string name=\"share_page\" translatable=\"false\">「%1$s%2$1s (分享自 @Gank) </string>]]></string>
 </resources>

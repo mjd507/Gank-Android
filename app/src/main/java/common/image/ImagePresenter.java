@@ -18,7 +18,7 @@ public class ImagePresenter {
 
     public void getImage(ImageView iv, String url) {
         ImageProvider imageProvider = new ImageProvider();
-        imageProvider.getImage(iv, url, R.mipmap.loading, R.mipmap.error);
+        imageProvider.getImage(iv, url, R.mipmap.icon_loading, R.mipmap.icon_error);
     }
 
 }

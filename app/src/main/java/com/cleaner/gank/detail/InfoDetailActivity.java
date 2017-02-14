@@ -33,30 +33,32 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
     public static final String EXTRA_TITLE = "TITLE";
 
     @BindView(R.id.toolBar)
-    Toolbar vToolbar;
+    Toolbar mToolbar;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.webview)
-    WebView vWebView;
+    WebView mVebView;
 
-    private String mUrl;
-    private String mTitle;
+    private String url;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_info_detail);
 
         ButterKnife.bind(this);
-        setSupportActionBar(vToolbar);
+        setSupportActionBar(mToolbar);
+        //显示返回箭头
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpWebView();
 
         if (null != getIntent()) {
-            mUrl = getIntent().getStringExtra(EXTRA_URL);
-            mTitle = getIntent().getStringExtra(EXTRA_TITLE);
+            url = getIntent().getStringExtra(EXTRA_URL);
+            title = getIntent().getStringExtra(EXTRA_TITLE);
         }
-        setTitle(mTitle);
-        vWebView.loadUrl(mUrl);
+        setTitle(title);
+        mVebView.loadUrl(url);
     }
 
     @Override
@@ -67,16 +69,16 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     protected void onPause() {
         super.onPause();
-        if (null != vWebView) {
-            vWebView.onPause();
+        if (null != mVebView) {
+            mVebView.onPause();
         }
     }
 
     private void setUpWebView() {
-        WebSettings settings = vWebView.getSettings();
+        WebSettings settings = mVebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
-        vWebView.setWebViewClient(new WebViewClient() {
+        mVebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
@@ -96,7 +98,7 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-        vWebView.setWebChromeClient(new WebChromeClient() {
+        mVebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -109,8 +111,8 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && vWebView.canGoBack()) {
-            vWebView.goBack();
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mVebView.canGoBack()) {
+            mVebView.goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -126,9 +128,11 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (vWebView.canGoBack()) {
-                    vWebView.goBack();
+                if (mVebView.canGoBack()) {
+                    mVebView.goBack();
                     return true;
+                }else{
+                    finish();
                 }
                 break;
             case R.id.action_share:
@@ -141,29 +145,29 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
     }
 
     private void sharePage() {
-        String title = vWebView.getTitle();
-        String url = vWebView.getUrl();
+        String title = mVebView.getTitle();
+        String url = mVebView.getUrl();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_page, title, url));
         intent.setType("text/plain");
-        startActivity(Intent.createChooser(intent, getString(R.string.share)));
+        startActivity(Intent.createChooser(intent, "分享"));
     }
 
     @Override
     public void onRefresh() {
-        vWebView.reload();
+        mVebView.reload();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != vWebView) {
+        if (null != mVebView) {
             // After Android 5.1, there has a problem in Webview:
             // if onDetach is called after destroy, AwComponentCallbacks object will be leaked.
-            if (null != vWebView.getParent()) {
-                ((ViewGroup) vWebView.getParent()).removeView(vWebView);
+            if (null != mVebView.getParent()) {
+                ((ViewGroup) mVebView.getParent()).removeView(mVebView);
             }
-            vWebView.destroy();
+            mVebView.destroy();
         }
     }
 }

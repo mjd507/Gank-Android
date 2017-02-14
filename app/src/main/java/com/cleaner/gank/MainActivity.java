@@ -20,6 +20,7 @@ import com.cleaner.gank.tag.view.frag.WelfareTagFrag;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.ui.BaseActivity;
+import common.utils.ToastUtils;
 
 /**
  * 描述:
@@ -63,5 +64,22 @@ public class MainActivity extends BaseActivity {
         mViewPager.setAdapter(mViewPageAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private long firstTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - firstTime > 2000) {
+            ToastUtils.showShort(this, "再按一次返回键退出");
+            firstTime = System.currentTimeMillis();
+            return;
+        } else {
+            GankApplication application = (GankApplication) getApplication();
+            application.destroyReceiver();
+            finish();
+        }
+        super.onBackPressed();
+
     }
 }

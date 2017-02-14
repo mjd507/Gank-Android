@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
 import com.cleaner.gank.daily.model.DailyBeen;
+import com.cleaner.gank.detail.ImageDetailActivity;
 import com.cleaner.gank.detail.InfoDetailActivity;
 import com.cleaner.gank.tag.TagType;
 
@@ -90,9 +91,16 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
-            String url = list.get(position).url;
-            url += "?imageView2/0/w/500";
-            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url);
+            final String url = list.get(position).url;
+            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url + "?imageView2/0/w/500");
+            ((HeaderViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ImageDetailActivity.class);
+                    intent.putExtra(ImageDetailActivity.URL, url);
+                    v.getContext().startActivity(intent);
+                }
+            });
         } else if (holder instanceof ItemViewHolder) {
             DailyBeen lastDailyBeen = list.get(position - 1);
             final DailyBeen dailyBeen = list.get(position);

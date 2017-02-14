@@ -8,4 +8,7 @@ import common.ui.BaseActivity;
  */
 
 public class ImageDetailActivity extends BaseActivity {
+
+    public static final String URL = "URL";
+
 }

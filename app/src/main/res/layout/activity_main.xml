@@ -15,9 +15,12 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextColor="@color/white" />
+            app:navigationIcon="@mipmap/icon_navigation"
+            app:popupTheme="@style/ToolbarPopupTheme"
+            app:theme="@style/ToolbarTheme"
+            app:titleTextAppearance="@style/ToolbarTitle" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"

@@ -1,25 +1,50 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/bg_application</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
+
+        <!-- toolbar（actionbar）背景颜色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--toolbar标题文字颜色-->
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+
+    <style name="AppTheme" parent="AppTheme.Base">
 
         <!-- Customize your theme here. -->
 
-        <item name="windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
 
-        <item name="android:windowBackground">@color/bg_application</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
     </style>
 
-    <style name="OverFlowMenuTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- 设置Menu菜单的背景色 -->
-        <item name="android:itemBackground">@android:color/white</item>
-        <!-- 设置Menu菜单的字体颜色 -->
-        <item name="android:textColorPrimary">@android:color/black</item>
-        <!-- 设置Menu窗口不覆盖Toolbar视图 -->
-        <item name="overlapAnchor">false</item>
+    <!-- toolbar标题文字样式 -->
+    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
     </style>
+
+    <!-- toolbar menu 文字样式 -->
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/ToolbarMenuTextSize</item>
+    </style>
+
+    <style name="ToolbarMenuTextSize" parent="@style/TextAppearance.AppCompat.Menu">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- toolbar弹出菜单样式 -->
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+
 
     <!-- activity之间的切换动画效果  -->
     <style name="WindowAnimationStyle" parent="@android:style/Animation">

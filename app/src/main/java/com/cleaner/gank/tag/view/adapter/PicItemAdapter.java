@@ -1,5 +1,6 @@
 package com.cleaner.gank.tag.view.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cleaner.commonandroid.R;
-import common.image.ImagePresenter;
+import com.cleaner.gank.detail.ImageDetailActivity;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import common.image.ImagePresenter;
 
 /**
  * 描述:
@@ -58,13 +60,19 @@ public class PicItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PicViewHolder picViewHolder = (PicViewHolder) holder;
-        String url = results.get(position).url;
-        url += "?imageView2/0/w/" + screenSize[0];
+        final String url = results.get(position).url;
         ViewGroup.LayoutParams params = picViewHolder.ivImage.getLayoutParams();
         params.height = screenSize[1] / 5 * 2;
         picViewHolder.ivImage.setLayoutParams(params);
-        presenter.getImage(picViewHolder.ivImage, url);
-
+        presenter.getImage(picViewHolder.ivImage, url + "?imageView2/0/w/" + screenSize[0]);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ImageDetailActivity.class);
+                intent.putExtra(ImageDetailActivity.URL, url);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
