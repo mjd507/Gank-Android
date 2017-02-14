@@ -2,7 +2,6 @@ package com.cleaner.gank.search.model;
 
 import android.support.annotation.NonNull;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
 import java.util.List;
@@ -44,17 +43,12 @@ public class SearchInfoProvider {
             }
 
             @Override
-            public void netUnConnect() {
-                searchInfoListener.netUnConnect();
-            }
-
-            @Override
             public void onResponse(HttpResponse response) {
                 handleResponse(response);
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(HttpTask.ErrorType error) {
                 searchInfoListener.onError(error);
             }
         });

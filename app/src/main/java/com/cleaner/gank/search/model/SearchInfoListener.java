@@ -1,8 +1,8 @@
 package com.cleaner.gank.search.model;
 
-import com.android.volley.VolleyError;
-
 import java.util.List;
+
+import common.http.volley.HttpTask;
 
 /**
  * 描述:
@@ -15,10 +15,8 @@ public interface SearchInfoListener {
 
     void hideLoading();
 
-    void netUnConnect();
-
     void onSuccess(List<SearchBeen> results);
 
-    void onError(VolleyError error);
+    void onError(HttpTask.ErrorType error);
 
 }

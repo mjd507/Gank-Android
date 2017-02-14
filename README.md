@@ -82,7 +82,7 @@
     private NetChangeObserver netChangeObserver = new NetChangeObserver() {
 
         @Override
-        public void onConnect(NetworkUtils.NetworkType type) {
+        public void onConnect(NetworkUtils.NetworkType errorType) {
             //do something
         }
 

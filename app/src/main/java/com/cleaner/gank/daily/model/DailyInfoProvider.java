@@ -1,8 +1,8 @@
 package com.cleaner.gank.daily.model;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
 import org.json.JSONException;
@@ -13,7 +13,9 @@ import java.util.List;
 
 import common.http.volley.HttpResponse;
 import common.http.volley.HttpTask;
+import common.http.volley.JsonUtil;
 import common.utils.LogUtils;
+import common.utils.SPUtils;
 import common.utils.TimeUtils;
 
 import static com.android.volley.VolleyLog.TAG;
@@ -31,10 +33,23 @@ public class DailyInfoProvider {
         this.dailyInfoListener = dailyInfoListener;
     }
 
+    private boolean isFromLocal;
 
-    public void getDailyInfo(Date date) {
+    public void getDailyInfoFormLocal(String url) {
+        String result = SPUtils.getInstence().getString(url, "");
+        if (!TextUtils.isEmpty(result)) {
+            isFromLocal = true;
+            HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
+            handlerResponse(url, response);
+        } else {
+            dailyInfoListener.onError(HttpTask.ErrorType.NODATA);
+        }
+    }
+
+
+    public void getDailyInfoFromNet(Date date) {
         String day = TimeUtils.date2String(date, "yyyy/MM/dd");
-        String url = Urls.GET_DAILY_INFO + day;
+        final String url = Urls.GET_DAILY_INFO + day;
 
         HttpTask task = new HttpTask();
         task.url = url;
@@ -53,25 +68,28 @@ public class DailyInfoProvider {
             }
 
             @Override
-            public void netUnConnect() {
-                dailyInfoListener.netUnConnect();
-            }
-
-            @Override
             public void onResponse(HttpResponse response) {
-                handlerResponse(response);
+                handlerResponse(url, response);
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                dailyInfoListener.onError(error);
+            public void onErrorResponse(HttpTask.ErrorType errorType) {
+                if (errorType == HttpTask.ErrorType.NetUnConnect) {
+                    getDailyInfoFormLocal(url);
+                }
+                dailyInfoListener.onError(errorType);
             }
+
+
         });
         task.start();
 
     }
 
-    private void handlerResponse(HttpResponse response) {
+    private void handlerResponse(String url, HttpResponse response) {
+        if (!isFromLocal) { //不是从本地获取，需要写入本地
+            SPUtils.getInstence().putString(url, response.getResponse().toString());
+        }
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");

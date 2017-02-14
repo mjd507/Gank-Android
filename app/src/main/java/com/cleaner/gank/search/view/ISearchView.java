@@ -15,8 +15,6 @@ public interface ISearchView {
 
     void showErrorView();
 
-    void netUnConnect();
-
     void hideLoading();
 
     void showLoading();

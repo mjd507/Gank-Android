@@ -7,6 +7,8 @@ import com.cleaner.gank.tag.view.ITagInfoView;
 
 import java.util.List;
 
+import common.http.volley.HttpTask;
+
 /**
  * 描述:
  * Created by mjd on 2017/2/7.
@@ -37,18 +39,13 @@ public class TagInfoPresenter implements TagInfoListener {
     }
 
     @Override
-    public void netUnConnect() {
-        ITagInfoView.netUnConnect();
-    }
-
-    @Override
     public void onSuccess(List<TagInfoBeen> results) {
         ITagInfoView.showSuccessView(results);
     }
 
     @Override
-    public void onError() {
-        ITagInfoView.showErrorView();
+    public void onError(HttpTask.ErrorType errorType) {
+        ITagInfoView.showErrorView(errorType);
     }
 
 

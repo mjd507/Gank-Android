@@ -38,6 +38,7 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void addList(List<DailyBeen> result) {
         if (result != null && result.size() > 0) {
             handleList(result);
+            list.clear();
             list.addAll(result);
         }
     }

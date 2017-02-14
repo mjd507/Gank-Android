@@ -1,12 +1,13 @@
 package com.cleaner.gank.search.presenter;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.search.model.SearchBeen;
 import com.cleaner.gank.search.model.SearchInfoListener;
 import com.cleaner.gank.search.model.SearchInfoProvider;
 import com.cleaner.gank.search.view.ISearchView;
 
 import java.util.List;
+
+import common.http.volley.HttpTask;
 
 /**
  * 描述:
@@ -37,17 +38,12 @@ public class SearchInfoPresenter implements SearchInfoListener {
     }
 
     @Override
-    public void netUnConnect() {
-        searchView.netUnConnect();
-    }
-
-    @Override
     public void onSuccess(List<SearchBeen> results) {
         searchView.showSuccessView(results);
     }
 
     @Override
-    public void onError(VolleyError error) {
+    public void onError(HttpTask.ErrorType error) {
         searchView.showErrorView();
     }
 }

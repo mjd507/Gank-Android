@@ -3,7 +3,6 @@ package com.cleaner.gank.tag.model;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.Urls;
 
 import java.util.List;
@@ -31,14 +30,14 @@ public class TagInfoProvider {
 
     private boolean isFromLocal;
 
-    public void getTagInfoFormLocal(String url, String category, String page) {
+    public void getTagInfoFormLocal(String url) {
         String result = SPUtils.getInstence().getString(url, "");
         if (!TextUtils.isEmpty(result)) {
             isFromLocal = true;
             HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
             handlerResponse(url, response);
         } else {
-            tagInfoListener.onError();
+            tagInfoListener.onError(HttpTask.ErrorType.NODATA);
         }
     }
 
@@ -64,20 +63,17 @@ public class TagInfoProvider {
             }
 
             @Override
-            public void netUnConnect() {
-                getTagInfoFormLocal(url, category, page);
-                tagInfoListener.netUnConnect();
-            }
-
-            @Override
             public void onResponse(HttpResponse response) {
                 handlerResponse(url, response);
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                //从网络获取失败，从本地获取
-                getTagInfoFormLocal(url, category, page);
+            public void onErrorResponse(HttpTask.ErrorType errorType) {
+                if (errorType == HttpTask.ErrorType.NetUnConnect) {
+                    //从网络获取失败，从本地获取
+                    getTagInfoFormLocal(url);
+                }
+                tagInfoListener.onError(errorType);
 
             }
         });

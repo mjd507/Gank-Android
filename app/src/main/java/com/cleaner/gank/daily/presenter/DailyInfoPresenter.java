@@ -1,6 +1,5 @@
 package com.cleaner.gank.daily.presenter;
 
-import com.android.volley.VolleyError;
 import com.cleaner.gank.daily.model.DailyBeen;
 import com.cleaner.gank.daily.model.DailyInfoListener;
 import com.cleaner.gank.daily.model.DailyInfoProvider;
@@ -8,6 +7,8 @@ import com.cleaner.gank.daily.view.IDailyView;
 
 import java.util.Date;
 import java.util.List;
+
+import common.http.volley.HttpTask;
 
 /**
  * 描述:
@@ -25,7 +26,7 @@ public class DailyInfoPresenter implements DailyInfoListener {
 
     public void getDailyInfo(Date date) {
         infoProvider = new DailyInfoProvider(this);
-        infoProvider.getDailyInfo(date);
+        infoProvider.getDailyInfoFromNet(date);
     }
 
     @Override
@@ -39,18 +40,13 @@ public class DailyInfoPresenter implements DailyInfoListener {
     }
 
     @Override
-    public void netUnConnect() {
-        dailyView.netUnConnect();
-    }
-
-    @Override
     public void onSuccess(List<DailyBeen> results) {
         dailyView.showSuccessView(results);
     }
 
     @Override
-    public void onError(VolleyError error) {
-        dailyView.showErrorView();
+    public void onError(HttpTask.ErrorType error) {
+        dailyView.showErrorView(error);
     }
 
 }

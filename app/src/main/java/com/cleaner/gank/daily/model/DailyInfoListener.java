@@ -1,8 +1,8 @@
 package com.cleaner.gank.daily.model;
 
-import com.android.volley.VolleyError;
-
 import java.util.List;
+
+import common.http.volley.HttpTask;
 
 /**
  * 描述:
@@ -14,9 +14,7 @@ public interface DailyInfoListener {
 
     void hideLoading();
 
-    void netUnConnect();
-
     void onSuccess(List<DailyBeen> results);
 
-    void onError(VolleyError error);
+    void onError(HttpTask.ErrorType errorType);
 }

@@ -18,7 +18,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import common.http.volley.HttpTask;
 import common.ui.BaseFragment;
+import common.utils.TimeUtils;
+import common.utils.ToastUtils;
 
 
 /**
@@ -61,17 +64,15 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         mAdapter = new DailyInfoAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        loadMore();
+        lazyLoad();
     }
 
     @Override
     protected void lazyLoad() {
-
         if (isPrepared && isVisible && !hasLoadedTop) {
-            loadMore();
             hasLoadedTop = true;
+            loadMore();
         }
-
     }
 
     private void loadMore() {
@@ -80,18 +81,26 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
 
     @Override
     public void showSuccessView(List<DailyBeen> results) {
+        if(results == null || results.size() == 0){
+            //获取前一天数据
+            Date beforeDay = TimeUtils.getBeforeDay();
+            presenter.getDailyInfo(beforeDay);
+            return;
+        }
         mAdapter.addList(results);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(HttpTask.ErrorType errorType) {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void netUnConnect() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (errorType == HttpTask.ErrorType.NetUnConnect) {
+            ToastUtils.showShort(getActivity(), "网络不可用");
+        } else if (errorType == HttpTask.ErrorType.NODATA) {
+            ToastUtils.showShort(getActivity(), "运营休息中，暂无数据");
+        } else if (errorType == HttpTask.ErrorType.OTHER) {
+            ToastUtils.showShort(getActivity(), "加载失败");
+        }
     }
 
     @Override

@@ -60,17 +60,16 @@ public class HttpTask {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     if (isShowLoadingDialog) listener.hideLoading();
-                    listener.onErrorResponse(error);
+                    listener.onErrorResponse(ErrorType.OTHER);
                 }
             });
             if (tag != null) request.setTag(tag);
             volleyFactory.addToRequestQueue(request);
 
         } else {
-            listener.netUnConnect();
+            listener.onErrorResponse(ErrorType.NetUnConnect);
         }
     }
-
 
     public interface Listener {
 
@@ -78,12 +77,14 @@ public class HttpTask {
 
         void hideLoading();
 
-        void netUnConnect();
-
         void onResponse(HttpResponse response);
 
-        void onErrorResponse(VolleyError error);
+        void onErrorResponse(ErrorType errorType);
 
+    }
+
+    public enum ErrorType {
+        NetUnConnect, NODATA, OTHER
     }
 
 }

@@ -226,4 +226,12 @@ public class TimeUtils {
                 ? month - 1
                 : (month + 10) % 12];
     }
+
+    public static Date getBeforeDay() {
+        Date dNow = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dNow);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        return calendar.getTime();
+    }
 }
