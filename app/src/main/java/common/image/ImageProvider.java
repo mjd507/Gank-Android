@@ -1,4 +1,4 @@
-package com.cleaner.gank.image;
+package common.image;
 
 import android.widget.ImageView;
 

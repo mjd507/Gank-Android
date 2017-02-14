@@ -19,4 +19,6 @@ public class DailyBeen {
     public boolean used;
     public String who;
     public List<String> images;
+
+    public boolean isRead;
 }

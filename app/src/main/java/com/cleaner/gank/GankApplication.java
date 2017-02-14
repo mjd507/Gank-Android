@@ -7,7 +7,7 @@ import common.CommonApplication;
  * Created by mjd on 2017/2/7.
  */
 
-public class GankApp extends CommonApplication{
+public class GankApplication extends CommonApplication{
 
     @Override
     public void onCreate() {

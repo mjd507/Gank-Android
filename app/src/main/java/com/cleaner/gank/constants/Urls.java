@@ -1,4 +1,4 @@
-package com.cleaner.gank;
+package com.cleaner.gank.constants;
 
 /**
  * 描述:

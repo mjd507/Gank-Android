@@ -2,7 +2,7 @@ package com.cleaner.gank.search.model;
 
 import android.support.annotation.NonNull;
 
-import com.cleaner.gank.Urls;
+import com.cleaner.gank.constants.Urls;
 
 import java.util.List;
 

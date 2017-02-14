@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cleaner.commonandroid.R;
-import com.cleaner.gank.image.ImagePresenter;
+import common.image.ImagePresenter;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.ArrayList;

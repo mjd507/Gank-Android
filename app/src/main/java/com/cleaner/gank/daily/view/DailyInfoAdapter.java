@@ -1,5 +1,6 @@
 package com.cleaner.gank.daily.view;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
 import com.cleaner.gank.daily.model.DailyBeen;
-import com.cleaner.gank.image.ImagePresenter;
+import com.cleaner.gank.detail.InfoDetailActivity;
 import com.cleaner.gank.tag.TagType;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import common.image.ImagePresenter;
 
 /**
  * 描述:
@@ -93,7 +95,7 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url);
         } else if (holder instanceof ItemViewHolder) {
             DailyBeen lastDailyBeen = list.get(position - 1);
-            DailyBeen dailyBeen = list.get(position);
+            final DailyBeen dailyBeen = list.get(position);
             if (lastDailyBeen.type.equals(dailyBeen.type)) {
                 ((ItemViewHolder) holder).tvCategory.setVisibility(View.GONE);
             } else {
@@ -102,6 +104,19 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
             ((ItemViewHolder) holder).tvDesc.setText(dailyBeen.desc);
             ((ItemViewHolder) holder).tvAuthor.setText(dailyBeen.who);
+            ((ItemViewHolder) holder).tvDesc.setTextColor(((ItemViewHolder) holder).tvDesc.getContext().getResources().getColor(dailyBeen.isRead ? R.color.text_be : R.color.black));
+
+            ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dailyBeen.isRead = true;
+                    Intent intent = new Intent(v.getContext(), InfoDetailActivity.class);
+                    intent.putExtra(InfoDetailActivity.EXTRA_URL, dailyBeen.url);
+                    intent.putExtra(InfoDetailActivity.EXTRA_TITLE, dailyBeen.desc);
+                    v.getContext().startActivity(intent);
+                    notifyDataSetChanged();
+                }
+            });
         }
 
 

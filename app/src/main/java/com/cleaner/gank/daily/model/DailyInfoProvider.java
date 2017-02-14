@@ -3,7 +3,7 @@ package com.cleaner.gank.daily.model;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cleaner.gank.Urls;
+import com.cleaner.gank.constants.Urls;
 
 import org.json.JSONException;
 

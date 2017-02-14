@@ -20,6 +20,8 @@ public class TagInfoBeen {
     public String who;
     public List<String> images;
 
+    public boolean isRead; //标记是否阅读过
+
     @Override
     public String toString() {
         return "TagInfoBeen{" +

@@ -1,5 +1,6 @@
 package com.cleaner.gank.tag.view.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cleaner.commonandroid.R;
-import com.cleaner.gank.image.ImagePresenter;
+import com.cleaner.gank.detail.InfoDetailActivity;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.ArrayList;
@@ -24,13 +25,11 @@ import butterknife.ButterKnife;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TagInfoBeen> results;
-    private ImagePresenter presenter;
 
     public ItemAdapter() {
         if (results == null) {
             results = new ArrayList<>();
         }
-        this.presenter = new ImagePresenter();
     }
 
     public void addList(List<TagInfoBeen> infos) {
@@ -67,16 +66,24 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-        itemViewHolder.tvDesc.setText(results.get(position).desc);
-        List<String> images = results.get(position).images;
-        if (images != null && images.size() > 0) {
-            //图片效果不好，暂不显示
-            //String url = images.get(0) + "?imageView2/0/w/160";
-            //presenter.getImage(picViewHolder.ivImage, url, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        }
-        itemViewHolder.tvAuthor.setText(results.get(position).who);
+        final TagInfoBeen been = results.get(position);
+        itemViewHolder.tvDesc.setText(been.desc);
+        itemViewHolder.tvDesc.setTextColor(itemViewHolder.tvDesc.getContext().getResources().getColor(been.isRead ? R.color.text_be : R.color.black));
+        itemViewHolder.tvAuthor.setText(been.who);
+
+        itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                been.isRead = true;
+                Intent intent = new Intent(v.getContext(), InfoDetailActivity.class);
+                intent.putExtra(InfoDetailActivity.EXTRA_URL, been.url);
+                intent.putExtra(InfoDetailActivity.EXTRA_TITLE, been.desc);
+                v.getContext().startActivity(intent);
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
