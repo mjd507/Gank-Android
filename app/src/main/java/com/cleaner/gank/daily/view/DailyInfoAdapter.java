@@ -89,6 +89,7 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
             String url = list.get(position).url;
+            url += "?imageView2/0/w/500";
             imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url);
         } else if (holder instanceof ItemViewHolder) {
             DailyBeen lastDailyBeen = list.get(position - 1);

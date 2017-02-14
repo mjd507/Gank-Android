@@ -68,17 +68,15 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ItemViewHolder) {
-            ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            itemViewHolder.tvDesc.setText(results.get(position).desc);
-            List<String> images = results.get(position).images;
-            if (images != null && images.size() > 0) {
-                //图片效果不好，暂不显示
-                //String url = images.get(0) + "?imageView2/0/w/160";
-                //presenter.getImage(itemViewHolder.ivImage, url, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-            }
-            itemViewHolder.tvAuthor.setText(results.get(position).who);
+        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        itemViewHolder.tvDesc.setText(results.get(position).desc);
+        List<String> images = results.get(position).images;
+        if (images != null && images.size() > 0) {
+            //图片效果不好，暂不显示
+            //String url = images.get(0) + "?imageView2/0/w/160";
+            //presenter.getImage(picViewHolder.ivImage, url, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
         }
+        itemViewHolder.tvAuthor.setText(results.get(position).who);
 
     }
 

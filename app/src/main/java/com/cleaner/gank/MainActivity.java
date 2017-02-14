@@ -53,10 +53,10 @@ public class MainActivity extends BaseActivity {
 
         PageAdapter mViewPageAdapter = new PageAdapter(getSupportFragmentManager());
         mViewPageAdapter.addFragment(dailyInfoFrag, TagType.Daily);
+        mViewPageAdapter.addFragment(welfareTagFrag, TagType.Welfare);
         mViewPageAdapter.addFragment(androidTagFrag, TagType.Android);
         mViewPageAdapter.addFragment(iosTagFrag, TagType.iOS);
         mViewPageAdapter.addFragment(webTagFrag, TagType.Web);
-        mViewPageAdapter.addFragment(welfareTagFrag, TagType.Welfare);
         mViewPageAdapter.addFragment(videoTagFrag, TagType.RestVideo);
         mViewPageAdapter.addFragment(otherTagFrag, TagType.Other);
 
