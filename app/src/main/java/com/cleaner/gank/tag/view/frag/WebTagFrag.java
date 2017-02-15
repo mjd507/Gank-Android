@@ -17,5 +17,10 @@ public class WebTagFrag extends BaseTagFragment {
         presenter.getInfo(EncodeUtils.urlEncode(TagType.Web), page + "");
     }
 
+    @Override
+    protected String getStartPageName() {
+        return this.getClass().getSimpleName();
+    }
+
 
 }

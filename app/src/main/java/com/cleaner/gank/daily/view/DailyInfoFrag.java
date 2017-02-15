@@ -64,6 +64,7 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         mAdapter = new DailyInfoAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         lazyLoad();
     }
 
@@ -81,7 +82,7 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
 
     @Override
     public void showSuccessView(List<DailyBeen> results) {
-        if(results == null || results.size() == 0){
+        if (results == null || results.size() == 0) {
             //获取前一天数据
             Date beforeDay = TimeUtils.getBeforeDay();
             presenter.getDailyInfo(beforeDay);
@@ -117,4 +118,17 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
     public void onRefresh() {
         loadMore();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (presenter != null) presenter.cancelAll();
+    }
+
+    @Override
+    protected String getStartPageName() {
+        return this.getClass().getSimpleName();
+    }
+
 }

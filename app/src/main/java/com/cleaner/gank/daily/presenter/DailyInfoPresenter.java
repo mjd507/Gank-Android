@@ -29,6 +29,11 @@ public class DailyInfoPresenter implements DailyInfoListener {
         infoProvider.getDailyInfoFromNet(date);
     }
 
+    public void cancelAll() {
+        if (infoProvider != null)
+            infoProvider.cancelAll();
+    }
+
     @Override
     public void showLoading() {
         dailyView.showLoading();

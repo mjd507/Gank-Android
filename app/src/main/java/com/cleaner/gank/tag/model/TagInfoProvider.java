@@ -23,6 +23,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class TagInfoProvider {
 
     private TagInfoListener tagInfoListener;
+    private HttpTask httpTask;
 
     public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
         this.tagInfoListener = tagInfoListener;
@@ -46,12 +47,12 @@ public class TagInfoProvider {
         //每页返回十条数据
         final String url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
 
-        HttpTask task = new HttpTask();
-        task.url = url;
-        task.isPost = false;
-        task.isShowLoadingDialog = true;
-        task.tag = category;
-        task.setListener(new HttpTask.Listener() {
+        httpTask = new HttpTask();
+        httpTask.url = url;
+        httpTask.isPost = false;
+        httpTask.isShowLoadingDialog = true;
+        httpTask.tag = category;
+        httpTask.setListener(new HttpTask.Listener() {
             @Override
             public void showLoading() {
                 tagInfoListener.showLoading();
@@ -77,7 +78,7 @@ public class TagInfoProvider {
 
             }
         });
-        task.start();
+        httpTask.start();
 
     }
 
@@ -95,5 +96,9 @@ public class TagInfoProvider {
         tagInfoListener.onSuccess(results);
     }
 
+    public void cancelAll() {
+        if (httpTask != null)
+            httpTask.cancelAll();
+    }
 
 }

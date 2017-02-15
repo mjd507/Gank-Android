@@ -18,4 +18,9 @@ public class VideoTagFrag extends BaseTagFragment {
     }
 
 
+    @Override
+    protected String getStartPageName() {
+        return this.getClass().getSimpleName();
+    }
+
 }

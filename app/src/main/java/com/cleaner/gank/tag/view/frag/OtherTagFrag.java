@@ -17,5 +17,10 @@ public class OtherTagFrag extends BaseTagFragment {
         presenter.getInfo(EncodeUtils.urlEncode(TagType.Other), page + "");
     }
 
+    @Override
+    protected String getStartPageName() {
+        return this.getClass().getSimpleName();
+    }
+
 
 }

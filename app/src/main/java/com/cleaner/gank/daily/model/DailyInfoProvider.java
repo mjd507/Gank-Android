@@ -28,6 +28,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class DailyInfoProvider {
 
     private DailyInfoListener dailyInfoListener;
+    private HttpTask httpTask;
 
     public DailyInfoProvider(@NonNull DailyInfoListener dailyInfoListener) {
         this.dailyInfoListener = dailyInfoListener;
@@ -51,12 +52,12 @@ public class DailyInfoProvider {
         String day = TimeUtils.date2String(date, "yyyy/MM/dd");
         final String url = Urls.GET_DAILY_INFO + day;
 
-        HttpTask task = new HttpTask();
-        task.url = url;
-        task.isPost = false;
-        task.isShowLoadingDialog = true;
-        task.tag = null;
-        task.setListener(new HttpTask.Listener() {
+        httpTask = new HttpTask();
+        httpTask.url = url;
+        httpTask.isPost = false;
+        httpTask.isShowLoadingDialog = true;
+        httpTask.tag = "daily";
+        httpTask.setListener(new HttpTask.Listener() {
             @Override
             public void showLoading() {
                 dailyInfoListener.showLoading();
@@ -82,7 +83,7 @@ public class DailyInfoProvider {
 
 
         });
-        task.start();
+        httpTask.start();
 
     }
 
@@ -110,5 +111,12 @@ public class DailyInfoProvider {
         }
     }
 
+
+    public void cancelAll() {
+        if (httpTask != null) {
+            httpTask.cancelAll();
+        }
+
+    }
 
 }

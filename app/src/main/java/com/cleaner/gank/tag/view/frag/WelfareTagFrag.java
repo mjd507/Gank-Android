@@ -63,7 +63,7 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter = new TagInfoPresenter(this);
-        mLayoutManager = new GridLayoutManager(getActivity(),2);
+        mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new PicItemAdapter();
@@ -72,6 +72,7 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         page = 1;
         lazyLoad();
     }
@@ -159,8 +160,19 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
 
     }
 
+    @Override
+    protected String getStartPageName() {
+        return this.getClass().getSimpleName();
+    }
+
     public void loadMore(int page) {
         presenter.getInfo(EncodeUtils.urlEncode(TagType.Welfare), page + "");
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (presenter != null) presenter.cancelAll();
+    }
 }

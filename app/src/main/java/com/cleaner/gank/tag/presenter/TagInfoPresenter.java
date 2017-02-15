@@ -28,6 +28,11 @@ public class TagInfoPresenter implements TagInfoListener {
         tagInfoProvider.getTagInfoFromNet(category, page);
     }
 
+    public void cancelAll() {
+        if (tagInfoProvider != null)
+            tagInfoProvider.cancelAll();
+    }
+
     @Override
     public void showLoading() {
         ITagInfoView.showLoading();

@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.cleaner.commonandroid.R;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ import common.ui.BaseActivity;
  * Created by mjd on 2017/2/14.
  */
 
-public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     public static final String EXTRA_URL = "URL";
     public static final String EXTRA_TITLE = "TITLE";
 
@@ -58,20 +59,28 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
             title = getIntent().getStringExtra(EXTRA_TITLE);
         }
         setTitle(title);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         mVebView.loadUrl(url);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(InfoDetailActivity.class.getSimpleName());
+        MobclickAgent.onResume(this);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (null != mVebView) {
             mVebView.onPause();
         }
+        if(mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        MobclickAgent.onPageEnd(InfoDetailActivity.class.getSimpleName());
+        MobclickAgent.onPause(this);
     }
 
     private void setUpWebView() {
@@ -131,7 +140,7 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
                 if (mVebView.canGoBack()) {
                     mVebView.goBack();
                     return true;
-                }else{
+                } else {
                     finish();
                 }
                 break;

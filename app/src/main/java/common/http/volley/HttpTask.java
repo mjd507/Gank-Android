@@ -39,6 +39,7 @@ public class HttpTask {
 
     public void cancelAll() {
         volleyFactory.getRequestQueue().cancelAll(tag);
+        listener = null; //释放 listener 防止内存泄漏
     }
 
     public void start() {
@@ -52,6 +53,7 @@ public class HttpTask {
             JsonObjectRequest request = new JsonObjectRequest(method, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    if (listener == null) return;
                     if (isShowLoadingDialog) listener.hideLoading();
                     HttpResponse res = new HttpResponse(response);
                     listener.onResponse(res);
@@ -59,6 +61,7 @@ public class HttpTask {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    if (listener == null) return;
                     if (isShowLoadingDialog) listener.hideLoading();
                     listener.onErrorResponse(ErrorType.OTHER);
                 }

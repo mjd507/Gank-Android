@@ -14,6 +14,7 @@ import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.presenter.TagInfoPresenter;
 import com.cleaner.gank.tag.view.ITagInfoView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -146,6 +147,21 @@ public class ImageDetailActivity extends BaseActivity implements ITagInfoView {
     @Override
     public void showLoading() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
+        MobclickAgent.onPause(this);
+        if (presenter != null) presenter.cancelAll();
     }
 
 }

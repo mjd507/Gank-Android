@@ -65,6 +65,7 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         page = 1;
         lazyLoad();
     }
@@ -85,9 +86,9 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
     @Override
     public void showErrorView(HttpTask.ErrorType errorType) {
         mSwipeRefreshLayout.setRefreshing(false);
-        if(errorType == HttpTask.ErrorType.NetUnConnect){
+        if (errorType == HttpTask.ErrorType.NetUnConnect) {
             ToastUtils.showShort(getActivity(), "网络不可用");
-        }else if (errorType == HttpTask.ErrorType.OTHER){
+        } else if (errorType == HttpTask.ErrorType.OTHER) {
             ToastUtils.showShort(getActivity(), "解析错误");
         } else if (errorType == HttpTask.ErrorType.NODATA) {
             ToastUtils.showShort(getActivity(), "运营休息中，暂无数据");
@@ -99,14 +100,14 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
 
     @Override
     public void hideLoading() {
-        if(page == 1){
+        if (page == 1) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
     @Override
     public void showLoading() {
-        if(page == 1){
+        if (page == 1) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
     }
@@ -152,5 +153,12 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
             hasLoadedTop = true;
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (presenter != null) presenter.cancelAll();
     }
 }
