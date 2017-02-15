@@ -89,15 +89,16 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
             final String url = list.get(position).url;
-            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url + "?imageView2/0/w/500");
+            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url + "?imageView2/0/w/720");
             ((HeaderViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ImageDetailActivity.class);
                     intent.putExtra(ImageDetailActivity.URL, url);
+                    intent.putExtra(ImageDetailActivity.DATE, list.get(position).publishedAt);
                     v.getContext().startActivity(intent);
                 }
             });

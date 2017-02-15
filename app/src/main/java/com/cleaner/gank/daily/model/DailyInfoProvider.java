@@ -90,9 +90,9 @@ public class DailyInfoProvider {
         if (!isFromLocal) { //不是从本地获取，需要写入本地
             SPUtils.getInstence().putString(url, response.getResponse().toString());
         }
-        boolean error = response.getState("icon_error");
+        boolean error = response.getState("error");
         if (error) {
-            LogUtils.d(TAG, "response icon_error !");
+            LogUtils.d(TAG, "response error !");
         } else {
             try {
                 List<String> categories = response.getList("category", String.class);

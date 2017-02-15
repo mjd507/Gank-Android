@@ -56,9 +56,9 @@ public class SearchInfoProvider {
     }
 
     private void handleResponse(HttpResponse response) {
-        boolean error = response.getState("icon_error");
+        boolean error = response.getState("error");
         if (error) {
-            LogUtils.d(TAG, "response icon_error !");
+            LogUtils.d(TAG, "response error !");
         } else {
             List<SearchBeen> results = response.getList("results",SearchBeen.class);
             searchInfoListener.onSuccess(results);

@@ -11,6 +11,7 @@ import com.cleaner.commonandroid.R;
 import com.cleaner.gank.detail.ImageDetailActivity;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class PicItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         PicViewHolder picViewHolder = (PicViewHolder) holder;
         final String url = results.get(position).url;
         ViewGroup.LayoutParams params = picViewHolder.ivImage.getLayoutParams();
@@ -70,6 +71,8 @@ public class PicItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ImageDetailActivity.class);
                 intent.putExtra(ImageDetailActivity.URL, url);
+                intent.putExtra(ImageDetailActivity.POSITION, position);
+                intent.putExtra(ImageDetailActivity.PIC_LIST, (Serializable) results);
                 v.getContext().startActivity(intent);
             }
         });

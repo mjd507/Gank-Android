@@ -1,5 +1,6 @@
 package com.cleaner.gank.tag.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by mjd on 2017/2/7.
  */
 
-public class TagInfoBeen {
+public class TagInfoBeen implements Serializable {
 
     public String _id;
     public String createdAt;
