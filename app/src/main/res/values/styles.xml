@@ -12,13 +12,13 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
-
     <style name="AppTheme" parent="AppTheme.Base">
 
         <!-- Customize your theme here. -->
 
 
     </style>
+
 
     <!-- toolbar标题文字样式 -->
     <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">

@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/fun_1"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_theme"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/icon_theme"
             android:title="@string/change_theme" />
         <item
             android:id="@+id/nav_clean"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/icon_clean"
             android:title="@string/clean_memory" />
         <item
-            android:id="@+id/nav_about"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/about" />
+            android:id="@+id/nav_update"
+            android:icon="@drawable/icon_update"
+            android:title="@string/update" />
+    </group>
+    <group
+        android:id="@+id/fun_2"
+        android:checkableBehavior="none">
+
         <item
             android:id="@+id/nav_feedback"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/icon_feedback"
             android:title="@string/feedback" />
 
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/icon_about"
+            android:title="@string/about" />
     </group>
 
 </menu>

@@ -9,5 +9,6 @@
     <string name="clean_memory">清理缓存</string>
     <string name="about">关于</string>
     <string name="feedback">反馈</string>
+    <string name="update">检查更新</string>
 
 </resources>

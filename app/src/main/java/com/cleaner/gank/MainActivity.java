@@ -24,6 +24,8 @@ import com.cleaner.gank.tag.view.frag.WebTagFrag;
 import com.cleaner.gank.tag.view.frag.WelfareTagFrag;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.ui.BaseActivity;
@@ -98,7 +100,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (id) {
 
             case R.id.nav_theme:
-                ToastUtils.showShort(getApplicationContext(), "关于");
+
+                break;
+            case R.id.nav_update:
+
                 break;
             case R.id.nav_clean:
                 CommonDialog dialog = new CommonDialog(this);
@@ -107,8 +112,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 dialog.setPositiveBtn("确定", new CommonDialog.OnDialogClickListener() {
                     @Override
                     public void onClick(Dialog dialog, int which) {
-                        boolean isSuccess = AppUtils.cleanAppData(MainActivity.this, null);
-                        if(isSuccess)ToastUtils.showShort(MainActivity.this,"清理完成");
+                        boolean isSuccess = AppUtils.cleanAppData(MainActivity.this, new File("") {
+                        });
+                        if (isSuccess) ToastUtils.showShort(MainActivity.this, "清理完成");
                         dialog.dismiss();
                     }
                 });
@@ -120,13 +126,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 });
                 dialog.show();
                 break;
+            case R.id.nav_about:
+                break;
             case R.id.nav_feedback:
-                ToastUtils.showShort(getApplicationContext(), "反馈");
                 break;
             default:
                 break;
         }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        item.setChecked(false);
+        //mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
