@@ -23,6 +23,7 @@ import com.cleaner.gank.tag.view.frag.VideoTagFrag;
 import com.cleaner.gank.tag.view.frag.WebTagFrag;
 import com.cleaner.gank.tag.view.frag.WelfareTagFrag;
 import com.cleaner.gank.theme.BaseThemeActivity;
+import com.cleaner.gank.theme.ThemeChooseDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
@@ -32,6 +33,7 @@ import butterknife.ButterKnife;
 import common.ui.dialog.CommonDialog;
 import common.utils.AppUtils;
 import common.utils.SPUtils;
+import common.utils.ScreenUtils;
 import common.utils.ToastUtils;
 
 import static com.cleaner.commonandroid.R.id.navigationView;
@@ -106,28 +108,37 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch (id) {
-
             case R.id.nav_theme:
-                int themeId = SPUtils.getInstence().getInt(this, THEME, 1);
-                if (themeId == 1) {
-                    colorful.setTheme(R.style.Theme1);
-                } else if (themeId == 2) {
-                    colorful.setTheme(R.style.Theme2);
-                } else if (themeId == 3) {
-                    colorful.setTheme(R.style.Theme3);
-                } else if (themeId == 4) {
-                    colorful.setTheme(R.style.Theme4);
-                }
-                SPUtils.getInstence().putInt(THEME, themeId);
-
+                final ThemeChooseDialog themeDialog = new ThemeChooseDialog(this);
+                int width = ScreenUtils.getScreenSize(this)[0];
+                themeDialog.setDialogWidth(width / 4 * 3);
+                themeDialog.setListener(new ThemeChooseDialog.OnThemeItemClickListener() {
+                    @Override
+                    public void onClick(int themeId) {
+                        themeDialog.dismiss();
+                        if (themeId == 1) {
+                            colorful.setTheme(R.style.Theme1);
+                        } else if (themeId == 2) {
+                            colorful.setTheme(R.style.Theme2);
+                        } else if (themeId == 3) {
+                            colorful.setTheme(R.style.Theme3);
+                        } else if (themeId == 4) {
+                            colorful.setTheme(R.style.Theme4);
+                        }
+                        SPUtils.getInstence().putInt(THEME, themeId);
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                });
+                themeDialog.show();
                 break;
             case R.id.nav_update:
 
                 break;
             case R.id.nav_clean:
                 CommonDialog cleanDialog = new CommonDialog(this);
+                cleanDialog.setCanceledOnTouchOutside(true);
                 cleanDialog.setTitleText("提示");
-                cleanDialog.setMsgText("确定要清理所以缓存吗？");
+                cleanDialog.setMsgText("确定要清理所有缓存吗？");
                 cleanDialog.setPositiveBtn("确定", new CommonDialog.OnDialogClickListener() {
                     @Override
                     public void onClick(Dialog dialog, int which) {
@@ -135,6 +146,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                         });
                         if (isSuccess) ToastUtils.showShort(MainActivity.this, "清理完成");
                         dialog.dismiss();
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
                     }
                 });
                 cleanDialog.setNegativeBtn("取消", new CommonDialog.OnDialogClickListener() {
@@ -153,7 +165,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                 break;
         }
         item.setChecked(false);
-        //mDrawerLayout.closeDrawer(GravityCompat.START);
+//        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
