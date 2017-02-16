@@ -88,6 +88,7 @@ public class AppUtils {
         isSuccess &= CleanUtils.cleanInternalSP(context);
         isSuccess &= CleanUtils.cleanInternalFiles(context);
         isSuccess &= CleanUtils.cleanExternalCache(context);
+        if (dirs == null) return isSuccess;
         for (File dir : dirs) {
             isSuccess &= CleanUtils.cleanCustomCache(dir);
         }

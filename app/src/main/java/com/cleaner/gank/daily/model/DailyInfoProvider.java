@@ -42,8 +42,6 @@ public class DailyInfoProvider {
             isFromLocal = true;
             HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
             handlerResponse(url, response);
-        } else {
-            dailyInfoListener.onError(HttpTask.ErrorType.NODATA);
         }
     }
 
@@ -94,6 +92,7 @@ public class DailyInfoProvider {
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
+            dailyInfoListener.onError(HttpTask.ErrorType.NODATA);
         } else {
             try {
                 List<String> categories = response.getList("category", String.class);

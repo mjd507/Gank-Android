@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">干货集中营</string>
     <string name="share_page"><![CDATA[<string name=\"share_page\" translatable=\"false\">「%1$s%2$1s (分享自 @Gank) </string>]]></string>
+    <string name="share">分享</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="gank_url">http://gank.io</string>
+    <string name="change_theme">切换主题</string>
+    <string name="clean_memory">清理缓存</string>
+    <string name="about">关于</string>
+    <string name="feedback">反馈</string>
+
 </resources>

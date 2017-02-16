@@ -5,7 +5,7 @@
         android:id="@+id/action_share"
         android:icon="@mipmap/icon_share"
         android:orderInCategory="100"
-        android:title="分享"
+        android:title="@string/share"
         app:showAsAction="always" />
 
 </menu>

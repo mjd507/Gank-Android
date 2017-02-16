@@ -30,6 +30,7 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<DailyBeen> list;
     private ImagePresenter imagePresenter;
+    private int[] screenSize;
 
     public DailyInfoAdapter() {
         if (list == null) {
@@ -45,6 +46,12 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             list.addAll(result);
         }
     }
+
+
+    public void setItemWith(int[] screenSize) {
+        this.screenSize = screenSize;
+    }
+
 
     private List<DailyBeen> handleList(List<DailyBeen> list) {
         if (list == null || list.size() == 0) return null;
@@ -92,7 +99,7 @@ public class DailyInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
             final String url = list.get(position).url;
-            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url + "?imageView2/0/w/720");
+            imagePresenter.getImage(((HeaderViewHolder) holder).ivHeader, url + "?imageView2/0/w/"+screenSize[0]);
             ((HeaderViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

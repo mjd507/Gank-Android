@@ -129,7 +129,7 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_webview, menu);
+        getMenuInflater().inflate(R.menu.menu_share, menu);
         return true;
     }
 

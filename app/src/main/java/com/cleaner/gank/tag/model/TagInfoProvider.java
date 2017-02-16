@@ -37,8 +37,6 @@ public class TagInfoProvider {
             isFromLocal = true;
             HttpResponse response = new HttpResponse(JsonUtil.getJsonObj(result));
             handlerResponse(url, response);
-        } else {
-            tagInfoListener.onError(HttpTask.ErrorType.NODATA);
         }
     }
 
@@ -90,6 +88,8 @@ public class TagInfoProvider {
         List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
+            tagInfoListener.onError(HttpTask.ErrorType.NODATA);
+            return;
         } else {
             results = response.getList("results", TagInfoBeen.class);
         }

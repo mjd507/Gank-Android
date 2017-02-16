@@ -65,7 +65,7 @@ public class PicItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ViewGroup.LayoutParams params = picViewHolder.ivImage.getLayoutParams();
         params.height = screenSize[1] / 5 * 2;
         picViewHolder.ivImage.setLayoutParams(params);
-        presenter.getImage(picViewHolder.ivImage, url + "?imageView2/0/w/" + screenSize[0]);
+        presenter.getImage(picViewHolder.ivImage, url + "?imageView2/0/w/" + screenSize[0] / 2);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

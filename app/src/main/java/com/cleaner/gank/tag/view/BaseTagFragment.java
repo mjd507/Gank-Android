@@ -89,10 +89,9 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         if (errorType == HttpTask.ErrorType.NetUnConnect) {
             ToastUtils.showShort(getActivity(), "网络不可用");
         } else if (errorType == HttpTask.ErrorType.OTHER) {
-            ToastUtils.showShort(getActivity(), "解析错误");
+            ToastUtils.showShort(getActivity(), "加载失败");
         } else if (errorType == HttpTask.ErrorType.NODATA) {
-            ToastUtils.showShort(getActivity(), "运营休息中，暂无数据");
-
+            ToastUtils.showShort(getActivity(), "暂无数据");
         }
 
     }
@@ -126,11 +125,10 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE
-                    && lastVisibleItem + 1 == mAdapter.getItemCount()) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
                 if (!isLoading) {
+                    isLoading = true; //一定要放在第一行，防止没网从 SP 读取的时候，读取一次后，不能再加载的问题
                     loadMore(++page);
-                    isLoading = true;
                 }
 
             }

@@ -96,9 +96,9 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
         if (errorType == HttpTask.ErrorType.NetUnConnect) {
             ToastUtils.showShort(getActivity(), "网络不可用");
         } else if (errorType == HttpTask.ErrorType.OTHER) {
-            ToastUtils.showShort(getActivity(), "解析错误");
+            ToastUtils.showShort(getActivity(), "加载失败");
         } else if (errorType == HttpTask.ErrorType.NODATA) {
-            ToastUtils.showShort(getActivity(), "运营休息中，暂无数据");
+            ToastUtils.showShort(getActivity(), "暂无数据");
 
         }
 
@@ -136,8 +136,8 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == mAdapter.getItemCount()) {
                 if (!isLoading) {
-                    loadMore(++page);
                     isLoading = true;
+                    loadMore(++page);
                 }
 
             }

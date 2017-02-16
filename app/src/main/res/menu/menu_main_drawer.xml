@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_theme"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/change_theme" />
+        <item
+            android:id="@+id/nav_clean"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/clean_memory" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/about" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/feedback" />
+
+    </group>
+
+</menu>
