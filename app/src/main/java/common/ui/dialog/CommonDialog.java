@@ -32,7 +32,7 @@ public class CommonDialog extends Dialog {
     }
 
     private void initView(Context context) {
-        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
+        View rootView = LayoutInflater.from(context).inflate(R.layout.layout_dialog_common, null);
         mTitleTextView = (TextView) rootView.findViewById(R.id.tv_title);
         mMsgTextView = (TextView) rootView.findViewById(R.id.tv_message);
         mNegativeBtn = (Button) rootView.findViewById(R.id.btn_negative);

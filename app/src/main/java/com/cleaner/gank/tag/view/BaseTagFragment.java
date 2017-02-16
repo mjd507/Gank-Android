@@ -65,7 +65,6 @@ public abstract class BaseTagFragment extends BaseFragment implements ITagInfoVi
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         page = 1;
         lazyLoad();
     }

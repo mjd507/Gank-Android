@@ -72,7 +72,6 @@ public class WelfareTagFrag extends BaseFragment implements ITagInfoView, SwipeR
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         page = 1;
         lazyLoad();
     }

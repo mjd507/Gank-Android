@@ -22,7 +22,7 @@
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="?attr/toolbar_bg"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="@mipmap/icon_navigation"
                 app:popupTheme="@style/ToolbarPopupTheme"
@@ -33,7 +33,7 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="?attr/toolbar_bg"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/white"
                 app:tabMode="scrollable"
@@ -63,8 +63,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@color/black"
         app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/black"
         app:menu="@menu/menu_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

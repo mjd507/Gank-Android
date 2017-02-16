@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="theme1">#1296db</color>
+    <color name="theme2">#FF4081</color>
+    <color name="theme3">#BB741E</color>
+    <color name="theme4">#AD86BB</color>
+
     <!-- Common Color -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

@@ -43,6 +43,6 @@
     <!-- item height -->
     <dimen name="item_height">48dp</dimen>
 
-
+    <dimen name="theme_circle">60dp</dimen>
 
 </resources>

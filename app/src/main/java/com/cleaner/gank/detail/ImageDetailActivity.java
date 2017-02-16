@@ -14,6 +14,7 @@ import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.presenter.TagInfoPresenter;
 import com.cleaner.gank.tag.view.ITagInfoView;
+import com.cleaner.gank.theme.BaseThemeActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -22,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.http.volley.HttpTask;
 import common.image.ImagePresenter;
-import common.ui.BaseActivity;
 import common.utils.EncodeUtils;
 
 /**
@@ -30,7 +30,7 @@ import common.utils.EncodeUtils;
  * Created by mjd on 2017/2/14.
  */
 
-public class ImageDetailActivity extends BaseActivity implements ITagInfoView {
+public class ImageDetailActivity extends BaseThemeActivity implements ITagInfoView {
 
     public static final String URL = "url";
     public static final String DATE = "date";

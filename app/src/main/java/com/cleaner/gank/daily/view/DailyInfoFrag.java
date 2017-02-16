@@ -67,7 +67,6 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         mAdapter.setItemWith(screenSize);
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         lazyLoad();
     }
 

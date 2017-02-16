@@ -18,18 +18,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.cleaner.commonandroid.R;
+import com.cleaner.gank.theme.BaseThemeActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import common.ui.BaseActivity;
 
 /**
  * 描述:
  * Created by mjd on 2017/2/14.
  */
 
-public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class InfoDetailActivity extends BaseThemeActivity implements SwipeRefreshLayout.OnRefreshListener {
     public static final String EXTRA_URL = "URL";
     public static final String EXTRA_TITLE = "TITLE";
 
@@ -59,7 +59,6 @@ public class InfoDetailActivity extends BaseActivity implements SwipeRefreshLayo
             title = getIntent().getStringExtra(EXTRA_TITLE);
         }
         setTitle(title);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         mVebView.loadUrl(url);
     }
 

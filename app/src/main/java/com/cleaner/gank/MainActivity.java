@@ -22,15 +22,16 @@ import com.cleaner.gank.tag.view.frag.OtherTagFrag;
 import com.cleaner.gank.tag.view.frag.VideoTagFrag;
 import com.cleaner.gank.tag.view.frag.WebTagFrag;
 import com.cleaner.gank.tag.view.frag.WelfareTagFrag;
+import com.cleaner.gank.theme.BaseThemeActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import common.ui.BaseActivity;
 import common.ui.dialog.CommonDialog;
 import common.utils.AppUtils;
+import common.utils.SPUtils;
 import common.utils.ToastUtils;
 
 import static com.cleaner.commonandroid.R.id.navigationView;
@@ -41,7 +42,7 @@ import static com.cleaner.commonandroid.R.id.navigationView;
  * Created by mjd on 2017/2/10.
  */
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseThemeActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolBar)
     Toolbar mToolbar;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -69,6 +71,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setItemIconTintList(null);//让图片就是显示他本身的颜色
+
+        //切换主题，要更新的颜色
+        colorful.mBuilder
+                .backgroundColor(R.id.toolBar, R.attr.toolbar_bg)
+                .backgroundColor(R.id.tabLayout, R.attr.toolbar_bg)
+                .backgroundColor(mNavigationView.getHeaderView(0), R.attr.toolbar_bg);
 
         DailyInfoFrag dailyInfoFrag = new DailyInfoFrag();
         AndroidTagFrag androidTagFrag = new AndroidTagFrag();
@@ -100,16 +108,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (id) {
 
             case R.id.nav_theme:
+                int themeId = SPUtils.getInstence().getInt(this, THEME, 1);
+                if (themeId == 1) {
+                    colorful.setTheme(R.style.Theme1);
+                } else if (themeId == 2) {
+                    colorful.setTheme(R.style.Theme2);
+                } else if (themeId == 3) {
+                    colorful.setTheme(R.style.Theme3);
+                } else if (themeId == 4) {
+                    colorful.setTheme(R.style.Theme4);
+                }
+                SPUtils.getInstence().putInt(THEME, themeId);
 
                 break;
             case R.id.nav_update:
 
                 break;
             case R.id.nav_clean:
-                CommonDialog dialog = new CommonDialog(this);
-                dialog.setTitleText("提示");
-                dialog.setMsgText("确定要清理所以缓存吗？");
-                dialog.setPositiveBtn("确定", new CommonDialog.OnDialogClickListener() {
+                CommonDialog cleanDialog = new CommonDialog(this);
+                cleanDialog.setTitleText("提示");
+                cleanDialog.setMsgText("确定要清理所以缓存吗？");
+                cleanDialog.setPositiveBtn("确定", new CommonDialog.OnDialogClickListener() {
                     @Override
                     public void onClick(Dialog dialog, int which) {
                         boolean isSuccess = AppUtils.cleanAppData(MainActivity.this, new File("") {
@@ -118,13 +137,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         dialog.dismiss();
                     }
                 });
-                dialog.setNegativeBtn("取消", new CommonDialog.OnDialogClickListener() {
+                cleanDialog.setNegativeBtn("取消", new CommonDialog.OnDialogClickListener() {
                     @Override
                     public void onClick(Dialog dialog, int which) {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                cleanDialog.show();
                 break;
             case R.id.nav_about:
                 break;
