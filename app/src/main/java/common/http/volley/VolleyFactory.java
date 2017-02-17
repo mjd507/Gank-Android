@@ -34,7 +34,7 @@ public class VolleyFactory {
     public void init(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-        mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(LruBitmapCache.getCacheSize(mCtx)));
+        mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(LruBitmapCache.getCacheSize(mCtx.getApplicationContext())));
     }
 
     public RequestQueue getRequestQueue() {

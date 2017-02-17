@@ -66,6 +66,10 @@
         <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
     </style>
 
+    <!--tabLayout 字母大小写-->
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textAllCaps">false</item>
+    </style>
 
     <!-- activity之间的切换动画效果  -->
     <style name="WindowAnimationStyle" parent="@android:style/Animation">

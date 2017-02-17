@@ -44,4 +44,5 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.tencent.bugly:crashreport:2.4.0'
     compile 'com.umeng.analytics:analytics:6.0.9'
+
 }
