@@ -1,5 +1,6 @@
 package com.cleaner.gank;
 
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
@@ -16,10 +17,11 @@ import common.utils.AppUtils;
  */
 
 public class GankApplication extends CommonApplication {
-
+    public final static String DEFAULT_APPKEY = "23641176";
     @Override
     public void onCreate() {
         super.onCreate();
+        FeedbackAPI.init(this, DEFAULT_APPKEY);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.cleaner.commonandroid.R;
 import com.cleaner.gank.daily.view.DailyInfoFrag;
 import com.cleaner.gank.tag.TagType;
@@ -159,6 +160,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
             case R.id.nav_about:
                 break;
             case R.id.nav_feedback:
+                FeedbackAPI.openFeedbackActivity();
                 break;
             default:
                 break;
@@ -198,5 +200,11 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
             }
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FeedbackAPI.cleanActivity();
     }
 }

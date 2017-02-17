@@ -68,7 +68,7 @@
 
     <!--tabLayout 字母大小写-->
     <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <!-- activity之间的切换动画效果  -->
