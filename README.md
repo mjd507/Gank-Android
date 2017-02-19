@@ -1,14 +1,49 @@
 # CommonAndroid
 
-本项目包含两个部分，Common 基础库 和 以它使用它为基础的应用实例 ，以此应用来不断完善基础库的封装。
-该库是本人在工作之余挤出时间来不断的完善,借鉴了 GitHub 上不少资源, 这里也欢迎大家 star 或者 fork 来一同完善。项目已经包含的一些模块如下：
+CommonAndroid 包含该两个部分，一部分是 应用层（干货集中营），借助 [干货Api](http://gank.io/api) 的接口实现的一个小项目，另一部分是 Android 基础库。先来看下项目的效果：
+[!干货集中营](http://ohlah9bje.bkt.clouddn.com/gank.gif)
 
-## Base UI 模块
-- Base App Theme 的设定,使所有 Activity 有统一的 进入退出 效果
-- BaseActivity 的封装,包括统一 TitleBar,以及 TitleBar 上返回键的处理,也可以自定义标题栏按钮的图片和功能。
-- BaseFragment 的封装,与 BaseActivity 几乎一致。
-- CommonAdapter/CommonViewHolder 的封装,简化项目大量使用 BaseAdapter 时写的重复代码。
-- CommonDialog/LoadingDialog 的封装,统一项目的 对话框和加载框。
+项目的初衷还是封装 Android 开发中基础的一些类库，包括 网络请求，数据库，控件，工具类等等。
+因为个人的知识，能力和精力有限，希望更多的朋友能共同完善这个项目。
+
+基础类库中已经包含的部分如下：
+
+## NetState 网络监测模块
+采用 单例 + 观察者模式, 监测网络状态的变化。无需在每个 Activity 注册 广播,解放了一定的生产力。
+使用方式:在 Application 创建时,初始化 NetStateReceiver
+```
+    /**
+     * 应用全局的网络变化处理
+     */
+    private void initNetChangeReceiver() {
+
+        //获取当前网络类型
+        mNetType = NetworkUtils.getNetworkType(this);
+
+        //定义网络状态的广播接受者
+        netStateReceiver = NetStateReceiver.getReceiver();
+
+        //给广播接受者注册一个观察者
+        netStateReceiver.registerObserver(netChangeObserver);
+
+        //注册网络变化广播
+        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
+
+    }
+
+    private NetChangeObserver netChangeObserver = new NetChangeObserver() {
+
+        @Override
+        public void onConnect(NetworkUtils.NetworkType errorType) {
+            //do something
+        }
+
+        @Override
+        public void onDisConnect() {
+            //do something
+        }
+    };
+```
 
 ## DB 模块
 可能是最简单的数据库封装,算上注解总共只有 7 个类,使用方法:
@@ -56,50 +91,11 @@
 
     ```
 
-## NetState 网络监测模块
-采用 单例 + 观察者模式, 监测网络状态的变化。无需在每个 Activity 注册 广播,解放了一定的生产力。
-使用方式:在 Application 创建时,初始化 NetStateReceiver
-```
-    /**
-     * 应用全局的网络变化处理
-     */
-    private void initNetChangeReceiver() {
-
-        //获取当前网络类型
-        mNetType = NetworkUtils.getNetworkType(this);
-
-        //定义网络状态的广播接受者
-        netStateReceiver = NetStateReceiver.getReceiver();
-
-        //给广播接受者注册一个观察者
-        netStateReceiver.registerObserver(netChangeObserver);
-
-        //注册网络变化广播
-        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
-
-    }
-
-    private NetChangeObserver netChangeObserver = new NetChangeObserver() {
-
-        @Override
-        public void onConnect(NetworkUtils.NetworkType errorType) {
-            //do something
-        }
-
-        @Override
-        public void onDisConnect() {
-            //do something
-        }
-    };
-```
 ## Http 模块
 - 对 volley 库进行了二次封装，返回结果统一处理，使得项目数据提供层更加清晰
 
 ## download 模块
 - 封装系统的 DownloadManager，在大文件下载，比如 apk 更新等操作时，更加方便
-
-## MVP 模块
-- 如果你的项目想使用 MVP 架构,可以参考以这个非常容易理解的 MVP 架构的业务模型案例。
 
 ## Common Utils 模块
 
@@ -206,7 +202,3 @@
 - ZipUtils
     * 压缩文件/目录
     * 解压文件
-
-## test 模块
-- 用来测试 以上模块代码正确性的模块。
-- 没有多余的布局文件,所有 Activity 的测试布局都是代码动态生成,保证了项目的干净。

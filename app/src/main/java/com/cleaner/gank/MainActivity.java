@@ -2,6 +2,7 @@ package com.cleaner.gank;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -126,6 +127,9 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                         } else if (themeId == 4) {
                             colorful.setTheme(R.style.Theme4);
                         }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(themeId == 1 ? R.color.theme1 : themeId == 2 ? R.color.theme2 : themeId == 3 ? R.color.theme3 : R.color.theme4));
+                        }
                         SPUtils.getInstence().putInt(THEME, themeId);
                         mDrawerLayout.closeDrawer(GravityCompat.START);
                     }
@@ -157,7 +161,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                 cleanDialog.show();
                 break;
             case R.id.nav_about:
-                startActivity(new Intent(this,AboutActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.nav_feedback:
                 FeedbackAPI.openFeedbackActivity();

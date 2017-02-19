@@ -1,5 +1,6 @@
 package com.cleaner.gank.theme;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -31,6 +32,8 @@ public class BaseThemeActivity extends BaseActivity {
         } else if (themeId == 4) {
             colorful.setTheme(R.style.Theme4);
         }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.getWindow().setStatusBarColor(getResources().getColor(themeId == 1 ? R.color.theme1 : themeId == 2 ? R.color.theme2 : themeId == 3 ? R.color.theme3 : R.color.theme4));
+        }
     }
 }
