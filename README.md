@@ -1,7 +1,5 @@
 # CommonAndroid
 先来看下项目的效果：
-
-![干货集中营](http://ohlah9bje.bkt.clouddn.com/gank.gif)
 ![干货集中营](/gank.gif)
 
 
