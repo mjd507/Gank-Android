@@ -1,6 +1,7 @@
 package com.cleaner.gank;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -131,9 +132,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                 });
                 themeDialog.show();
                 break;
-            case R.id.nav_update:
 
-                break;
             case R.id.nav_clean:
                 CommonDialog cleanDialog = new CommonDialog(this);
                 cleanDialog.setCanceledOnTouchOutside(true);
@@ -158,6 +157,7 @@ public class MainActivity extends BaseThemeActivity implements NavigationView.On
                 cleanDialog.show();
                 break;
             case R.id.nav_about:
+                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.nav_feedback:
                 FeedbackAPI.openFeedbackActivity();

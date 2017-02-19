@@ -66,6 +66,9 @@
         <activity
             android:name="com.cleaner.gank.detail.ImageDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cleaner.gank.AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

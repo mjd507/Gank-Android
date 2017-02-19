@@ -82,12 +82,13 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         presenter.getDailyInfo(new Date());
     }
 
+    private Date beforeDay = TimeUtils.getBeforeDay(new Date());
     @Override
     public void showSuccessView(List<DailyBeen> results) {
         if (results == null || results.size() == 0) {
             //获取前一天数据
-            Date beforeDay = TimeUtils.getBeforeDay();
             presenter.getDailyInfo(beforeDay);
+            beforeDay = TimeUtils.getBeforeDay(beforeDay);
             return;
         }
         mAdapter.addList(results);

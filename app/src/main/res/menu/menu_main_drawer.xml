@@ -11,10 +11,10 @@
             android:id="@+id/nav_clean"
             android:icon="@drawable/icon_clean"
             android:title="@string/clean_memory" />
-        <item
-            android:id="@+id/nav_update"
-            android:icon="@drawable/icon_update"
-            android:title="@string/update" />
+        <!--<item-->
+            <!--android:id="@+id/nav_update"-->
+            <!--android:icon="@drawable/icon_update"-->
+            <!--android:title="@string/update" />-->
     </group>
     <group
         android:id="@+id/fun_2"
