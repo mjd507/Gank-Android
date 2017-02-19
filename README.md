@@ -1,7 +1,7 @@
+# CommonAndroid
 先来看下项目的效果：
 ![干货集中营](http://ohlah9bje.bkt.clouddn.com/gank.gif)
 
-# CommonAndroid
 
 CommonAndroid 包含该两个部分，一部分是 应用层（干货集中营），借助 [干货Api](http://gank.io/api) 的接口实现的一个小项目，另一部分是 Android 基础库。
 
