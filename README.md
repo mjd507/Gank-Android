@@ -1,7 +1,7 @@
 # CommonAndroid
 
 CommonAndroid 包含该两个部分，一部分是 应用层（干货集中营），借助 [干货Api](http://gank.io/api) 的接口实现的一个小项目，另一部分是 Android 基础库。先来看下项目的效果：
-[!干货集中营](http://ohlah9bje.bkt.clouddn.com/gank.gif)
+![干货集中营](http://ohlah9bje.bkt.clouddn.com/gank.gif)
 
 项目的初衷还是封装 Android 开发中基础的一些类库，包括 网络请求，数据库，控件，工具类等等。
 因为个人的知识，能力和精力有限，希望更多的朋友能共同完善这个项目。
@@ -92,10 +92,16 @@ CommonAndroid 包含该两个部分，一部分是 应用层（干货集中营�
     ```
 
 ## Http 模块
-- 对 volley 库进行了二次封装，返回结果统一处理，使得项目数据提供层更加清晰
+- 对 volley 库进行了二次封装，包括请求的和响应的统一处理，json 数据的解析，使得项目数据提供层更加清晰。
+- 后期会在 该模块下加入 RxAndroid 等响应式编程的封装。
 
 ## download 模块
 - 封装系统的 DownloadManager，在大文件下载，比如 apk 更新等操作时，更加方便
+
+## 图片加载模块
+- 项目中使用的图片加载时 volley 自带的，为了避免三分类库的过多使用
+- 后期会加入 Glide 作为图片加载的底层支持库
+
 
 ## Common Utils 模块
 
