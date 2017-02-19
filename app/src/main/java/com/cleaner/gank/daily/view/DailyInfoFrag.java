@@ -52,6 +52,7 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         ButterKnife.bind(this, view);
         isPrepared = true;
         hasLoadedTop = false;
+        beforeDay = TimeUtils.getBeforeDay(new Date());
         return view;
     }
 
@@ -82,7 +83,8 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
         presenter.getDailyInfo(new Date());
     }
 
-    private Date beforeDay = TimeUtils.getBeforeDay(new Date());
+    private Date beforeDay;
+
     @Override
     public void showSuccessView(List<DailyBeen> results) {
         if (results == null || results.size() == 0) {
