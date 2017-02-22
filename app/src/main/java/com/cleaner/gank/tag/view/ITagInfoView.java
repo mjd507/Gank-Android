@@ -4,7 +4,7 @@ import com.cleaner.gank.tag.model.TagInfoBeen;
 
 import java.util.List;
 
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 
 /**
  * 描述:
@@ -15,7 +15,7 @@ public interface ITagInfoView {
 
     void showSuccessView(List<TagInfoBeen> results);
 
-    void showErrorView(Listener.ErrorType errorType);
+    void showErrorView(VolleyListener.ErrorType errorType);
 
     void hideLoading();
 

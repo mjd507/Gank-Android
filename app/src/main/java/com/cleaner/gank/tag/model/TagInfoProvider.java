@@ -9,7 +9,7 @@ import java.util.List;
 
 import common.http.common.HttpResponse;
 import common.http.common.JsonUtil;
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
@@ -51,7 +51,7 @@ public class TagInfoProvider {
         volleyHttpTask.isPost = false;
         volleyHttpTask.isShowLoadingDialog = true;
         volleyHttpTask.tag = category;
-        volleyHttpTask.setListener(new Listener() {
+        volleyHttpTask.setListener(new VolleyListener() {
             @Override
             public void showLoading() {
                 tagInfoListener.showLoading();
@@ -89,7 +89,7 @@ public class TagInfoProvider {
         List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
-            tagInfoListener.onError(Listener.ErrorType.NODATA);
+            tagInfoListener.onError(VolleyListener.ErrorType.NODATA);
             return;
         } else {
             results = response.getList("results", TagInfoBeen.class);

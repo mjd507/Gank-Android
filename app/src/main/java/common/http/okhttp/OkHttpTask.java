@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import common.CommonApplication;
 import common.http.common.HttpResponse;
-import common.http.common.Listener;
 import common.netstate.NetworkUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -142,7 +140,7 @@ public class OkHttpTask {
 
     public boolean isShowLoadingDialog = true;
 
-    private void doRequest(Request request, final WSCallBack baseCallBack) {
+    private void doRequest(Request request, final OkHttpListener listener) {
         if (listener == null) return;
         if (CommonApplication.getInstance().mNetType != NetworkUtils.NetworkType.NETWORK_NONE) {
             if (isShowLoadingDialog) listener.showLoading();
@@ -150,60 +148,51 @@ public class OkHttpTask {
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    if (isShowLoadingDialog) listener.hideLoading();
-                    sendFaile(baseCallBack, call, e);
+
+                    sendFaile(listener, call, OkHttpListener.ErrorType.OTHER);
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        if (isShowLoadingDialog) listener.hideLoading();
                         String json = response.body().string();
-                        HttpResponse res = new HttpResponse(json);
-                        listener.onResponse(res);
-
-                        sendSuccess(json, call, baseCallBack);
+                        sendSuccess(json, call, listener);
                     } else {
-                        sendFaile(baseCallBack, call, null);
+                        sendFaile(listener, call, null);
                     }
                 }
             });
-
+        } else {
+            listener.onErrorResponse(null, OkHttpListener.ErrorType.NetUnConnect);
         }
 
     }
 
-    private void sendFaile(final WSCallBack bcb, final Call call, Exception e) {
+    private void sendFaile(final OkHttpListener listener, final Call call, final OkHttpListener.ErrorType errorType) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                bcb.onFailure(call, null);
+                if (isShowLoadingDialog) listener.hideLoading();
+                listener.onErrorResponse(call, errorType);
             }
         });
     }
 
-    private void sendSuccess(final String json, final Call call, final WSCallBack bcb) {
+    private void sendSuccess(final String json, final Call call, final OkHttpListener listener) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (bcb.type == String.class) {
-                    bcb.onSuccess(json);
-                } else {
-                    try {
-                        Object object = gson.fromJson(json, bcb.type);
-                        bcb.onSuccess(object);
-                    } catch (JsonParseException e) {
-                        sendFaile(bcb, call, e);
-                    }
-                }
+                if (isShowLoadingDialog) listener.hideLoading();
+                HttpResponse response = new HttpResponse(json);
+                listener.onResponse(response);
             }
         });
     }
 
-    private Listener listener;
+    private OkHttpListener listener;
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
+    public void setOkHttpListener(OkHttpListener volleyListener) {
+        this.listener = volleyListener;
     }
 
 

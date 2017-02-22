@@ -7,7 +7,7 @@ import com.cleaner.gank.constants.Urls;
 import java.util.List;
 
 import common.http.common.HttpResponse;
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 
@@ -32,7 +32,7 @@ public class SearchInfoProvider {
         task.isShowLoadingDialog = true;
         task.isPost = false;
         task.tag = null;
-        task.setListener(new Listener() {
+        task.setListener(new VolleyListener() {
             @Override
             public void showLoading() {
                 searchInfoListener.showLoading();

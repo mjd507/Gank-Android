@@ -2,7 +2,7 @@ package com.cleaner.gank.tag.model;
 
 import java.util.List;
 
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 
 /**
  * 描述:
@@ -17,5 +17,5 @@ public interface TagInfoListener {
 
     void onSuccess(List<TagInfoBeen> results);
 
-    void onError(Listener.ErrorType errorType);
+    void onError(VolleyListener.ErrorType errorType);
 }

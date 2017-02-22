@@ -13,7 +13,7 @@ import java.util.List;
 
 import common.http.common.HttpResponse;
 import common.http.common.JsonUtil;
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
@@ -56,7 +56,7 @@ public class DailyInfoProvider {
         volleyHttpTask.isPost = false;
         volleyHttpTask.isShowLoadingDialog = true;
         volleyHttpTask.tag = "daily";
-        volleyHttpTask.setListener(new Listener() {
+        volleyHttpTask.setListener(new VolleyListener() {
             @Override
             public void showLoading() {
                 dailyInfoListener.showLoading();
@@ -93,7 +93,7 @@ public class DailyInfoProvider {
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
-            dailyInfoListener.onError(Listener.ErrorType.NODATA);
+            dailyInfoListener.onError(VolleyListener.ErrorType.NODATA);
         } else {
             try {
                 List<String> categories = response.getList("category", String.class);

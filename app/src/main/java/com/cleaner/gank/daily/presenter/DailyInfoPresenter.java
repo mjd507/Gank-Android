@@ -8,7 +8,7 @@ import com.cleaner.gank.daily.view.IDailyView;
 import java.util.Date;
 import java.util.List;
 
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 
 /**
  * 描述:
@@ -50,7 +50,7 @@ public class DailyInfoPresenter implements DailyInfoListener {
     }
 
     @Override
-    public void onError(Listener.ErrorType error) {
+    public void onError(VolleyListener.ErrorType error) {
         dailyView.showErrorView(error);
     }
 

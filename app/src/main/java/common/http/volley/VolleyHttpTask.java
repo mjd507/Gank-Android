@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import common.CommonApplication;
 import common.http.common.HttpResponse;
-import common.http.common.Listener;
 import common.netstate.NetworkUtils;
 
 /**
@@ -33,9 +32,9 @@ public class VolleyHttpTask {
         mNetType = CommonApplication.getInstance().mNetType;
     }
 
-    private Listener listener;
+    private VolleyListener listener;
 
-    public void setListener(Listener listener) {
+    public void setListener(VolleyListener listener) {
         this.listener = listener;
     }
 
@@ -65,14 +64,14 @@ public class VolleyHttpTask {
                 public void onErrorResponse(VolleyError error) {
                     if (listener == null) return;
                     if (isShowLoadingDialog) listener.hideLoading();
-                    listener.onErrorResponse(Listener.ErrorType.OTHER);
+                    listener.onErrorResponse(VolleyListener.ErrorType.OTHER);
                 }
             });
             if (tag != null) request.setTag(tag);
             volleyFactory.addToRequestQueue(request);
 
         } else {
-            listener.onErrorResponse(Listener.ErrorType.NetUnConnect);
+            listener.onErrorResponse(VolleyListener.ErrorType.NetUnConnect);
         }
     }
 

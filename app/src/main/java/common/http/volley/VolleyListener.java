@@ -1,4 +1,6 @@
-package common.http.common;
+package common.http.volley;
+
+import common.http.common.HttpResponse;
 
 /**
  * 描述:
@@ -6,7 +8,7 @@ package common.http.common;
  */
 
 
-public interface Listener {
+public interface VolleyListener {
 
     void showLoading();
 

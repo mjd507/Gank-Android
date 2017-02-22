@@ -21,7 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import common.http.common.Listener;
+import common.http.volley.VolleyListener;
 import common.image.ImagePresenter;
 import common.utils.EncodeUtils;
 
@@ -135,7 +135,7 @@ public class ImageDetailActivity extends BaseThemeActivity implements ITagInfoVi
     }
 
     @Override
-    public void showErrorView(Listener.ErrorType errorType) {
+    public void showErrorView(VolleyListener.ErrorType errorType) {
 
     }
 
