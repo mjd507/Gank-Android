@@ -8,6 +8,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
 import common.CommonApplication;
+import common.http.common.HttpResponse;
+import common.http.common.Listener;
 import common.netstate.NetworkUtils;
 
 /**
@@ -15,7 +17,7 @@ import common.netstate.NetworkUtils;
  * Created by mjd on 2017/2/7.
  */
 
-public class HttpTask {
+public class VolleyHttpTask {
 
     private VolleyFactory volleyFactory;
 
@@ -26,7 +28,7 @@ public class HttpTask {
     public boolean isPost = false;
     public Object tag;
 
-    public HttpTask() {
+    public VolleyHttpTask() {
         volleyFactory = VolleyFactory.getInstance();
         mNetType = CommonApplication.getInstance().mNetType;
     }
@@ -63,31 +65,15 @@ public class HttpTask {
                 public void onErrorResponse(VolleyError error) {
                     if (listener == null) return;
                     if (isShowLoadingDialog) listener.hideLoading();
-                    listener.onErrorResponse(ErrorType.OTHER);
+                    listener.onErrorResponse(Listener.ErrorType.OTHER);
                 }
             });
             if (tag != null) request.setTag(tag);
             volleyFactory.addToRequestQueue(request);
 
         } else {
-            listener.onErrorResponse(ErrorType.NetUnConnect);
+            listener.onErrorResponse(Listener.ErrorType.NetUnConnect);
         }
-    }
-
-    public interface Listener {
-
-        void showLoading();
-
-        void hideLoading();
-
-        void onResponse(HttpResponse response);
-
-        void onErrorResponse(ErrorType errorType);
-
-    }
-
-    public enum ErrorType {
-        NetUnConnect, NODATA, OTHER
     }
 
 }

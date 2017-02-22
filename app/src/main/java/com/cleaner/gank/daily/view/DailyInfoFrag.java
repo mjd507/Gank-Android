@@ -18,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import common.http.volley.HttpTask;
+import common.http.volley.VolleyHttpTask;
 import common.ui.BaseFragment;
 import common.utils.ScreenUtils;
 import common.utils.TimeUtils;
@@ -98,13 +98,13 @@ public class DailyInfoFrag extends BaseFragment implements IDailyView, SwipeRefr
     }
 
     @Override
-    public void showErrorView(HttpTask.ErrorType errorType) {
+    public void showErrorView(VolleyHttpTask.ErrorType errorType) {
         mSwipeRefreshLayout.setRefreshing(false);
-        if (errorType == HttpTask.ErrorType.NetUnConnect) {
+        if (errorType == VolleyHttpTask.ErrorType.NetUnConnect) {
             ToastUtils.showShort(getActivity(), "网络不可用");
-        } else if (errorType == HttpTask.ErrorType.NODATA) {
+        } else if (errorType == VolleyHttpTask.ErrorType.NODATA) {
             ToastUtils.showShort(getActivity(), "暂无数据");
-        } else if (errorType == HttpTask.ErrorType.OTHER) {
+        } else if (errorType == VolleyHttpTask.ErrorType.OTHER) {
             ToastUtils.showShort(getActivity(), "加载失败");
         }
     }

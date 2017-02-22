@@ -7,7 +7,7 @@ import com.cleaner.gank.tag.view.ITagInfoView;
 
 import java.util.List;
 
-import common.http.volley.HttpTask;
+import common.http.common.Listener;
 
 /**
  * 描述:
@@ -49,7 +49,7 @@ public class TagInfoPresenter implements TagInfoListener {
     }
 
     @Override
-    public void onError(HttpTask.ErrorType errorType) {
+    public void onError(Listener.ErrorType errorType) {
         ITagInfoView.showErrorView(errorType);
     }
 

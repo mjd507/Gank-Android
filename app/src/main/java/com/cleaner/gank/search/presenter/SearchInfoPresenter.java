@@ -7,7 +7,7 @@ import com.cleaner.gank.search.view.ISearchView;
 
 import java.util.List;
 
-import common.http.volley.HttpTask;
+import common.http.common.Listener;
 
 /**
  * 描述:
@@ -43,7 +43,7 @@ public class SearchInfoPresenter implements SearchInfoListener {
     }
 
     @Override
-    public void onError(HttpTask.ErrorType error) {
+    public void onError(Listener.ErrorType error) {
         searchView.showErrorView();
     }
 }

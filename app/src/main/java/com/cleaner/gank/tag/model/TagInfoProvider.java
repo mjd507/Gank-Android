@@ -7,9 +7,10 @@ import com.cleaner.gank.constants.Urls;
 
 import java.util.List;
 
-import common.http.volley.HttpResponse;
-import common.http.volley.HttpTask;
-import common.http.volley.JsonUtil;
+import common.http.common.HttpResponse;
+import common.http.common.JsonUtil;
+import common.http.common.Listener;
+import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
 
@@ -23,7 +24,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class TagInfoProvider {
 
     private TagInfoListener tagInfoListener;
-    private HttpTask httpTask;
+    private VolleyHttpTask volleyHttpTask;
 
     public TagInfoProvider(@NonNull TagInfoListener tagInfoListener) {
         this.tagInfoListener = tagInfoListener;
@@ -45,12 +46,12 @@ public class TagInfoProvider {
         //每页返回十条数据
         final String url = Urls.GET_CATEGORY_INFO + category + "/" + 10 + "/" + page;
 
-        httpTask = new HttpTask();
-        httpTask.url = url;
-        httpTask.isPost = false;
-        httpTask.isShowLoadingDialog = true;
-        httpTask.tag = category;
-        httpTask.setListener(new HttpTask.Listener() {
+        volleyHttpTask = new VolleyHttpTask();
+        volleyHttpTask.url = url;
+        volleyHttpTask.isPost = false;
+        volleyHttpTask.isShowLoadingDialog = true;
+        volleyHttpTask.tag = category;
+        volleyHttpTask.setListener(new Listener() {
             @Override
             public void showLoading() {
                 tagInfoListener.showLoading();
@@ -67,8 +68,8 @@ public class TagInfoProvider {
             }
 
             @Override
-            public void onErrorResponse(HttpTask.ErrorType errorType) {
-                if (errorType == HttpTask.ErrorType.NetUnConnect) {
+            public void onErrorResponse(ErrorType errorType) {
+                if (errorType == ErrorType.NetUnConnect) {
                     //从网络获取失败，从本地获取
                     getTagInfoFormLocal(url);
                 }
@@ -76,7 +77,7 @@ public class TagInfoProvider {
 
             }
         });
-        httpTask.start();
+        volleyHttpTask.start();
 
     }
 
@@ -88,7 +89,7 @@ public class TagInfoProvider {
         List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
-            tagInfoListener.onError(HttpTask.ErrorType.NODATA);
+            tagInfoListener.onError(Listener.ErrorType.NODATA);
             return;
         } else {
             results = response.getList("results", TagInfoBeen.class);
@@ -97,8 +98,8 @@ public class TagInfoProvider {
     }
 
     public void cancelAll() {
-        if (httpTask != null)
-            httpTask.cancelAll();
+        if (volleyHttpTask != null)
+            volleyHttpTask.cancelAll();
     }
 
 }

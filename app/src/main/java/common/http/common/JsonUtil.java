@@ -1,4 +1,4 @@
-package common.http.volley;
+package common.http.common;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

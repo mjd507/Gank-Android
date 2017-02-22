@@ -6,8 +6,9 @@ import com.cleaner.gank.constants.Urls;
 
 import java.util.List;
 
-import common.http.volley.HttpResponse;
-import common.http.volley.HttpTask;
+import common.http.common.HttpResponse;
+import common.http.common.Listener;
+import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 
 import static com.android.volley.VolleyLog.TAG;
@@ -26,12 +27,12 @@ public class SearchInfoProvider {
     }
 
     public void getSearchInfo(String category, String page) {
-        HttpTask task = new HttpTask();
+        VolleyHttpTask task = new VolleyHttpTask();
         task.url = Urls.GET_SEARCH + category + "/count/10/" + page;    //  /Android/count/10/page/1
         task.isShowLoadingDialog = true;
         task.isPost = false;
         task.tag = null;
-        task.setListener(new HttpTask.Listener() {
+        task.setListener(new Listener() {
             @Override
             public void showLoading() {
                 searchInfoListener.showLoading();
@@ -48,7 +49,7 @@ public class SearchInfoProvider {
             }
 
             @Override
-            public void onErrorResponse(HttpTask.ErrorType error) {
+            public void onErrorResponse(ErrorType error) {
                 searchInfoListener.onError(error);
             }
         });

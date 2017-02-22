@@ -1,5 +1,6 @@
-package common.http.volley;
+package common.http.common;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -13,12 +14,26 @@ import common.logger.Logger;
 
 public class HttpResponse {
 
+    private Object object;
     private JSONObject jsonObject;
 
-    public HttpResponse(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
-        if (jsonObject != null)
-            Logger.json(jsonObject.toString());
+    public HttpResponse(Object obj) {
+        this.object = obj;
+        if (object != null)
+            Logger.json(object.toString());
+        jsonObject = parse(object);
+    }
+
+    public JSONObject parse(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        try {
+            return new JSONObject(obj.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public JSONObject getResponse() {

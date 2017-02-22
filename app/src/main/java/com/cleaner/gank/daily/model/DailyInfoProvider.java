@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import common.http.volley.HttpResponse;
-import common.http.volley.HttpTask;
-import common.http.volley.JsonUtil;
+import common.http.common.HttpResponse;
+import common.http.common.JsonUtil;
+import common.http.common.Listener;
+import common.http.volley.VolleyHttpTask;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
 import common.utils.TimeUtils;
@@ -28,7 +29,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class DailyInfoProvider {
 
     private DailyInfoListener dailyInfoListener;
-    private HttpTask httpTask;
+    private VolleyHttpTask volleyHttpTask;
 
     public DailyInfoProvider(@NonNull DailyInfoListener dailyInfoListener) {
         this.dailyInfoListener = dailyInfoListener;
@@ -50,12 +51,12 @@ public class DailyInfoProvider {
         String day = TimeUtils.date2String(date, "yyyy/MM/dd");
         final String url = Urls.GET_DAILY_INFO + day;
 
-        httpTask = new HttpTask();
-        httpTask.url = url;
-        httpTask.isPost = false;
-        httpTask.isShowLoadingDialog = true;
-        httpTask.tag = "daily";
-        httpTask.setListener(new HttpTask.Listener() {
+        volleyHttpTask = new VolleyHttpTask();
+        volleyHttpTask.url = url;
+        volleyHttpTask.isPost = false;
+        volleyHttpTask.isShowLoadingDialog = true;
+        volleyHttpTask.tag = "daily";
+        volleyHttpTask.setListener(new Listener() {
             @Override
             public void showLoading() {
                 dailyInfoListener.showLoading();
@@ -72,8 +73,8 @@ public class DailyInfoProvider {
             }
 
             @Override
-            public void onErrorResponse(HttpTask.ErrorType errorType) {
-                if (errorType == HttpTask.ErrorType.NetUnConnect) {
+            public void onErrorResponse(ErrorType errorType) {
+                if (errorType == ErrorType.NetUnConnect) {
                     getDailyInfoFormLocal(url);
                 }
                 dailyInfoListener.onError(errorType);
@@ -81,7 +82,7 @@ public class DailyInfoProvider {
 
 
         });
-        httpTask.start();
+        volleyHttpTask.start();
 
     }
 
@@ -92,7 +93,7 @@ public class DailyInfoProvider {
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
-            dailyInfoListener.onError(HttpTask.ErrorType.NODATA);
+            dailyInfoListener.onError(Listener.ErrorType.NODATA);
         } else {
             try {
                 List<String> categories = response.getList("category", String.class);
@@ -112,8 +113,8 @@ public class DailyInfoProvider {
 
 
     public void cancelAll() {
-        if (httpTask != null) {
-            httpTask.cancelAll();
+        if (volleyHttpTask != null) {
+            volleyHttpTask.cancelAll();
         }
 
     }
