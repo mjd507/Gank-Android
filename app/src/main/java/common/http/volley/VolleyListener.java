@@ -1,5 +1,6 @@
 package common.http.volley;
 
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
 
 /**
@@ -17,9 +18,5 @@ public interface VolleyListener {
     void onResponse(HttpResponse response);
 
     void onErrorResponse(ErrorType errorType);
-
-    public enum ErrorType {
-        NetUnConnect, NODATA, OTHER
-    }
 
 }

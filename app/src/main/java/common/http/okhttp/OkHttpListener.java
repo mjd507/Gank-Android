@@ -1,5 +1,6 @@
 package common.http.okhttp;
 
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
 import okhttp3.Call;
 
@@ -18,9 +19,5 @@ public interface OkHttpListener {
     void onResponse(HttpResponse response);
 
     void onErrorResponse(Call call, ErrorType errorType);
-
-    public enum ErrorType {
-        NetUnConnect, NODATA, OTHER
-    }
 
 }

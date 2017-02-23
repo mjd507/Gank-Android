@@ -6,9 +6,10 @@ import com.cleaner.gank.constants.Urls;
 
 import java.util.List;
 
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
-import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
+import common.http.volley.VolleyListener;
 import common.utils.LogUtils;
 
 import static com.android.volley.VolleyLog.TAG;

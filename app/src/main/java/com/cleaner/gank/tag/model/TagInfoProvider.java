@@ -7,10 +7,11 @@ import com.cleaner.gank.constants.Urls;
 
 import java.util.List;
 
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
 import common.http.common.JsonUtil;
-import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
+import common.http.volley.VolleyListener;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
 
@@ -89,7 +90,7 @@ public class TagInfoProvider {
         List<TagInfoBeen> results = null;
         if (error) {
             LogUtils.d(TAG, "response error !");
-            tagInfoListener.onError(VolleyListener.ErrorType.NODATA);
+            tagInfoListener.onError(ErrorType.NODATA);
             return;
         } else {
             results = response.getList("results", TagInfoBeen.class);

@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
 import common.http.common.JsonUtil;
-import common.http.volley.VolleyListener;
 import common.http.volley.VolleyHttpTask;
+import common.http.volley.VolleyListener;
 import common.utils.LogUtils;
 import common.utils.SPUtils;
 import common.utils.TimeUtils;
@@ -93,7 +94,7 @@ public class DailyInfoProvider {
         boolean error = response.getState("error");
         if (error) {
             LogUtils.d(TAG, "response error !");
-            dailyInfoListener.onError(VolleyListener.ErrorType.NODATA);
+            dailyInfoListener.onError(ErrorType.NODATA);
         } else {
             try {
                 List<String> categories = response.getList("category", String.class);

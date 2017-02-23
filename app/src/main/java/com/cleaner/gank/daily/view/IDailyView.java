@@ -4,7 +4,7 @@ import com.cleaner.gank.daily.model.DailyBeen;
 
 import java.util.List;
 
-import common.http.volley.VolleyListener;
+import common.http.common.ErrorType;
 
 /**
  * 描述:
@@ -15,7 +15,7 @@ public interface IDailyView {
 
     void showSuccessView(List<DailyBeen> results);
 
-    void showErrorView(VolleyListener.ErrorType errorType);
+    void showErrorView(ErrorType errorType);
 
     void hideLoading();
 

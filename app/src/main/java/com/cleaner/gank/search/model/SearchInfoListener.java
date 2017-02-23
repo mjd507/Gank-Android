@@ -2,7 +2,7 @@ package com.cleaner.gank.search.model;
 
 import java.util.List;
 
-import common.http.volley.VolleyListener;
+import common.http.common.ErrorType;
 
 /**
  * 描述:
@@ -17,6 +17,6 @@ public interface SearchInfoListener {
 
     void onSuccess(List<SearchBeen> results);
 
-    void onError(VolleyListener.ErrorType error);
+    void onError(ErrorType error);
 
 }

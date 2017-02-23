@@ -2,7 +2,7 @@ package com.cleaner.gank.daily.model;
 
 import java.util.List;
 
-import common.http.volley.VolleyListener;
+import common.http.common.ErrorType;
 
 /**
  * 描述:
@@ -16,5 +16,5 @@ public interface DailyInfoListener {
 
     void onSuccess(List<DailyBeen> results);
 
-    void onError(VolleyListener.ErrorType errorType);
+    void onError(ErrorType errorType);
 }

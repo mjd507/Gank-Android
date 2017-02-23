@@ -8,6 +8,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
 import common.CommonApplication;
+import common.http.common.ErrorType;
 import common.http.common.HttpResponse;
 import common.netstate.NetworkUtils;
 
@@ -64,14 +65,14 @@ public class VolleyHttpTask {
                 public void onErrorResponse(VolleyError error) {
                     if (listener == null) return;
                     if (isShowLoadingDialog) listener.hideLoading();
-                    listener.onErrorResponse(VolleyListener.ErrorType.OTHER);
+                    listener.onErrorResponse(ErrorType.FAIL);
                 }
             });
             if (tag != null) request.setTag(tag);
             volleyFactory.addToRequestQueue(request);
 
         } else {
-            listener.onErrorResponse(VolleyListener.ErrorType.NetUnConnect);
+            listener.onErrorResponse(ErrorType.NetUnConnect);
         }
     }
 
