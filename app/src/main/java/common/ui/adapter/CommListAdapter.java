@@ -13,11 +13,11 @@ import java.util.List;
  * 作者 mjd
  * 日期：2015/11/3 9:46
  */
-public abstract class CommonAdapter<Bean> extends BaseAdapter {
+public abstract class CommListAdapter<Bean> extends BaseAdapter {
     private Context context;
     private List<Bean> list;
 
-    public CommonAdapter(Context context, List<Bean> list) {
+    public CommListAdapter(Context context, List<Bean> list) {
         this.context = context;
         this.list = list;
     }
@@ -39,16 +39,16 @@ public abstract class CommonAdapter<Bean> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        CommonViewHolder<Bean> holder;
+        CommListViewHolder<Bean> holder;
         if (convertView == null) {
             holder = getViewHolder(context);
         } else {
-            holder = (CommonViewHolder<Bean>) convertView.getTag();
+            holder = (CommListViewHolder<Bean>) convertView.getTag();
         }
         holder.setBean(list.get(position));
         return holder.getRootView();
     }
 
-    public abstract CommonViewHolder<Bean> getViewHolder(Context context);
+    public abstract CommListViewHolder<Bean> getViewHolder(Context context);
 
 }

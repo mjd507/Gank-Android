@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.ui.adapter.CommonAdapter;
-import common.ui.adapter.CommonViewHolder;
+import common.ui.adapter.CommListAdapter;
+import common.ui.adapter.CommListViewHolder;
 import common.utils.ScreenUtils;
 
 public class CommonAdapterTest extends Activity {
@@ -37,19 +37,19 @@ public class CommonAdapterTest extends Activity {
 
     }
 
-    class MyAdapter<String> extends CommonAdapter<String> {
+    class MyAdapter<String> extends CommListAdapter<String> {
 
         public MyAdapter(Context context, List<String> list) {
             super(context, list);
         }
 
         @Override
-        public CommonViewHolder<String> getViewHolder(Context context) {
+        public CommListViewHolder<String> getViewHolder(Context context) {
             return new MyHolder(context);
         }
     }
 
-    class MyHolder<String> extends CommonViewHolder<String> {
+    class MyHolder<String> extends CommListViewHolder<String> {
 
         public MyHolder(Context context) {
             super(context);

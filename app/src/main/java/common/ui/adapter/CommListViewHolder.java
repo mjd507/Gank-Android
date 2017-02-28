@@ -8,13 +8,13 @@ import android.view.View;
  * 作者 mjd
  * 日期：2015/11/3 10:22
  */
-public abstract class CommonViewHolder<Bean> {
+public abstract class CommListViewHolder<Bean> {
 
     protected Context context;
     protected View rootView;
     protected Bean bean;
 
-    public CommonViewHolder(Context context) {
+    public CommListViewHolder(Context context) {
         this.context = context;
         rootView = initView(context);
         rootView.setTag(this);
