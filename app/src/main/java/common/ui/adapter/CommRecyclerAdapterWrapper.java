@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 /**
  * 描述: 为已有的 Adapter 添加 Header 和 Footer
  * Created by mjd on 2017/2/28.
- * 
+ *
  * CommRecyclerAdapter adapter = new CommRecyclerAdapter();
  * adapter.addData();
  * View headerView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, mRecyclerView, false);
