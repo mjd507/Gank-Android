@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
 
 import common.ui.BaseActivity;
 import common.utils.SPUtils;

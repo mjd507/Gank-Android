@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
 import com.cleaner.gank.tag.TagType;
 import com.cleaner.gank.tag.model.TagInfoBeen;
 import com.cleaner.gank.tag.presenter.TagInfoPresenter;

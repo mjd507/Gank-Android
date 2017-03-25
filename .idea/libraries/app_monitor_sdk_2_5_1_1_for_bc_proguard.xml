@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="app-monitor-sdk-2.5.1.1_for_bc_proguard">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/app-monitor-sdk-2.5.1.1_for_bc_proguard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

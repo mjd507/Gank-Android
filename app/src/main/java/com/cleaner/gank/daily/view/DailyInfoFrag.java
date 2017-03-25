@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
 import com.cleaner.gank.daily.model.DailyBeen;
 import com.cleaner.gank.daily.presenter.DailyInfoPresenter;
 

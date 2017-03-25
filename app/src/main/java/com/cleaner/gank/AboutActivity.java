@@ -11,7 +11,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.cleaner.commonandroid.R;
 import com.cleaner.gank.theme.BaseThemeActivity;
 import com.umeng.analytics.MobclickAgent;
 

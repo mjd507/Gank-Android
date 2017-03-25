@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
 import com.cleaner.gank.daily.model.DailyBeen;
 import com.cleaner.gank.detail.ImageDetailActivity;
 import com.cleaner.gank.detail.InfoDetailActivity;

@@ -2,7 +2,8 @@ package common.image;
 
 import android.widget.ImageView;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
+
 
 /**
  * 描述:

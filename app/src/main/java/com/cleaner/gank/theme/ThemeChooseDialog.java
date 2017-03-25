@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.cleaner.commonandroid.R;
+import com.cleaner.gank.R;
+
 
 /**
  * 描述:
