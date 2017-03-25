@@ -1,13 +1,11 @@
 # Gank Android客户端
-[点击查看动图效果](./gank.gif)
+借助  [干货Api](http://gank.io/api) 的接口实现的一个小项目。[点击查看动图效果](./gank.gif)
 
-Gank Android 包含该两个部分，一部分是 应用层（干货集中营），借助 [干货Api](http://gank.io/api) 的接口实现的一个小项目，另一部分是 Android 基础库。
+项目结构上包含该两个部分：
+- 应用层（干货集中营的界面和业务逻辑），使用 MVP 模式，层次结构更加清晰
+- 组件层（http、image、net state、database ...），为应用层提供友好调用支持
 
-项目的初衷还是封装 Android 开发中基础的一些类库，包括 网络请求，数据库，控件，工具类等等。
-
-## 基础类库中已经包含的部分如下：
-
-* MVP 模块：V 与 M 完全解耦，项目架构更加清晰
+## 底层组件支持的模块：
 
 * NetState 网络监测模块：当网络变化时，对其进行检测
 
@@ -24,9 +22,7 @@ Gank Android 包含该两个部分，一部分是 应用层（干货集中营）
 ## 关于基础库的使用
 
 1. common 文件夹下是库的全部类容
-
 2. CommonApplication 里面默认初始化了使用时需要初始化的组件，使用时可以将 应用的 Application 继承 CommonApplication，或者直接 copy 到 自己的 Application 当中。
-
 3. 一些权限在 manifest 中，不要忘记添加
 
 
